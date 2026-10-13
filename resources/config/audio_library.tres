@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="AudioLibrary" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/audio_library.gd" id="1_erpth"]
+
+[resource]
+script = ExtResource("1_erpth")
+sfx = Dictionary[StringName, AudioStream]({
+&"attack_mana": null,
+&"attack_slash": null,
+&"block": null,
+&"boss_defeated": null,
+&"boss_roar": null,
+&"boss_start": null,
+&"dash": null,
+&"death": null,
+&"enemy_attack": null,
+&"fight_end": null,
+&"fight_start": null,
+&"hit": null,
+&"hurt": null,
+&"loot": null,
+&"parry": null,
+&"parry_success": null,
+&"qte_fail": null,
+&"qte_success": null,
+&"rescue": null,
+&"skill_dash_slash": null,
+&"skill_fireball": null,
+&"skill_lightning": null,
+&"skill_spin": null,
+&"ui_click": null,
+&"ui_focus": null,
+&"ult_beam": null,
+&"ult_great_slash": null
+})
+music = Dictionary[StringName, AudioStream]({
+&"boss": null,
+&"credits": null,
+&"ending": null,
+&"gameplay": null,
+&"intro": null,
+&"menu": null
+})

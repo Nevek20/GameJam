@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EndingImages" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ending_images.gd" id="1_bkmxo"]
+
+[resource]
+script = ExtResource("1_bkmxo")
+princess = Dictionary[StringName, Texture2D]({
+&"negative_imprisoned": null,
+&"negative_victorious": null,
+&"positive": null,
+&"questionable": null
+})
+mage = Dictionary[StringName, Texture2D]({
+&"negative_imprisoned": null,
+&"negative_victorious": null,
+&"positive": null,
+&"questionable": null
+})
+kingdom = Dictionary[StringName, Texture2D]({
+&"double_alliance": null,
+&"negative": null,
+&"positive": null
+})

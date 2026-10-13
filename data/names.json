@@ -1,0 +1,8 @@
+{
+	"_comment": "Nomes exibidos. Chave = id do personagem/inimigo usado nos Resources.",
+	"princess": "Princesa Guerreira",
+	"mage": "Mago Mercenário",
+	"kingdom_knight": "Cavaleiro do Reino",
+	"army_champion": "Campeão do Exército",
+	"villager": "Morador"
+}

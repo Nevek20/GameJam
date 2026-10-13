@@ -1,0 +1,144 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/game/game.gd" id="1_game"]
+[ext_resource type="Resource" path="res://resources/config/match_config.tres" id="2_match"]
+[ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="3_ui"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="4_player"]
+[ext_resource type="Script" path="res://scripts/core/juice.gd" id="5_juice"]
+[ext_resource type="Resource" path="res://resources/config/juice_config.tres" id="6_juice_cfg"]
+[ext_resource type="Script" path="res://scripts/core/pools.gd" id="7_pools"]
+[ext_resource type="PackedScene" path="res://scenes/world/level.tscn" id="8_level"]
+[ext_resource type="Script" path="res://scripts/core/object_pool.gd" id="9_pool"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy.tscn" id="10_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/combat/attack_hitbox.tscn" id="11_hitbox"]
+[ext_resource type="PackedScene" path="res://scenes/combat/projectile.tscn" id="12_projectile"]
+[ext_resource type="PackedScene" path="res://scenes/effects/burst_particles.tscn" id="13_particles"]
+[ext_resource type="PackedScene" path="res://scenes/effects/damage_number.tscn" id="14_number"]
+[ext_resource type="PackedScene" path="res://scenes/effects/afterimage.tscn" id="15_after"]
+[ext_resource type="PackedScene" path="res://scenes/effects/lightning_line.tscn" id="16_lightning"]
+[ext_resource type="Script" path="res://scripts/effects/camera_rig.gd" id="17_camera"]
+[ext_resource type="Script" path="res://scripts/game/interaction_director.gd" id="18_interact"]
+[ext_resource type="Script" path="res://scripts/world/army_encounter.gd" id="19_encounter"]
+[ext_resource type="Script" path="res://scripts/game/boss_director.gd" id="20_boss_dir"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="21_boss"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="22_hud"]
+[ext_resource type="PackedScene" path="res://ui/dialog/dialog_box.tscn" id="23_dialog"]
+[ext_resource type="PackedScene" path="res://ui/qte/qte_panel.tscn" id="24_qte"]
+[ext_resource type="PackedScene" path="res://ui/tutorial/tutorial_panel.tscn" id="25_tutorial"]
+[ext_resource type="PackedScene" path="res://ui/intro/intro_sequence.tscn" id="26_intro"]
+[ext_resource type="PackedScene" path="res://ui/endings/tombstone_view.tscn" id="27_tomb"]
+[ext_resource type="PackedScene" path="res://ui/pause/pause_menu.tscn" id="28_pause"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+match_config = ExtResource("2_match")
+ui_config = ExtResource("3_ui")
+player_scene = ExtResource("4_player")
+
+[node name="Juice" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("5_juice")
+config = ExtResource("6_juice_cfg")
+camera = NodePath("../Camera")
+
+[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies")]
+script = ExtResource("7_pools")
+hitboxes = NodePath("../Effects/Hitboxes")
+projectiles = NodePath("../Effects/Projectiles")
+particles = NodePath("../Effects/Particles")
+damage_numbers = NodePath("../DamageNumbers")
+afterimages = NodePath("../Afterimages")
+lightning = NodePath("../Effects/Lightning")
+enemies = NodePath("../Level/World/Actors/Enemies")
+
+[node name="Level" parent="." instance=ExtResource("8_level")]
+
+[node name="Enemies" type="Node2D" parent="Level/World/Actors"]
+y_sort_enabled = true
+script = ExtResource("9_pool")
+scene = ExtResource("10_enemy")
+initial_size = 18
+
+[node name="Afterimages" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("9_pool")
+scene = ExtResource("15_after")
+initial_size = 24
+
+[node name="Effects" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Hitboxes" type="Node2D" parent="Effects"]
+script = ExtResource("9_pool")
+scene = ExtResource("11_hitbox")
+initial_size = 24
+
+[node name="Projectiles" type="Node2D" parent="Effects"]
+script = ExtResource("9_pool")
+scene = ExtResource("12_projectile")
+initial_size = 40
+
+[node name="Lightning" type="Node2D" parent="Effects"]
+script = ExtResource("9_pool")
+scene = ExtResource("16_lightning")
+initial_size = 6
+
+[node name="Particles" type="Node2D" parent="Effects"]
+script = ExtResource("9_pool")
+scene = ExtResource("13_particles")
+initial_size = 40
+
+[node name="DamageNumbers" type="Node2D" parent="."]
+z_index = 20
+script = ExtResource("9_pool")
+scene = ExtResource("14_number")
+initial_size = 30
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("17_camera")
+
+[node name="InteractionDirector" type="Node" parent="."]
+script = ExtResource("18_interact")
+
+[node name="ArmyEncounter" type="Node" parent="."]
+script = ExtResource("19_encounter")
+
+[node name="WaveTimer" type="Timer" parent="ArmyEncounter"]
+one_shot = true
+
+[node name="BossDirector" type="Node" parent="."]
+script = ExtResource("20_boss_dir")
+boss_scene = ExtResource("21_boss")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HUD" parent="UI" instance=ExtResource("22_hud")]
+unique_name_in_owner = true
+
+[node name="QTE" parent="UI" instance=ExtResource("24_qte")]
+unique_name_in_owner = true
+
+[node name="DialogBox" parent="UI" instance=ExtResource("23_dialog")]
+unique_name_in_owner = true
+
+[node name="Tutorial" parent="UI" instance=ExtResource("25_tutorial")]
+unique_name_in_owner = true
+
+[node name="IntroLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Intro" parent="IntroLayer" instance=ExtResource("26_intro")]
+unique_name_in_owner = true
+
+[node name="TombLayer" type="CanvasLayer" parent="."]
+layer = 30
+
+[node name="Tombstone" parent="TombLayer" instance=ExtResource("27_tomb")]
+unique_name_in_owner = true
+
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 40
+
+[node name="PauseMenu" parent="PauseLayer" instance=ExtResource("28_pause")]
+unique_name_in_owner = true

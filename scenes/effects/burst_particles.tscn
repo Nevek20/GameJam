@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/effects/burst_particles.gd" id="1_burst"]
+
+[node name="BurstParticles" type="CPUParticles2D"]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+script = ExtResource("1_burst")

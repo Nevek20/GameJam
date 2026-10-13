@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/endings/tombstone_view.gd" id="1_tomb"]
+[ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="2_shape"]
+
+[node name="Tombstone" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tomb")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.01, 0.06, 0.92)
+
+[node name="Content" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StoneHolder" type="Control" parent="Content"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 70.0
+offset_right = 120.0
+offset_bottom = 330.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Stone" type="Node2D" parent="Content/StoneHolder"]
+unique_name_in_owner = true
+position = Vector2(120, 140)
+script = ExtResource("2_shape")
+kind = 8
+size = Vector2(150, 200)
+color = Color(0.55, 0.52, 0.65, 1)
+secondary_color = Color(0.3, 0.27, 0.4, 1)
+
+[node name="Art" type="TextureRect" parent="Content/StoneHolder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_top = 360.0
+offset_right = 500.0
+offset_bottom = 410.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.85, 0.82, 0.95, 1)
+theme_override_font_sizes/font_size = 36
+text = "Aqui jaz"
+horizontal_alignment = 1
+
+[node name="Text" type="RichTextLabel" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -460.0
+offset_top = 420.0
+offset_right = 460.0
+offset_bottom = 600.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "..."
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -420.0
+offset_top = -50.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 1, 0.85, 1)
+text = "Enter"
+horizontal_alignment = 2

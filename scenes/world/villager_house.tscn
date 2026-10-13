@@ -1,0 +1,74 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/villager_house.gd" id="1_house"]
+[ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="2_shape"]
+[ext_resource type="Script" path="res://scripts/components/entity_visual.gd" id="3_visual"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(150, 70)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
+radius = 135.0
+
+[node name="VillagerHouse" type="Node2D"]
+script = ExtResource("1_house")
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Placeholder" type="Node2D" parent="Visual"]
+position = Vector2(0, -10)
+script = ExtResource("2_shape")
+kind = 5
+size = Vector2(150, 110)
+color = Color(0.55, 0.42, 0.78, 1)
+secondary_color = Color(0.9, 0.35, 0.6, 1)
+accent_color = Color(1, 0.9, 0.5, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+visible = false
+
+[node name="Villager" type="Node2D" parent="." node_paths=PackedStringArray("placeholder", "sprite", "animated")]
+position = Vector2(55, 80)
+script = ExtResource("3_visual")
+placeholder = NodePath("Placeholder")
+sprite = NodePath("Sprite2D")
+animated = NodePath("AnimatedSprite2D")
+
+[node name="Placeholder" type="Node2D" parent="Villager"]
+script = ExtResource("2_shape")
+size = Vector2(24, 24)
+eyes = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Villager"]
+visible = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Villager"]
+visible = false
+
+[node name="InteractionZone" type="Area2D" parent="."]
+position = Vector2(0, 40)
+collision_layer = 32
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+shape = SubResource("CircleShape2D_zone")
+
+[node name="Status" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -120.0
+offset_right = 20.0
+offset_bottom = -80.0
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.02, 0.15, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 34
+text = "!"
+horizontal_alignment = 1

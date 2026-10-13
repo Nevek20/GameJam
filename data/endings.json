@@ -1,0 +1,32 @@
+{
+	"_comment": "Textos dos finais. Personagem: death usa a lápide (tombstone). {name} = nome do personagem.",
+	"tombstone": {
+		"princess": {
+			"title": "Aqui jaz {name}",
+			"text": "Caiu com a espada erguida, entre flores que não paravam de mudar de cor."
+		},
+		"mage": {
+			"title": "Aqui jaz {name}",
+			"text": "Cobrou caro por cada feitiço. O último saiu de graça."
+		}
+	},
+	"characters": {
+		"princess": {
+			"positive": {"title": "A Princesa da Vila", "text": "Os moradores cantam o nome de {name}. A vila nunca esqueceu quem abriu as portas."},
+			"questionable": {"title": "Uma Heroína Pela Metade", "text": "{name} lutou, mas os moradores ainda se perguntam o que sumiu de suas casas."},
+			"negative_victorious": {"title": "A Coroa Vendida", "text": "{name} marcha à frente do exército. A vila agora curva a cabeça para ela."},
+			"negative_imprisoned": {"title": "Grades de Ouro", "text": "Derrotada, {name} assiste ao reino seguir em frente através das grades."}
+		},
+		"mage": {
+			"positive": {"title": "O Mercenário de Coração", "text": "Pela primeira vez, {name} recusou pagamento. A vila insistiu mesmo assim."},
+			"questionable": {"title": "Pago, Não Amado", "text": "{name} salvou o dia e encheu os bolsos. Ninguém sabe bem em que ordem."},
+			"negative_victorious": {"title": "O Preço de Tudo", "text": "{name} encontrou quem pagasse mais. O exército agora tem um mago."},
+			"negative_imprisoned": {"title": "Feitiço Quebrado", "text": "Derrotado, {name} conta moedas imaginárias numa cela fria."}
+		}
+	},
+	"kingdom": {
+		"positive": {"title": "O Reino Prospera", "text": "A vila foi reconstruída mais colorida do que antes. O reino respira em paz."},
+		"negative": {"title": "O Reino Sob Domínio", "text": "As bandeiras do exército sobem nas torres. A vila foi só o começo."},
+		"double_alliance": {"title": "Traição em Dobro", "text": "Com os dois heróis ao seu lado, o exército tomou o reino sem resistência."}
+	}
+}

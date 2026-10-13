@@ -1,0 +1,63 @@
+{
+	"_comment": "Textos provisórios. Cada casa usa houses.<dialogue_key> (definido na cena da vila); se não existir, usa houses.default. Aceita BBCode.",
+	"qte_title": "Segure firme... agora!",
+	"loot_speaker": "Casa vazia",
+	"choices": {
+		"help": "Ajudar",
+		"leave": "Seguir em frente",
+		"leave_house": "Deixar como está",
+		"loot": "Saquear",
+		"confront": "Enfrentar",
+		"ally": "Aliar-se",
+		"not_now": "Agora não"
+	},
+	"houses": {
+		"default": {
+			"speaker": "Morador",
+			"ask": "Socorro! A porta emperrou e os soldados estão chegando. Você me ajuda a sair?",
+			"rescued": "Você me salvou! Pode pegar o que quiser... mas isso é tudo o que eu tenho.",
+			"failed": "A porta cedeu para o lado errado... o morador não conseguiu sair.",
+			"loot_ask": "A casa está vazia agora. Ainda há moedas na mesa.",
+			"loot_allied": "Ninguém vai impedir você agora. Os cofres da casa estão à vista."
+		},
+		"baker": {
+			"speaker": "Padeira",
+			"ask": "Meu forno está cantando e as paredes estão derretendo! Me ajuda a sair daqui?",
+			"rescued": "Obrigada! Os pães voltaram a ter cheiro de pão. Leve o que precisar...",
+			"failed": "O forno engoliu a porta. Não deu tempo.",
+			"loot_ask": "A padaria está vazia. O cofre de farinha brilha num canto.",
+			"loot_allied": "A padaria está aberta e ninguém para defendê-la."
+		},
+		"weaver": {
+			"speaker": "Tecelão",
+			"ask": "Os fios do tear me prenderam numa teia de cores! Corta isso para mim?",
+			"rescued": "Livre! As cores voltaram ao lugar. Fique com o que quiser da oficina.",
+			"failed": "A teia apertou demais. O tecelão sumiu entre os fios.",
+			"loot_ask": "A oficina ficou para trás. Rolos de seda preciosa estão à vista.",
+			"loot_allied": "Sedas e fios dourados, sem dono para reclamar."
+		},
+		"elder": {
+			"speaker": "Anciã",
+			"ask": "Meus pés viraram raízes no chão da sala. Você me puxa daqui?",
+			"rescued": "Ah, de volta ao chão firme! O baú da família é seu, se precisar.",
+			"failed": "As raízes foram mais rápidas.",
+			"loot_ask": "O baú da família está aberto sobre a mesa.",
+			"loot_allied": "O baú antigo da anciã está ali, desprotegido."
+		},
+		"twins": {
+			"speaker": "Gêmeos",
+			"ask": "A escada está subindo sozinha e a gente não consegue descer! Ajuda?",
+			"rescued": "Uhuu! Pode levar nossas moedinhas, a gente nem liga.",
+			"failed": "A escada levou os gêmeos para cima, e para longe.",
+			"loot_ask": "O cofrinho dos gêmeos está na janela.",
+			"loot_allied": "O cofrinho está na janela. Fácil demais."
+		}
+	},
+	"army": {
+		"speaker": "Capitão do Exército",
+		"p1_ask": "Essa vila já é nossa. Você pode lutar e cair junto com ela... ou marchar ao nosso lado e ficar com o que quiser. O que vai ser?",
+		"p2_ask_p1_hero": "{p1} tentou nos deter. Você vai terminar o que {p1} começou, ou vai ser mais esperto?",
+		"p2_ask_p1_allied": "{p1} já marcha conosco. Junte-se a nós, ou enfrente o exército inteiro.",
+		"p2_ask_p1_dead": "{p1} caiu aqui. Quer ter o mesmo destino, ou prefere se aliar?"
+	}
+}

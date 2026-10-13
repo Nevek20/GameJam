@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/qte/qte_panel.gd" id="1_qte"]
+[ext_resource type="Script" path="res://ui/qte/qte_bar.gd" id="2_bar"]
+
+[node name="QTE" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_qte")
+
+[node name="Box" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -370.0
+offset_right = 280.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Box"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Box/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 22
+text = "Resgate!"
+horizontal_alignment = 1
+
+[node name="Bar" type="Control" parent="Box/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 34)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_bar")
+
+[node name="Hint" type="Label" parent="Box/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Clique"
+horizontal_alignment = 1

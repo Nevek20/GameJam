@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="JuiceConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/particle_preset.gd" id="1_5d3ff"]
+[ext_resource type="Script" path="res://scripts/resources/juice_config.gd" id="2_5vp72"]
+
+[sub_resource type="Resource" id="Resource_1rjig"]
+script = ExtResource("1_5d3ff")
+lifetime = 0.35
+speed_min = 60.0
+speed_max = 160.0
+spread = 40.0
+
+[sub_resource type="Resource" id="Resource_druwo"]
+script = ExtResource("1_5d3ff")
+amount = 26
+lifetime = 0.7
+speed_max = 360.0
+scale_min = 4.0
+scale_max = 9.0
+damping = 400.0
+
+[sub_resource type="Resource" id="Resource_n0lwa"]
+script = ExtResource("1_5d3ff")
+amount = 10
+lifetime = 0.35
+speed_min = 120.0
+speed_max = 320.0
+spread = 50.0
+damping = 600.0
+
+[sub_resource type="Resource" id="Resource_reexf"]
+script = ExtResource("1_5d3ff")
+amount = 22
+speed_min = 200.0
+speed_max = 480.0
+spread = 70.0
+scale_max = 7.0
+damping = 500.0
+
+[sub_resource type="Resource" id="Resource_36nvc"]
+script = ExtResource("1_5d3ff")
+amount = 16
+lifetime = 0.5
+speed_max = 260.0
+scale_max = 7.0
+damping = 350.0
+
+[sub_resource type="Resource" id="Resource_te77i"]
+script = ExtResource("1_5d3ff")
+amount = 18
+lifetime = 0.5
+speed_min = 60.0
+speed_max = 200.0
+damping = 200.0
+gravity = Vector2(0, -200)
+
+[resource]
+script = ExtResource("2_5vp72")
+particles_hit = SubResource("Resource_n0lwa")
+particles_death = SubResource("Resource_druwo")
+particles_dash = SubResource("Resource_1rjig")
+particles_parry = SubResource("Resource_reexf")
+particles_skill = SubResource("Resource_36nvc")
+particles_spawn = SubResource("Resource_te77i")

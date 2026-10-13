@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="MatchConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/wave_data.gd" id="1_ddvub"]
+[ext_resource type="Resource" path="res://resources/enemies/kingdom_knight.tres" id="2_jiyy7"]
+[ext_resource type="Resource" path="res://resources/ai/character_boss_profile.tres" id="3_dodi1"]
+[ext_resource type="Script" path="res://scripts/resources/character_stats.gd" id="4_uuib0"]
+[ext_resource type="Resource" path="res://resources/characters/princess.tres" id="5_m8gfc"]
+[ext_resource type="Resource" path="res://resources/characters/mage.tres" id="6_1iarw"]
+[ext_resource type="Resource" path="res://resources/enemies/soldier.tres" id="7_fdsxe"]
+[ext_resource type="Resource" path="res://resources/enemies/elite.tres" id="8_6sms3"]
+[ext_resource type="Resource" path="res://resources/bosses/knight_boss.tres" id="9_pv5gv"]
+[ext_resource type="Script" path="res://scripts/resources/qte_config.gd" id="10_qhdo4"]
+[ext_resource type="Script" path="res://scripts/resources/match_config.gd" id="11_ifoeb"]
+
+[sub_resource type="Resource" id="Resource_qxo0s"]
+script = ExtResource("1_ddvub")
+delay_before = 1.5
+primary_enemy = ExtResource("2_jiyy7")
+
+[sub_resource type="Resource" id="Resource_inrfv"]
+script = ExtResource("1_ddvub")
+delay_before = 1.5
+primary_enemy = ExtResource("2_jiyy7")
+primary_count = 4
+
+[sub_resource type="Resource" id="Resource_eit5g"]
+script = ExtResource("1_ddvub")
+delay_before = 1.5
+primary_enemy = ExtResource("2_jiyy7")
+primary_count = 5
+
+[sub_resource type="Resource" id="Resource_ukvfe"]
+script = ExtResource("1_ddvub")
+delay_before = 0.8
+primary_enemy = ExtResource("7_fdsxe")
+primary_count = 4
+
+[sub_resource type="Resource" id="Resource_d2eq7"]
+script = ExtResource("1_ddvub")
+delay_before = 2.0
+primary_enemy = ExtResource("7_fdsxe")
+primary_count = 5
+elite_enemy = ExtResource("8_6sms3")
+elite_count = 1
+
+[sub_resource type="Resource" id="Resource_4xlcw"]
+script = ExtResource("1_ddvub")
+delay_before = 2.0
+primary_enemy = ExtResource("7_fdsxe")
+primary_count = 4
+elite_enemy = ExtResource("8_6sms3")
+elite_count = 2
+
+[sub_resource type="Resource" id="Resource_xjlkt"]
+script = ExtResource("10_qhdo4")
+
+[resource]
+script = ExtResource("11_ifoeb")
+characters = Array[ExtResource("4_uuib0")]([ExtResource("5_m8gfc"), ExtResource("6_1iarw")])
+qte = SubResource("Resource_xjlkt")
+confront_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_ukvfe"), SubResource("Resource_d2eq7"), SubResource("Resource_4xlcw")])
+alliance_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_qxo0s"), SubResource("Resource_inrfv"), SubResource("Resource_eit5g")])
+knight_boss = ExtResource("9_pv5gv")
+character_boss_profile = ExtResource("3_dodi1")
