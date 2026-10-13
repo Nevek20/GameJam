@@ -86,7 +86,8 @@
 		"wave": "Onda {n} de {total}",
 		"cleared": "O exército recuou",
 		"time_up": "O tempo acabou",
-		"p2_subtitle": "entra em cena"
+		"p2_subtitle": "entra em cena",
+		"enemies_stronger": "[TODO] Os inimigos estão mais fortes!"
 	},
 	"ending": {
 		"next": "{key} ▶",

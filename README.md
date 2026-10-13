@@ -16,7 +16,7 @@ habilidades especiais, boss) fica para a equipe. Procure por `TODO` no código e
 - **Inimigo simples** (soldado): persegue, avisa antes de atacar (telegraph) e ataca.
 - **Moradores**: chegar perto abre o diálogo → QTE (barra que esvazia, clique na faixa) → resgatado ou perdido.
 - **Exército**: escolha enfrentar (ondas de soldados) ou se aliar (só marca a aliança por enquanto).
-- **Morte**: lápide e troca imediata para o Personagem 2, que começa do início do mapa.
+- **Morte**: lápide e troca imediata para o Personagem 2, que começa do início do mapa. Inimigos ficam mais fortes para ele (GDD 4.2; multiplicadores em `match_config.tres`, grupo "Morte do Personagem 1").
 - **Reputação**: heroísmo por personagem (sobe ao salvar e enfrentar), barra no HUD, aliança.
 - **Finais**: tela de conclusão com final do P1, do P2 e do reino (escolhidos por funções puras em `scripts/core/endings.gd`).
 - **Juice**: shake, hit stop, flash branco, knockback, squash, partículas, números de dano, rastro do dash, zoom e fade,
@@ -35,7 +35,8 @@ habilidades especiais, boss) fica para a equipe. Procure por `TODO` no código e
 - [ ] Inimigo: `resources/enemies/soldier.tres` → `skin`.
 - [ ] Casas e moradores: campos `house_texture` / `villager_texture` em cada casa da vila.
 - [ ] Imagens da introdução: `resources/config/intro_config.tres`. Finais: `resources/config/ending_images.tres`. Lápide: `ui/endings/tombstone_view.tscn`.
-- [ ] Cenário: hoje é um shader psicodélico + formas desenhadas por código (`scenes/world/level.tscn`).
+- [ ] Cenário (GDD 7): casas, muralhas, fogo, vegetação e bandeiras já têm placeholders na vila (`scenes/world/level.tscn`, nó `World/Invasion`). Muralha, fogo e bandeira: campo `texture` do nó `Visual` em `scenes/world/prop_wall.tscn`, `prop_fire.tscn` e `prop_banner.tscn`.
+- [ ] Estética dreamcore / Alice no país das maravilhas: hoje o fundo é um shader roxo provisório (`assets/shaders/psychedelic.gdshader`).
 
 **Áudio**
 - [ ] Arrastar os sons para as chaves de `resources/config/audio_library.tres` (já criadas, vazias = silêncio).

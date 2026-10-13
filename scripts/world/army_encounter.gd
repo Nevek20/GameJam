@@ -9,6 +9,10 @@ signal enemy_killed(enemy: Enemy)
 
 var config: MatchConfig
 var running: bool = false
+## Fortalecimento dos inimigos (o Game liga quando o Personagem 1 morre).
+var health_multiplier: float = 1.0
+var damage_multiplier: float = 1.0
+var visual_scale: float = 1.0
 
 var _spawn_points: Array[Vector2] = []
 var _wave_index: int = -1
@@ -86,7 +90,7 @@ func _flush_queue() -> void:
 			break
 		if not enemy.died.is_connected(_on_enemy_died):
 			enemy.died.connect(_on_enemy_died)
-		enemy.activate(stats, point)
+		enemy.activate(stats, point, null, health_multiplier, damage_multiplier, visual_scale)
 		_alive += 1
 
 

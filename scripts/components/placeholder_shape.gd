@@ -4,7 +4,7 @@ extends Node2D
 ## Forma geométrica desenhada por código enquanto não há sprites.
 ## Fica escondida automaticamente quando o EntityVisual recebe uma textura.
 
-enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM }
+enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER }
 enum Accent { NONE, CROWN, HAT, HELMET, HORNS, HOOD }
 
 @export var kind: Kind = Kind.CIRCLE:
@@ -84,6 +84,12 @@ func _draw() -> void:
 			_draw_mushroom(h)
 		Kind.TOMBSTONE:
 			_draw_tombstone(h)
+		Kind.WALL:
+			_draw_wall(h)
+		Kind.FLAME:
+			_draw_flame(h)
+		Kind.BANNER:
+			_draw_banner(h)
 	if eyes:
 		_draw_eyes(h)
 	_draw_accent(h)
@@ -181,6 +187,44 @@ func _draw_tombstone(h: Vector2) -> void:
 	draw_rect(Rect2(Vector2(-h.x * 1.3, h.y * 0.85), Vector2(h.x * 2.6, h.y * 0.15)), secondary_color)
 	draw_rect(Rect2(Vector2(-4, -h.y * 0.75), Vector2(8, h.y * 0.8)), secondary_color)
 	draw_rect(Rect2(Vector2(-h.x * 0.4, -h.y * 0.55), Vector2(h.x * 0.8, 8)), secondary_color)
+
+
+func _draw_wall(h: Vector2) -> void:
+	draw_rect(Rect2(-h, size), color)
+	# Ameias no topo.
+	var merlon := 18.0
+	var x := -h.x
+	while x < h.x - 1.0:
+		draw_rect(Rect2(Vector2(x, -h.y - 12.0), Vector2(minf(merlon, h.x - x), 12.0)), color)
+		x += merlon * 2.0
+	# Linhas dos tijolos.
+	var y := -h.y + 14.0
+	while y < h.y:
+		draw_line(Vector2(-h.x, y), Vector2(h.x, y), secondary_color, 1.5)
+		y += 14.0
+	_outline_poly(PackedVector2Array([-h, Vector2(h.x, -h.y), h, Vector2(-h.x, h.y)]))
+
+
+func _draw_flame(h: Vector2) -> void:
+	for layer: int in 3:
+		var k := 1.0 - layer * 0.3
+		var col: Color = [color, accent_color, Color(1, 1, 0.85)][layer]
+		var pts := PackedVector2Array([
+			Vector2(0, -h.y * k), Vector2(h.x * 0.8 * k, -h.y * 0.1 * k), Vector2(h.x * 0.6 * k, h.y * 0.6),
+			Vector2(0, h.y), Vector2(-h.x * 0.6 * k, h.y * 0.6), Vector2(-h.x * 0.8 * k, -h.y * 0.1 * k)])
+		draw_colored_polygon(pts, col)
+
+
+func _draw_banner(h: Vector2) -> void:
+	draw_line(Vector2(0, h.y), Vector2(0, -h.y), secondary_color, 4.0)
+	draw_circle(Vector2(0, -h.y), 4.0, accent_color)
+	var w := size.x
+	var fh := size.y * 0.55
+	var flag := PackedVector2Array([Vector2(2, -h.y + 4), Vector2(2 + w, -h.y + 4), Vector2(2 + w, -h.y + fh),
+		Vector2(2 + w * 0.5, -h.y + fh - 14), Vector2(2, -h.y + fh)])
+	draw_colored_polygon(flag, color)
+	_outline_poly(flag)
+	draw_circle(Vector2(2 + w * 0.5, -h.y + fh * 0.45), w * 0.18, accent_color)
 
 
 func _outline_circle_at(center: Vector2, radius: float) -> void:

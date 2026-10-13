@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" path="res://scenes/world/army_camp.tscn" id="5_camp"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_tree.tscn" id="6_tree"]
 [ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="7_shape"]
+[ext_resource type="PackedScene" path="res://scenes/world/prop_wall.tscn" id="8_wall"]
+[ext_resource type="PackedScene" path="res://scenes/world/prop_fire.tscn" id="9_fire"]
+[ext_resource type="PackedScene" path="res://scenes/world/prop_banner.tscn" id="10_banner"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ground"]
 shader = ExtResource("2_shader")
@@ -317,6 +320,122 @@ position = Vector2(2756, 905)
 kind = 7
 color = Color(0.95, 0.5, 0.8, 1)
 
+
+[node name="Invasion" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Wall1" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(380, 260)
+
+[node name="Wall2" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(540, 260)
+
+[node name="Wall3" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(860, 260)
+
+[node name="Wall4" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(1020, 260)
+
+[node name="Wall5" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(1180, 260)
+
+[node name="Wall6" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(1500, 260)
+
+[node name="Wall7" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(1660, 260)
+
+[node name="Wall8" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(1820, 260)
+
+[node name="Wall9" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(2150, 1100)
+rotation = 1.5707964
+
+[node name="Wall10" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(2150, 1500)
+rotation = 1.5707964
+
+[node name="Wall11" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(2150, 1660)
+rotation = 1.5707964
+
+[node name="Wall12" parent="World/Invasion" instance=ExtResource("8_wall")]
+position = Vector2(2150, 1820)
+rotation = 1.5707964
+
+[node name="Fire1" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(1290, 1606)
+
+[node name="Visual" parent="World/Invasion/Fire1" index="0"]
+position = Vector2(0, -50)
+
+[node name="Embers" parent="World/Invasion/Fire1" index="1"]
+position = Vector2(0, -80)
+
+[node name="Fire2" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(2040, 1426)
+
+[node name="Visual" parent="World/Invasion/Fire2" index="0"]
+position = Vector2(0, -50)
+
+[node name="Embers" parent="World/Invasion/Fire2" index="1"]
+position = Vector2(0, -80)
+
+[node name="Fire3" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(1450, 1026)
+
+[node name="Visual" parent="World/Invasion/Fire3" index="0"]
+position = Vector2(0, -50)
+
+[node name="Embers" parent="World/Invasion/Fire3" index="1"]
+position = Vector2(0, -80)
+
+[node name="Fire4" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(1700, 1300)
+
+[node name="Fire5" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(2400, 1520)
+
+[node name="Fire6" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(1150, 880)
+
+[node name="Fire7" parent="World/Invasion" instance=ExtResource("9_fire")]
+position = Vector2(520, 1000)
+
+[node name="ArmyBanner1" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(2440, 640)
+
+[node name="ArmyBanner2" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(2860, 640)
+
+[node name="ArmyBanner3" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(1900, 1250)
+
+[node name="ArmyBanner4" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(1350, 1360)
+
+[node name="KingdomBanner1" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(1000, 1100)
+
+[node name="Placeholder" parent="World/Invasion/KingdomBanner1/Visual" index="0"]
+color = Color(0.35, 0.55, 1, 1)
+accent_color = Color(1, 0.85, 0.35, 1)
+
+[node name="KingdomBanner2" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(600, 1200)
+
+[node name="Placeholder" parent="World/Invasion/KingdomBanner2/Visual" index="0"]
+color = Color(0.35, 0.55, 1, 1)
+accent_color = Color(1, 0.85, 0.35, 1)
+
+[node name="KingdomBanner3" parent="World/Invasion" instance=ExtResource("10_banner")]
+position = Vector2(1700, 700)
+
+[node name="Placeholder" parent="World/Invasion/KingdomBanner3/Visual" index="0"]
+color = Color(0.35, 0.55, 1, 1)
+accent_color = Color(1, 0.85, 0.35, 1)
+
 [node name="Actors" type="Node2D" parent="World"]
 y_sort_enabled = true
 
@@ -415,3 +534,15 @@ position = Vector2(3040, 1100)
 [editable path="World/Props/Tree25"]
 
 [editable path="World/Props/Tree26"]
+
+[editable path="World/Invasion/Fire1"]
+
+[editable path="World/Invasion/Fire2"]
+
+[editable path="World/Invasion/Fire3"]
+
+[editable path="World/Invasion/KingdomBanner1"]
+
+[editable path="World/Invasion/KingdomBanner2"]
+
+[editable path="World/Invasion/KingdomBanner3"]

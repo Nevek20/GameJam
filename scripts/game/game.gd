@@ -169,6 +169,11 @@ func _switch_to_second(first_died: bool) -> void:
 	player.set_input_enabled(false)
 	var first_id := GameState.p1_id()
 	if first_died:
+		# GDD 4.2: inimigos mais fortes para o personagem seguinte.
+		# TODO: aplicar os mesmos multiplicadores no boss quando ele existir.
+		encounter.health_multiplier = match_config.death_enemy_health_multiplier
+		encounter.damage_multiplier = match_config.death_enemy_damage_multiplier
+		encounter.visual_scale = match_config.death_enemy_scale
 		tombstone.show_for(first_id, ui_config.tombstone_duration)
 		await tombstone.closed
 	else:
@@ -180,7 +185,8 @@ func _switch_to_second(first_died: bool) -> void:
 	_place_player(1)
 	interactions.prepare_world_for(1)
 	await GameManager.fade_in()
-	hud.show_banner(Texts.character_name(GameState.p2_id()), Texts.ui("banner.p2_subtitle"))
+	var subtitle := Texts.ui("banner.enemies_stronger") if first_died else Texts.ui("banner.p2_subtitle")
+	hud.show_banner(Texts.character_name(GameState.p2_id()), subtitle)
 	phase = Phase.TUTORIAL
 	pause_menu.can_pause = true
 	tutorial.open("p2")

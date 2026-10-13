@@ -19,4 +19,11 @@ extends Resource
 @export var confront_waves: Array[WaveData] = []
 @export var max_active_enemies: int = 14
 
+@export_group("Morte do Personagem 1")
+## GDD 4.2: se o P1 morrer, os inimigos ficam mais fortes para o P2.
+@export var death_enemy_health_multiplier: float = 1.3
+@export var death_enemy_damage_multiplier: float = 1.25
+## Os inimigos fortalecidos ficam um pouco maiores (aviso visual).
+@export var death_enemy_scale: float = 1.12
+
 ## TODO (seção 4.5/8): parâmetros do boss (vida, fases, ataques, intervalos).

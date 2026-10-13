@@ -85,6 +85,15 @@ func _p1_dies(game: Game) -> void:
 	_press(Actions.CONFIRM)
 	await _p2_intro(game)
 	check(game.player.global_position.distance_to(game.level.marker("PlayerStart")) < 5.0, "P2 começa do início do mapa")
+	check(game.encounter.health_multiplier > 1.0, "inimigos mais fortes depois da morte do P1")
+	await _army_choice(game, 0)
+	await _wait(1.5)
+	var pool := Pools.get_pool(&"enemies")
+	var stronger := false
+	for node: Node in pool.get_active():
+		var e := node as Enemy
+		stronger = stronger or e.health.max_health > e.stats.max_health
+	check(stronger, "onda do P2 nasce fortalecida")
 	await _time_up(game)
 	await _conclusion(Endings.DEATH)
 

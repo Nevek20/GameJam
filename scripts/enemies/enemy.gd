@@ -35,7 +35,9 @@ func _ready() -> void:
 	guard.hide_guard()
 
 
-func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = null) -> void:
+## Os multiplicadores fortalecem o inimigo (ex.: depois que o Personagem 1 morre).
+func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = null,
+		health_multiplier: float = 1.0, damage_multiplier: float = 1.0, visual_scale: float = 1.0) -> void:
 	stats = enemy_stats
 	skin = enemy_skin if enemy_skin else enemy_stats.skin
 	if not is_in_group(Team.GROUP_FOES):
@@ -48,13 +50,15 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	caster.show_telegraph = true
 	caster.interrupt()
 	caster.reset_cooldowns()
+	caster.damage_multiplier = damage_multiplier
+	visual.base_scale = Vector2.ONE * visual_scale
 	movement.configure(stats.move_speed, stats.acceleration, stats.friction)
 	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
 	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
 	if skin:
 		visual.apply_look(skin.texture, skin.sprite_frames, skin.body_color, skin.accent_color,
 			skin.placeholder_accent, stats.body_radius, stats.sprite_scale)
-	health.setup(stats.max_health)
+	health.setup(stats.max_health * health_multiplier)
 	global_position = pos
 	velocity = Vector2.ZERO
 	dead = false
