@@ -1,26 +1,23 @@
 {
 	"_comment": "Créditos (BBCode, uma linha por item). Edite à vontade.",
 	"lines": [
-		"[center][font_size=34][color=#ffd36b]Vila Psicodélica[/color][/font_size]",
+		"[center][font_size=34][color=#ffd36b][TODO] Nome do Jogo[/color][/font_size]",
 		"",
 		"[b]Game Design[/b]",
-		"Equipe da Jam",
+		"[TODO]",
 		"",
-		"[b]História e Roteiro[/b]",
-		"Equipe de narrativa",
+		"[b]História[/b]",
+		"[TODO]",
 		"",
 		"[b]Programação[/b]",
-		"Equipe de programação",
+		"[TODO]",
 		"",
 		"[b]Arte[/b]",
-		"Equipe de arte",
+		"[TODO]",
 		"",
 		"[b]Áudio[/b]",
-		"Equipe de áudio",
+		"[TODO]",
 		"",
-		"[b]Feito com[/b]",
-		"Godot Engine",
-		"",
-		"Obrigado por jogar![/center]"
+		"Feito com Godot Engine[/center]"
 	]
 }

@@ -1,5 +1,5 @@
 extends EnemyState
-## Morte: partículas, encolhe e volta ao pool (o boss fica caído).
+## Morte: partículas, encolhe e volta ao pool.
 
 var _tween: Tween
 

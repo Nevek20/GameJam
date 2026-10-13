@@ -12,10 +12,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_idle.gd" id="11_idle"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_chase.gd" id="12_chase"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_attack.gd" id="13_attack"]
-[ext_resource type="Script" path="res://scripts/enemies/states/enemy_dash.gd" id="14_dash"]
-[ext_resource type="Script" path="res://scripts/enemies/states/enemy_block.gd" id="15_block"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_hurt.gd" id="16_hurt"]
-[ext_resource type="Script" path="res://scripts/enemies/states/enemy_roar.gd" id="17_roar"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_dead.gd" id="18_dead"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
@@ -96,17 +93,8 @@ script = ExtResource("12_chase")
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("13_attack")
 
-[node name="Dash" type="Node" parent="StateMachine"]
-script = ExtResource("14_dash")
-
-[node name="Block" type="Node" parent="StateMachine"]
-script = ExtResource("15_block")
-
 [node name="Hurt" type="Node" parent="StateMachine"]
 script = ExtResource("16_hurt")
-
-[node name="Roar" type="Node" parent="StateMachine"]
-script = ExtResource("17_roar")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("18_dead")

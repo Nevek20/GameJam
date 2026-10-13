@@ -15,12 +15,9 @@
 [ext_resource type="PackedScene" path="res://scenes/effects/burst_particles.tscn" id="13_particles"]
 [ext_resource type="PackedScene" path="res://scenes/effects/damage_number.tscn" id="14_number"]
 [ext_resource type="PackedScene" path="res://scenes/effects/afterimage.tscn" id="15_after"]
-[ext_resource type="PackedScene" path="res://scenes/effects/lightning_line.tscn" id="16_lightning"]
 [ext_resource type="Script" path="res://scripts/effects/camera_rig.gd" id="17_camera"]
 [ext_resource type="Script" path="res://scripts/game/interaction_director.gd" id="18_interact"]
 [ext_resource type="Script" path="res://scripts/world/army_encounter.gd" id="19_encounter"]
-[ext_resource type="Script" path="res://scripts/game/boss_director.gd" id="20_boss_dir"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/boss.tscn" id="21_boss"]
 [ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="22_hud"]
 [ext_resource type="PackedScene" path="res://ui/dialog/dialog_box.tscn" id="23_dialog"]
 [ext_resource type="PackedScene" path="res://ui/qte/qte_panel.tscn" id="24_qte"]
@@ -40,14 +37,13 @@ script = ExtResource("5_juice")
 config = ExtResource("6_juice_cfg")
 camera = NodePath("../Camera")
 
-[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies")]
+[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "enemies")]
 script = ExtResource("7_pools")
 hitboxes = NodePath("../Effects/Hitboxes")
 projectiles = NodePath("../Effects/Projectiles")
 particles = NodePath("../Effects/Particles")
 damage_numbers = NodePath("../DamageNumbers")
 afterimages = NodePath("../Afterimages")
-lightning = NodePath("../Effects/Lightning")
 enemies = NodePath("../Level/World/Actors/Enemies")
 
 [node name="Level" parent="." instance=ExtResource("8_level")]
@@ -77,11 +73,6 @@ script = ExtResource("9_pool")
 scene = ExtResource("12_projectile")
 initial_size = 40
 
-[node name="Lightning" type="Node2D" parent="Effects"]
-script = ExtResource("9_pool")
-scene = ExtResource("16_lightning")
-initial_size = 6
-
 [node name="Particles" type="Node2D" parent="Effects"]
 script = ExtResource("9_pool")
 scene = ExtResource("13_particles")
@@ -104,10 +95,6 @@ script = ExtResource("19_encounter")
 
 [node name="WaveTimer" type="Timer" parent="ArmyEncounter"]
 one_shot = true
-
-[node name="BossDirector" type="Node" parent="."]
-script = ExtResource("20_boss_dir")
-boss_scene = ExtResource("21_boss")
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 10

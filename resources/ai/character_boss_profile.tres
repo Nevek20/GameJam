@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="BossCharacterProfile" format=3]
-
-[ext_resource type="Script" path="res://scripts/resources/boss_character_profile.gd" id="1_mu5hr"]
-
-[resource]
-script = ExtResource("1_mu5hr")
-health_multiplier = 6.5

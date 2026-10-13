@@ -1,6 +1,7 @@
 class_name Enemy
 extends CharacterBody2D
-## Inimigo genérico (soldado, elite, cavaleiro do reino). Tudo vem do EnemyStats.
+## Inimigo genérico. Tudo vem do EnemyStats (hoje: soldado do exército).
+## TODO: elite (dash, defesa, variação de ataque), cavaleiro do reino e boss.
 ## Vive em um ObjectPool: activate() reinicia, a morte devolve ao pool.
 
 signal died(enemy: Enemy)
@@ -12,8 +13,6 @@ var team: Team.Faction = Team.Faction.FOES
 var target: Node2D
 var dead: bool = false
 var attack_cooldown_left: float = 0.0
-var dash_cooldown_left: float = 0.0
-var block_cooldown_left: float = 0.0
 
 @onready var visual: EntityVisual = $Visual
 @onready var guard: GuardVisual = $Visual/Guard
@@ -49,7 +48,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	caster.show_telegraph = true
 	caster.interrupt()
 	caster.reset_cooldowns()
-	movement.configure(stats.move_speed * current_speed_multiplier(), stats.acceleration, stats.friction)
+	movement.configure(stats.move_speed, stats.acceleration, stats.friction)
 	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
 	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
 	if skin:
@@ -61,8 +60,6 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	dead = false
 	target = null
 	attack_cooldown_left = randf_range(0.4, maxf(stats.attack_interval, 0.5))
-	dash_cooldown_left = stats.dash_cooldown * 0.5
-	block_cooldown_left = 0.0
 	guard.hide_guard()
 	visual.rotation = 0.0
 	_play_spawn()
@@ -93,47 +90,19 @@ func has_valid_target() -> bool:
 	return not target.has_method(&"is_targetable") or target.call(&"is_targetable")
 
 
-# --- Pontos que o Boss sobrescreve (fases) ---
-
-func get_attacks() -> Array[Ability]:
-	return stats.attacks
-
-
-func get_attack_weights() -> Array[float]:
-	return stats.attack_weights
-
-
-func current_attack_interval() -> float:
-	return stats.attack_interval
-
-
-func current_speed_multiplier() -> float:
-	return 1.0
-
-
-## Sorteia um ataque (por peso) entre os que alcançam o alvo.
+## Primeiro ataque da lista que alcança o alvo e está pronto.
+## TODO: sorteio com pesos e variação de ataque para a elite.
 func choose_attack(distance: float) -> Ability:
-	var attacks := get_attacks()
-	var weights := get_attack_weights()
-	var total := 0.0
-	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range and caster.is_ready(attacks[i]):
-			total += weights[i] if i < weights.size() else 1.0
-	if total <= 0.0:
-		return null
-	var roll := randf() * total
-	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range and caster.is_ready(attacks[i]):
-			roll -= weights[i] if i < weights.size() else 1.0
-			if roll <= 0.0:
-				return attacks[i]
+	for ability: Ability in stats.attacks:
+		if ability and distance <= ability.ai_range and caster.is_ready(ability):
+			return ability
 	return null
 
 
 ## Maior alcance entre os ataques (para saber quando parar de andar).
 func max_attack_range() -> float:
 	var best := 0.0
-	for ability: Ability in get_attacks():
+	for ability: Ability in stats.attacks:
 		if ability:
 			best = maxf(best, ability.ai_range)
 	return best
@@ -164,9 +133,7 @@ func _play_spawn() -> void:
 func _on_hit_received(hit: HitData) -> void:
 	if dead:
 		return
-	var blocked := state_machine.is_in(&"Block")
-	var multiplier := stats.block_damage_multiplier if blocked else 1.0
-	var applied := health.take_damage(hit.damage * multiplier)
+	var applied := health.take_damage(hit.damage)
 	var cfg := Juice.cfg()
 	visual.flash()
 	if cfg:
@@ -177,16 +144,9 @@ func _on_hit_received(hit: HitData) -> void:
 		Juice.burst(cfg.particles_hit, global_position, hit.color, hit.direction)
 		if cfg.knockback_enabled:
 			var knock := hit.knockback * cfg.knockback_multiplier * (1.0 - stats.knockback_resistance)
-			movement.apply_knockback(hit.direction * knock * (0.3 if blocked else 1.0))
-	AudioManager.play_sfx(&"block" if blocked else hit.sfx_hit)
+			movement.apply_knockback(hit.direction * knock)
+	AudioManager.play_sfx(hit.sfx_hit)
 	if health.is_dead():
-		return
-	if blocked:
-		guard.parry_flash()
-		return
-	if stats.armor_while_attacking and caster.is_casting():
-		return
-	if state_machine.is_in(&"Roar"):
 		return
 	state_machine.transition_to(&"Hurt", {"duration": stats.hurt_stun})
 

@@ -1,5 +1,5 @@
 extends Node
-## Testes headless: regras puras (boss, finais, reputação) e carga de todas as cenas/resources.
+## Testes headless: regras puras (finais, reputação), textos e carga de todas as cenas/resources.
 ## Rodar: godot --headless --path . res://tests/test_runner.tscn
 
 var _failures: int = 0
@@ -7,7 +7,6 @@ var _checks: int = 0
 
 
 func _ready() -> void:
-	_test_boss_selector()
 	_test_endings()
 	_test_reputation()
 	_test_texts()
@@ -21,28 +20,6 @@ func check(condition: bool, label: String) -> void:
 	if not condition:
 		_failures += 1
 		push_error("FALHOU: " + label)
-
-
-func _test_boss_selector() -> void:
-	var K := BossSelector.Kind
-	# a) ninguém se aliou
-	var s := BossSelector.select(&"p1", &"p2", true, false, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.player_id == &"p2" and s.helper_id == &"p1", "a) P1 vivo ajuda")
-	s = BossSelector.select(&"p1", &"p2", false, false, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.helper_id == &"", "a) P1 morto: P2 sozinho")
-	# b) só P1 se aliou
-	s = BossSelector.select(&"p1", &"p2", true, true, false)
-	check(s.kind == K.CHARACTER and s.boss_character_id == &"p1" and s.player_id == &"p2", "b) P2 x P1 aliado")
-	s = BossSelector.select(&"p1", &"p2", false, true, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.helper_id == &"", "b) P1 aliado e morto não aparece")
-	# b) só P2 se aliou
-	s = BossSelector.select(&"p1", &"p2", true, false, true)
-	check(s.kind == K.CHARACTER and s.boss_character_id == &"p2" and s.player_id == &"p1" and s.control_switched, "b) controle troca para P1")
-	s = BossSelector.select(&"p1", &"p2", false, false, true)
-	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.player_id == &"p2" and s.player_fights_for_army, "b) P1 morto: P2 aliado x cavaleiro do reino")
-	# c) ambos aliados
-	s = BossSelector.select(&"p1", &"p2", true, true, true)
-	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.double_alliance and s.player_id == &"p2", "c) aliança dupla")
 
 
 func _test_endings() -> void:

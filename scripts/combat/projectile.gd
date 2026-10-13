@@ -25,7 +25,6 @@ func launch(projectile_ability: ProjectileAbility, by: AbilityCaster, from: Vect
 	ability = projectile_ability
 	caster = by
 	set_team(by.team, Layers.PROJECTILE, Layers.WORLD)
-	rehit_interval = 0.0
 	reset_hits()
 	active = true
 	_impacting = false
@@ -51,7 +50,6 @@ func on_pool_release() -> void:
 func _physics_process(delta: float) -> void:
 	if ability == null or _impacting:
 		return
-	super(delta)
 	global_position += _velocity * delta
 	_traveled += ability.speed * delta
 	if _traveled >= ability.max_range:
@@ -74,7 +72,7 @@ func _on_body_entered(_body: Node2D) -> void:
 		_impact.call_deferred()
 
 
-## Pouso: estouro de partículas, dano em área opcional e squash antes de sumir.
+## Pouso: estouro de partículas e squash antes de sumir.
 func _impact() -> void:
 	if _impacting or ability == null:
 		return
@@ -83,28 +81,13 @@ func _impact() -> void:
 	var c := Juice.cfg()
 	if c:
 		Juice.burst(c.particles_hit, global_position, ability.color, -_velocity.normalized())
-	if ability.impact_radius > 0.0:
-		_area_damage()
-		Juice.shake(ability.juice_level)
 	var squash := c.squash_impact if c and c.squash_enabled else Vector2.ONE
 	if _impact_tween:
 		_impact_tween.kill()
 	_impact_tween = create_tween().set_parallel(true)
-	_impact_tween.tween_property(self, "scale", squash * (1.0 + ability.impact_radius / 40.0), 0.09)
+	_impact_tween.tween_property(self, "scale", squash, 0.09)
 	_impact_tween.tween_property(self, "modulate:a", 0.0, 0.09)
 	_impact_tween.chain().tween_callback(_release)
-
-
-func _area_damage() -> void:
-	var group := Team.hurtbox_group(Team.opposite(team))
-	for node: Node in get_tree().get_nodes_in_group(group):
-		var hurtbox := node as HurtboxComponent
-		if hurtbox == null or not hurtbox.is_active() or _next_hit_time.has(hurtbox):
-			continue
-		if hurtbox.global_position.distance_to(global_position) <= ability.impact_radius:
-			var hit := ability.make_hit(caster, global_position.direction_to(hurtbox.global_position), 0.6)
-			hit.hit_position = hurtbox.global_position
-			hurtbox.receive_hit(hit)
 
 
 func _draw() -> void:

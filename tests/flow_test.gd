@@ -1,6 +1,5 @@
 extends Node
-## Teste de fluxo completo (headless): simula partidas inteiras com as combinações
-## pedidas: P1 morre, P1 sobrevive, aliança de nenhum / de um / de ambos e P2 morre.
+## Teste de fluxo do esqueleto (headless): P1 sobrevive, P1 morre, P2 morre, aliança.
 ## Rodar: godot --headless --path . res://tests/flow_test.tscn
 
 var _failures: int = 0
@@ -20,13 +19,9 @@ func _ready() -> void:
 
 
 func _run_all() -> void:
-	await _scenario("nenhum aliado, P1 vivo ajuda", _none_allied)
+	await _scenario("P1 resgata, enfrenta e sobrevive", _p1_survives)
 	await _scenario("P1 morre", _p1_dies)
-	await _scenario("só P1 aliado", _p1_allied)
-	await _scenario("só P2 aliado (controle troca)", _p2_allied)
-	await _scenario("ambos aliados", _both_allied)
-	await _scenario("P2 morre na fase", _p2_dies)
-	await _scenario("P2 morre no boss", _p2_dies_boss)
+	await _scenario("aliança e P2 morre", _p2_dies)
 	for line: String in _log:
 		print(line)
 	print("FLUXO: %d falhas" % _failures)
@@ -37,9 +32,7 @@ func check(condition: bool, label: String) -> void:
 	if not condition:
 		_failures += 1
 		push_error("FALHOU: " + label)
-		_log.append("  x " + label)
-	else:
-		_log.append("  ok " + label)
+	_log.append(("  ok " if condition else "  x ") + label)
 
 
 func _scenario(title: String, body: Callable) -> void:
@@ -49,27 +42,40 @@ func _scenario(title: String, body: Callable) -> void:
 	if game == null:
 		check(false, "cena do jogo carregou")
 		return
-	await _skip_intro(game)
+	while game.intro.is_playing:
+		_press(Actions.CONFIRM)
+		await _wait(0.1)
+	await _wait(0.5)
+	check(game.tutorial.is_open, "tutorial aberto")
+	_press(Actions.CONFIRM)
+	await _wait(0.2)
+	check(game.phase == Game.Phase.PLAYING, "P1 jogando")
 	await body.call(game)
 
 
-# --- Cenários ---
-
-func _none_allied(game: Game) -> void:
-	await _rescue_first_house(game)
+func _p1_survives(game: Game) -> void:
+	var house: VillagerHouse = game.level.get_houses()[0]
+	game.player.global_position = house.global_position + Vector2(0, 90)
+	await _choose(game, 0)
+	for i in 100:
+		if game.qte._running and game.qte._delay_left <= 0.0:
+			break
+		await _wait(0.02)
+	game.qte._bar.value = game.qte._bar.window_start + game.qte._bar.window_size * 0.5
+	_press(Actions.ATTACK)
+	await _wait(0.8)
+	check(house.state == GameState.HouseState.RESCUED, "morador resgatado pelo QTE")
+	_press(Actions.CONFIRM)
+	await _wait(0.1)
+	_press(Actions.CONFIRM)
+	await _wait(0.2)
 	await _army_choice(game, 0)
-	await _bot_fight(game, 6.0)
+	await _wait(1.5)
+	check(game.encounter.running, "ondas do exército começaram")
 	await _time_up(game)
 	await _p2_intro(game)
-	await _army_choice(game, 0)
 	await _time_up(game)
-	await _wait_boss(game)
-	var data := game.boss_director.setup_data
-	check(data.kind == BossSelector.Kind.KNIGHT_ARMY_SKIN, "boss = cavaleiro com skin do exército")
-	check(data.helper_id == GameState.p1_id(), "P1 vivo ajuda na luta")
-	await _bot_fight(game, 4.0)
-	await _win_boss(game)
-	await _check_conclusion(Endings.KINGDOM_POSITIVE, [&"", &""])
+	await _conclusion(&"")
 
 
 func _p1_dies(game: Game) -> void:
@@ -78,84 +84,21 @@ func _p1_dies(game: Game) -> void:
 	check(game.tombstone.is_open, "lápide aparece ao morrer")
 	_press(Actions.CONFIRM)
 	await _p2_intro(game)
-	check(game.player.stats.id == GameState.p2_id(), "P2 assume")
 	check(game.player.global_position.distance_to(game.level.marker("PlayerStart")) < 5.0, "P2 começa do início do mapa")
-	await _army_choice(game, 0)
 	await _time_up(game)
-	await _wait_boss(game)
-	check(game.boss_director.setup_data.helper_id == &"", "P1 morto não ajuda")
-	await _win_boss(game)
-	await _check_conclusion(Endings.KINGDOM_POSITIVE, [Endings.DEATH, &""])
-
-
-func _p1_allied(game: Game) -> void:
-	await _army_choice(game, 1)
-	check(ReputationState.is_allied(GameState.p1_id()), "P1 aliado")
-	await _loot_any_house(game)
-	await _bot_fight(game, 5.0)
-	await _time_up(game)
-	await _p2_intro(game)
-	await _army_choice(game, 0)
-	await _time_up(game)
-	await _wait_boss(game)
-	var data := game.boss_director.setup_data
-	check(data.kind == BossSelector.Kind.CHARACTER and data.boss_character_id == GameState.p1_id(), "P1 vira o boss")
-	await _bot_fight(game, 4.0)
-	await _win_boss(game)
-	await _check_conclusion(Endings.KINGDOM_POSITIVE, [Endings.NEGATIVE_IMPRISONED, &""])
-
-
-func _p2_allied(game: Game) -> void:
-	await _army_choice(game, 0)
-	await _time_up(game)
-	await _p2_intro(game)
-	await _army_choice(game, 1)
-	await _bot_fight(game, 4.0)
-	await _time_up(game)
-	await _wait_boss(game)
-	var data := game.boss_director.setup_data
-	check(data.control_switched and game.player.stats.id == GameState.p1_id(), "controle troca para P1")
-	check(data.boss_character_id == GameState.p2_id(), "P2 vira o boss")
-	await _bot_fight(game, 4.0)
-	await _win_boss(game)
-	await _check_conclusion(Endings.KINGDOM_POSITIVE, [&"", Endings.NEGATIVE_IMPRISONED])
-
-
-func _both_allied(game: Game) -> void:
-	await _army_choice(game, 1)
-	await _time_up(game)
-	await _p2_intro(game)
-	await _army_choice(game, 1)
-	await _time_up(game)
-	await _wait_boss(game)
-	var data := game.boss_director.setup_data
-	check(data.kind == BossSelector.Kind.KNIGHT_KINGDOM_SKIN and data.double_alliance, "aliança dupla x cavaleiro do reino")
-	await _win_boss(game)
-	await _check_conclusion(Endings.KINGDOM_DOUBLE_ALLIANCE, [Endings.NEGATIVE_VICTORIOUS, Endings.NEGATIVE_VICTORIOUS])
+	await _conclusion(Endings.DEATH)
 
 
 func _p2_dies(game: Game) -> void:
+	await _army_choice(game, 1)
+	check(ReputationState.is_allied(GameState.p1_id()), "P1 aliado")
 	await _time_up(game)
 	await _p2_intro(game)
 	game.player.health.take_damage(99999.0)
 	await _wait(0.5)
-	check(game.tombstone.is_open, "lápide do P2")
 	_press(Actions.CONFIRM)
-	await _check_conclusion(Endings.KINGDOM_NEGATIVE, [&"", Endings.DEATH])
+	await _conclusion(Endings.NEGATIVE_VICTORIOUS)
 
-
-func _p2_dies_boss(game: Game) -> void:
-	await _time_up(game)
-	await _p2_intro(game)
-	await _time_up(game)
-	await _wait_boss(game)
-	game.player.health.take_damage(99999.0)
-	await _wait(0.5)
-	_press(Actions.CONFIRM)
-	await _check_conclusion(Endings.KINGDOM_NEGATIVE, [&"", Endings.DEATH])
-
-
-# --- Passos ---
 
 func _wait_game() -> Game:
 	for i in 600:
@@ -164,17 +107,6 @@ func _wait_game() -> Game:
 		if scene and scene.intro.is_playing and not GameManager.is_changing_scene():
 			return scene
 	return null
-
-
-func _skip_intro(game: Game) -> void:
-	while game.intro.is_playing:
-		_press(Actions.CONFIRM)
-		await _wait(0.1)
-	await _wait(0.5)
-	check(game.tutorial.is_open, "tutorial aberto (cronômetro parado)")
-	_press(Actions.CONFIRM)
-	await _wait(0.2)
-	check(game.phase == Game.Phase.PLAYING, "P1 jogando")
 
 
 func _p2_intro(game: Game) -> void:
@@ -200,61 +132,10 @@ func _choose(game: Game, index: int) -> void:
 			break
 		await _wait(0.02)
 	check(game.dialog.is_open, "diálogo abriu")
-	_press(Actions.CONFIRM) # completa o texto
+	_press(Actions.CONFIRM)
 	await _wait(0.1)
 	game.dialog._on_choice_pressed(index)
 	await _wait(0.1)
-
-
-func _rescue_first_house(game: Game) -> void:
-	var house: VillagerHouse = game.level.get_houses()[0]
-	var before := ReputationState.get_heroism(GameState.current_id())
-	game.player.global_position = house.global_position + Vector2(0, 90)
-	await _choose(game, 0)
-	for i in 100:
-		if game.qte._running and game.qte._delay_left <= 0.0:
-			break
-		await _wait(0.02)
-	game.qte._bar.value = game.qte._bar.window_start + game.qte._bar.window_size * 0.5
-	_press(Actions.ATTACK)
-	await _wait(0.8)
-	check(house.state == GameState.HouseState.RESCUED, "morador resgatado pelo QTE")
-	await _choose(game, 1) # saquear
-	check(house.looted, "casa saqueada")
-	var after := ReputationState.get_heroism(GameState.current_id())
-	check(after == before + ReputationState.config.rescue_gain - ReputationState.config.loot_loss, "heroísmo: resgate e saque")
-	game.player.global_position = game.level.marker("PlayerStart")
-	await _wait(0.2)
-
-
-func _loot_any_house(game: Game) -> void:
-	var house: VillagerHouse = game.level.get_houses()[1]
-	game.player.global_position = house.global_position + Vector2(0, 90)
-	await _choose(game, 0)
-	check(house.looted, "aliado saqueia livremente")
-
-
-## Troca o controle por IA por alguns segundos para exercitar o combate de verdade.
-func _bot_fight(game: Game, seconds: float) -> void:
-	var human := game.player.controller
-	var bot := AIController.new()
-	bot.profile = game.player.stats.ai_profile
-	var p := game.player
-	p.controller = bot
-	p.add_child(bot)
-	p.move_child(bot, p.state_machine.get_index())
-	bot.setup(p)
-	var start_hp := p.health.current
-	var t := 0.0
-	while t < seconds and is_instance_valid(p) and not p.dead:
-		# Mantém o bot vivo: o teste é de estabilidade, não de balanceamento.
-		if p.health.current < start_hp * 0.5:
-			p.health.heal(start_hp)
-		await _wait(0.1)
-		t += 0.1
-	if is_instance_valid(p):
-		p.controller = human
-		bot.queue_free()
 
 
 func _time_up(game: Game) -> void:
@@ -266,33 +147,15 @@ func _time_up(game: Game) -> void:
 		await _wait(0.05)
 
 
-func _wait_boss(game: Game) -> void:
-	for i in 400:
-		if game.phase == Game.Phase.BOSS and game.player.controller.enabled:
-			break
-		await _wait(0.05)
-	check(game.phase == Game.Phase.BOSS, "luta do boss começou")
-
-
-func _win_boss(game: Game) -> void:
-	game.boss_director.boss_health().take_damage(999999.0)
-	await _wait(0.2)
-
-
-func _check_conclusion(kingdom: StringName, endings: Array) -> void:
+func _conclusion(p1_ending: StringName) -> void:
 	for i in 600:
 		if get_tree().current_scene and get_tree().current_scene.scene_file_path == GameManager.SCENE_CONCLUSION \
 				and not GameManager.is_changing_scene():
 			break
 		await _wait(0.05)
 	check(get_tree().current_scene.scene_file_path == GameManager.SCENE_CONCLUSION, "tela de conclusão")
-	check(GameState.kingdom_ending() == kingdom, "final do reino = %s (veio %s)" % [kingdom, GameState.kingdom_ending()])
-	var ids := [GameState.p1_id(), GameState.p2_id()]
-	for i in 2:
-		var got := GameState.character_ending(ids[i])
-		_log.append("  final %s: %s" % [ids[i], got])
-		if endings[i] != &"":
-			check(got == endings[i], "final %s = %s (veio %s)" % [ids[i], endings[i], got])
+	if p1_ending != &"":
+		check(GameState.character_ending(GameState.p1_id()) == p1_ending, "final do P1 = %s" % p1_ending)
 	for i in 4:
 		_press(Actions.CONFIRM)
 		await _wait(0.6)
