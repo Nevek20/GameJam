@@ -74,7 +74,7 @@ func _apply_visual() -> void:
 	var tint := Color.WHITE
 	if looted:
 		tint = Color(0.45, 0.4, 0.5)
-	if state == GameState.HouseState.LOST:
+	elif state == GameState.HouseState.LOST:
 		tint = Color(0.6, 0.55, 0.7)
 	$Visual.modulate = tint
 

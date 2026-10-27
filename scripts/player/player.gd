@@ -2,8 +2,7 @@ class_name Player
 extends CharacterBody2D
 ## Classe base dos dois personagens: vida, movimento, dash, parry e cooldowns.
 ## O que muda entre Princesa e Mago vem do CharacterStats (habilidades são Resources).
-## TODO (seção 4.5): a mesma cena pode servir para o ajudante e para o personagem que vira
-## boss, trocando o controller por uma IA (subclasse de CharacterController) e o time para FOES.
+## A mesma cena serve para o jogador, para o ajudante (IA) e para o personagem que vira boss.
 
 signal died(player: Player)
 signal health_changed(current: float, maximum: float)
@@ -17,6 +16,7 @@ const SLOT_ACTIONS: Array[StringName] = [Actions.ATTACK, Actions.SKILL_Q, Action
 var stats: CharacterStats
 var team: Team.Faction = Team.Faction.HEROES
 var controller: CharacterController
+var boss_profile: BossCharacterProfile
 var aim_dir: Vector2 = Vector2.RIGHT
 var dead: bool = false
 var dash_cooldown_left: float = 0.0
@@ -44,9 +44,11 @@ func _ready() -> void:
 
 
 ## Configura o personagem para um papel (jogador, ajudante ou boss).
-func setup(character: CharacterStats, side: Team.Faction, new_controller: CharacterController) -> void:
+func setup(character: CharacterStats, side: Team.Faction, new_controller: CharacterController,
+		profile: BossCharacterProfile = null) -> void:
 	stats = character
 	team = side
+	boss_profile = profile
 	for group: StringName in [Team.GROUP_HEROES, Team.GROUP_FOES]:
 		if is_in_group(group):
 			remove_from_group(group)
@@ -56,7 +58,11 @@ func setup(character: CharacterStats, side: Team.Faction, new_controller: Charac
 	hurtbox.set_team(side)
 	caster.setup(self, side)
 	caster.show_telegraph = side == Team.Faction.FOES
-	movement.configure(stats.move_speed, stats.acceleration, stats.friction)
+	caster.damage_multiplier = profile.damage_multiplier if profile else 1.0
+	caster.windup_multiplier = profile.windup_multiplier if profile else 1.0
+	caster.cooldown_multiplier = profile.cooldown_multiplier if profile else 1.0
+	var speed_mult := profile.speed_multiplier if profile else 1.0
+	movement.configure(stats.move_speed * speed_mult, stats.acceleration, stats.friction)
 	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
 	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
 	visual.apply_look(stats.texture, stats.sprite_frames, stats.body_color, stats.accent_color,
@@ -75,7 +81,8 @@ func spawn_at(pos: Vector2) -> void:
 	dash_cooldown_left = 0.0
 	parry_cooldown_left = 0.0
 	invulnerable_left = 0.0
-	health.setup(stats.max_health)
+	var hp_mult := boss_profile.health_multiplier if boss_profile else 1.0
+	health.setup(stats.max_health * hp_mult)
 	hurtbox.enabled = true
 	caster.interrupt()
 	caster.reset_cooldowns()
@@ -163,8 +170,22 @@ func _physics_process(delta: float) -> void:
 	aim_dir = controller.get_aim_direction()
 	visual.face(aim_dir)
 	aim_indicator.rotation = aim_dir.angle()
-	# A mira de um ataque fica travada enquanto ele acontece.
+	_update_cast_aim(delta)
+
+
+# A mira de um ataque fica travada ao lançar; só o feixe acompanha a mira.
+func _update_cast_aim(delta: float) -> void:
 	if not caster.is_casting():
+		caster.set_aim(aim_dir)
+		return
+	var shape := caster.current as ShapeAbility
+	if shape == null or not shape.follow_aim:
+		return
+	if boss_profile:
+		var step := deg_to_rad(boss_profile.aim_turn_speed) * delta
+		var angle := rotate_toward(caster.aim_dir.angle(), aim_dir.angle(), step)
+		caster.set_aim(Vector2.from_angle(angle))
+	else:
 		caster.set_aim(aim_dir)
 
 
@@ -219,7 +240,7 @@ func _apply_damage(hit: HitData, multiplier: float, blocked: bool) -> void:
 	if blocked:
 		return
 	invulnerable_left = stats.hurt_invulnerability if is_human() else 0.0
-	if not caster.has_super_armor():
+	if not caster.has_super_armor() and not boss_profile:
 		state_machine.transition_to(&"Hurt", {"duration": stats.hurt_stun})
 
 
@@ -235,3 +256,11 @@ func _on_died() -> void:
 	state_machine.transition_to(&"Dead")
 	died.emit(self)
 
+
+# Ponto de interesse (só quando é o boss).
+func is_poi_active() -> bool:
+	return boss_profile != null and not dead and visible
+
+
+func get_poi_color() -> Color:
+	return Color(1, 0.2, 0.3)

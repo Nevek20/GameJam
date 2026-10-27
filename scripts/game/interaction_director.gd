@@ -1,8 +1,6 @@
 class_name InteractionDirector
 extends Node
-## Diálogos de moradores e do exército e QTE de resgate.
-## TODO (seção 4.3): depois do resgate, perguntar se quer saquear a casa
-## (ReputationState.register_loot) e, se aliado, deixar saquear qualquer casa.
+## Diálogos de moradores e do exército, QTE de resgate e saque.
 ## Morte ou troca de personagem chamam cancel(): toda espera pendente é invalidada
 ## por um token, então nada continua de um estado antigo.
 
@@ -11,6 +9,7 @@ signal busy_changed(busy: bool)
 
 const CHOICE_HELP := &"help"
 const CHOICE_LEAVE := &"leave"
+const CHOICE_LOOT := &"loot"
 const CHOICE_CONFRONT := &"confront"
 const CHOICE_ALLY := &"ally"
 
@@ -53,7 +52,6 @@ func prepare_world_for(index: int) -> void:
 	for house: VillagerHouse in _houses:
 		house.load_state()
 	var p1 := GameState.p1_id()
-	# TODO (seção 4.5): o estado do mundo do P2 depende das escolhas do P1.
 	var show_ally := index == 1 and ReputationState.is_allied(p1) and GameState.is_alive(p1)
 	_camp.show_ally_figure(_stats_for(p1) if show_ally else null)
 	_camp.set_decor_visible(true)
@@ -86,21 +84,34 @@ func disable_all_pois() -> void:
 	_camp.set_poi_active(false)
 
 
-## Marca (!) o que ainda tem algo a fazer.
-## TODO (seção 4.3): guia de mapa com setas na borda da tela apontando para estes pontos.
 func refresh_pois() -> void:
+	var allied := ReputationState.is_allied(current_id())
 	for house: VillagerHouse in _houses:
-		house.set_poi_active(character_index == 0 and house.state == GameState.HouseState.OCCUPIED)
+		var active := false
+		if allied:
+			active = not house.looted
+		elif character_index == 0:
+			active = house.state == GameState.HouseState.OCCUPIED
+		house.set_poi_active(active)
 	_camp.set_poi_active(not _army_decided)
 
 
 func _on_house_entered(house: VillagerHouse) -> void:
-	# Só o Personagem 1 salva moradores.
-	if not enabled or _busy or character_index != 0:
+	if not enabled or _busy:
+		return
+	if ReputationState.is_allied(current_id()):
+		if not house.looted:
+			@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+			_run_loot(house, true)
+		return
+	if character_index != 0:
 		return
 	if house.state == GameState.HouseState.OCCUPIED:
 		@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
 		_run_rescue(house)
+	elif house.state == GameState.HouseState.RESCUED and not house.looted:
+		@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+		_run_loot(house, false)
 
 
 func _run_rescue(house: VillagerHouse) -> void:
@@ -132,9 +143,39 @@ func _run_rescue(house: VillagerHouse) -> void:
 	if cfg:
 		Juice.burst(cfg.particles_skill, house.global_position, Color(0.5, 1.0, 0.7))
 	refresh_pois()
-	await _dialog.ask(speaker, Texts.text("dialogues", "houses.%s.rescued" % key), [])
-	if token == _token:
-		_end()
+	var loot: StringName = await _dialog.ask(speaker, Texts.text("dialogues", "houses.%s.rescued" % key), [
+		_choice(CHOICE_LEAVE, "dialogues", "choices.leave_house"),
+		_choice(CHOICE_LOOT, "dialogues", "choices.loot")])
+	if token != _token:
+		return
+	if loot == CHOICE_LOOT:
+		_loot(house)
+	_end()
+
+
+func _run_loot(house: VillagerHouse, allied: bool) -> void:
+	var token := _begin()
+	var key := _house_key(house)
+	var path := "houses.%s.%s" % [key, "loot_allied" if allied else "loot_ask"]
+	var choice: StringName = await _dialog.ask(Texts.text("dialogues", "loot_speaker"), Texts.text("dialogues", path), [
+		_choice(CHOICE_LOOT, "dialogues", "choices.loot"),
+		_choice(CHOICE_LEAVE, "dialogues", "choices.leave_house")])
+	if token != _token:
+		return
+	if choice == CHOICE_LOOT:
+		_loot(house)
+	_end()
+
+
+func _loot(house: VillagerHouse) -> void:
+	house.set_state(house.state, true)
+	ReputationState.register_loot(current_id())
+	AudioManager.play_sfx(&"loot")
+	var cfg := Juice.cfg()
+	if cfg:
+		Juice.burst(cfg.particles_skill, house.global_position, Color(1.0, 0.85, 0.3))
+		Juice.shake(Ability.JuiceLevel.LIGHT)
+	refresh_pois()
 
 
 func _on_camp_entered(_camp_node: ArmyCamp) -> void:
@@ -162,9 +203,17 @@ func _on_camp_entered(_camp_node: ArmyCamp) -> void:
 	_end()
 
 
-## TODO: o texto para o P2 pode mudar conforme o que o P1 fez (morreu, se aliou...).
+## Texto do exército muda conforme o que o Personagem 1 fez (estado do mundo).
 func _army_text() -> String:
-	return Texts.text("dialogues", "army.p1_ask" if character_index == 0 else "army.p2_ask")
+	if character_index == 0:
+		return Texts.text("dialogues", "army.p1_ask")
+	var p1 := GameState.p1_id()
+	var params := {"p1": Texts.character_name(p1)}
+	if not GameState.is_alive(p1):
+		return Texts.text("dialogues", "army.p2_ask_p1_dead", params)
+	if ReputationState.is_allied(p1):
+		return Texts.text("dialogues", "army.p2_ask_p1_allied", params)
+	return Texts.text("dialogues", "army.p2_ask_p1_hero", params)
 
 
 func _begin() -> int:

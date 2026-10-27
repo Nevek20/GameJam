@@ -1,12 +1,12 @@
 class_name HUD
 extends Control
-## HUD: vida, heroísmo, tempo, objetivo e cooldowns.
-## TODO: barra de vida do boss e guia de mapa (setas na borda da tela, seção 4.3).
+## HUD: vida, heroísmo, tempo, objetivo, cooldowns, boss e guia de mapa.
 ## Escuta sinais (Player, ReputationState); não conhece regras de jogo.
 
 @export var ui_config: UIConfig
 
 var _player: Player
+var _boss_source: Node
 var _chip_tween: Tween
 var _parry_tween: Tween
 var _vignette_tween: Tween
@@ -20,6 +20,9 @@ var _time_warning: bool = false
 @onready var _alliance: Label = %AllianceTag
 @onready var _timer: Label = %TimerLabel
 @onready var _objective: Label = %Objective
+@onready var _boss_panel: Control = %BossPanel
+@onready var _boss_name: Label = %BossName
+@onready var _boss_bar: ProgressBar = %BossBar
 @onready var _parry: Label = %ParryLabel
 @onready var _vignette: TextureRect = %Vignette
 @onready var _slot_dash: CooldownSlot = %SlotDash
@@ -28,11 +31,13 @@ var _time_warning: bool = false
 @onready var _slot_e: CooldownSlot = %SlotE
 @onready var _slot_r: CooldownSlot = %SlotR
 @onready var banner: Banner = %Banner
+@onready var poi_arrows: PoiArrows = %PoiArrows
 
 
 func _ready() -> void:
 	ReputationState.heroism_changed.connect(_on_heroism_changed)
 	ReputationState.alliance_changed.connect(_on_alliance_changed)
+	_boss_panel.hide()
 	_parry.hide()
 	_vignette.modulate.a = 0.0
 	_heroism_label.text = Texts.ui("hud.heroism")
@@ -86,6 +91,20 @@ func set_objective(text: String) -> void:
 	_objective.text = text
 
 
+func show_boss(display_name: String, source: Node, current: float, maximum: float) -> void:
+	_boss_source = source
+	_boss_name.text = display_name
+	_boss_bar.max_value = maximum
+	_boss_bar.value = current
+	_boss_panel.show()
+	if source.has_signal(&"health_changed") and not source.is_connected(&"health_changed", _on_boss_health):
+		source.connect(&"health_changed", _on_boss_health)
+
+
+func hide_boss() -> void:
+	_boss_panel.hide()
+
+
 func show_banner(title: String, subtitle: String = "") -> void:
 	banner.show_banner(title, subtitle)
 
@@ -127,6 +146,11 @@ func _on_heroism_changed(id: StringName, value: float, maximum: float) -> void:
 func _on_alliance_changed(id: StringName, allied: bool) -> void:
 	if _player and _player.stats.id == id:
 		_alliance.visible = allied
+
+
+func _on_boss_health(current: float, maximum: float) -> void:
+	_boss_bar.max_value = maximum
+	_boss_bar.value = current
 
 
 func _on_parried(_p: Player) -> void:

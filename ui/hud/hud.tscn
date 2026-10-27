@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_hud"]
 [ext_resource type="Script" path="res://ui/hud/cooldown_slot.gd" id="2_slot"]
+[ext_resource type="Script" path="res://ui/hud/poi_arrows.gd" id="3_poi"]
 [ext_resource type="Script" path="res://ui/hud/banner.gd" id="4_banner"]
 [ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="5_ui"]
 
@@ -38,6 +39,13 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="StyleBoxFlat" id="Style_boss"]
+bg_color = Color(0.85, 0.15, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -60,6 +68,18 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_vignette")
 expand_mode = 1
+
+[node name="PoiArrows" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_poi")
+ui_config = ExtResource("5_ui")
 
 [node name="TopLeft" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -172,6 +192,36 @@ grow_horizontal = 2
 theme_override_colors/font_color = Color(0.75, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
+
+[node name="BossPanel" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 90.0
+offset_right = 330.0
+offset_bottom = 140.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="BossName" type="Label" parent="BossPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "Boss"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="BossPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(660, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/fill = SubResource("Style_boss")
+value = 100.0
+show_percentage = false
 
 [node name="ParryLabel" type="Label" parent="."]
 unique_name_in_owner = true

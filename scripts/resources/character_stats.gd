@@ -48,11 +48,13 @@ extends Resource
 
 @export_group("Habilidades (Strategy: troque o Resource)")
 @export var attack: Ability
-## TODO: criar os .tres de Q, E e R (seção 5 do briefing) e arrastar para cá.
-## Enquanto estiverem vazios, a tecla só não faz nada.
 @export var skill_q: Ability
 @export var skill_e: Ability
 @export var ultimate: Ability
+
+@export_group("IA (ajudante e boss)")
+## Como este personagem luta quando controlado pela IA.
+@export var ai_profile: AIProfile
 
 @export_group("Input")
 ## Por quanto tempo um input fica guardado (buffer), em segundos.

@@ -15,6 +15,8 @@ extends Resource
 ## 0 = sofre knockback total, 1 = imune.
 @export_range(0.0, 1.0) var knockback_resistance: float = 0.0
 @export var hurt_stun: float = 0.25
+## Não é interrompido por golpes enquanto ataca (elites e boss).
+@export var armor_while_attacking: bool = false
 
 @export_group("IA")
 @export var aggro_range: float = 700.0
@@ -22,11 +24,21 @@ extends Resource
 @export var think_interval: float = 0.3
 ## Pausa mínima entre ataques.
 @export var attack_interval: float = 1.1
-## Ataques possíveis (cada um é um Ability).
+## Ataques possíveis (cada um é um Ability) e seus pesos.
 @export var attacks: Array[Ability] = []
+@export var attack_weights: Array[float] = []
 
-## TODO (elite, seção 4.3/9): chance de dash, defesa e variação de ataque.
-## Hoje o inimigo só persegue e usa o primeiro ataque da lista que alcança o alvo.
+@export_group("Elite")
+## Chance (por decisão) de dar dash.
+@export_range(0.0, 1.0) var dash_chance: float = 0.0
+@export var dash_distance: float = 180.0
+@export var dash_duration: float = 0.2
+@export var dash_cooldown: float = 2.0
+## Chance de erguer a guarda quando o alvo ataca por perto.
+@export_range(0.0, 1.0) var block_chance: float = 0.0
+@export var block_duration: float = 0.8
+@export var block_damage_multiplier: float = 0.15
+@export var block_cooldown: float = 2.5
 
 @export_group("Recompensa")
 ## Se true, conta para heroísmo ao ser derrotado (quando o jogador enfrenta o exército).

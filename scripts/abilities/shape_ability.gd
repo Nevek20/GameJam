@@ -1,16 +1,11 @@
 class_name ShapeAbility
 extends Ability
 ## Ataque de área com forma (retângulo, triângulo ou círculo), desenhado por código.
-## Hoje só faz o básico: a forma aparece na frente do personagem, na direção da mira.
-##
-## TODO (habilidades da Princesa, seção 5.1 do briefing):
-##  - Q, corte com dash: a hitbox triangular avança junto com o personagem
-##    (dica: em active_physics(), chame caster.set_forced_velocity(...)).
-##  - E, corte giratório: círculo que gira ao redor do personagem
-##    (dica: um novo modo em AttackHitbox._update_transform()).
-##  - R, grande corte: um retângulo grande (só configurar um .tres novo).
+## Cobre: corte de espada, corte com dash (lunge), corte giratório (orbit),
+## grande corte e o feixe do mago (rehit_interval = dano por tick).
 
 enum Shape { RECT, TRIANGLE, CIRCLE }
+enum Style { SLASH, SOLID, BEAM }
 
 @export_group("Forma")
 @export var shape: Shape = Shape.RECT
@@ -18,8 +13,20 @@ enum Shape { RECT, TRIANGLE, CIRCLE }
 @export var size: Vector2 = Vector2(70, 60)
 ## Distância do centro da forma até o lançador, na direção da mira.
 @export var forward_offset: float = 50.0
-## A hitbox acompanha o lançador enquanto está ativa.
+@export var style: Style = Style.SLASH
+
+@export_group("Comportamento")
+## A hitbox acompanha o lançador.
 @export var follow_caster: bool = true
+## A hitbox gira junto com a mira enquanto ativa (feixe).
+@export var follow_aim: bool = false
+## O lançador avança esta distância durante a fase ativa (corte com dash).
+@export var lunge_distance: float = 0.0
+## Raio e velocidade (graus/s) de órbita ao redor do lançador (corte giratório).
+@export var orbit_radius: float = 0.0
+@export var orbit_speed: float = 0.0
+## 0 = acerta cada alvo uma vez. > 0 = dano contínuo a cada X segundos.
+@export var rehit_interval: float = 0.0
 
 
 func begin_active(caster: AbilityCaster) -> void:
@@ -32,12 +39,22 @@ func begin_active(caster: AbilityCaster) -> void:
 		caster.track(hitbox)
 
 
+func active_physics(caster: AbilityCaster, _delta: float) -> void:
+	if lunge_distance > 0.0 and active_time > 0.0:
+		caster.set_forced_velocity(caster.aim_dir * (lunge_distance / active_time))
+
+
 func end_active(caster: AbilityCaster) -> void:
 	caster.release_tracked()
 
 
 func draw_telegraph(canvas: CanvasItem, aim: Vector2, progress: float, tint: Color) -> void:
-	canvas.draw_set_transform(aim * forward_offset, aim.angle(), Vector2.ONE)
+	if orbit_radius > 0.0:
+		canvas.draw_arc(Vector2.ZERO, orbit_radius + size.x, 0.0, TAU, 48, Color(tint, 0.35), 4.0)
+		canvas.draw_arc(Vector2.ZERO, orbit_radius + size.x, 0.0, TAU * progress, 48, Color(tint, 0.85), 4.0)
+		return
+	var reach := forward_offset + lunge_distance
+	canvas.draw_set_transform(aim * reach, aim.angle(), Vector2.ONE)
 	draw_local(canvas, Color(tint, 0.18), true)
 	draw_local(canvas, Color(tint, 0.7), false, 2.0)
 	draw_local_scaled(canvas, Color(tint, 0.35), progress)

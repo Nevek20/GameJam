@@ -1,7 +1,11 @@
 [gd_resource type="Resource" script_class="CharacterStats" format=3]
 
+[ext_resource type="Resource" path="res://resources/ai/mage_ai.tres" id="1_e6cab"]
 [ext_resource type="Resource" path="res://resources/abilities/mage/mana_bolt.tres" id="2_aehaq"]
 [ext_resource type="Script" path="res://scripts/resources/character_stats.gd" id="3_t5pu6"]
+[ext_resource type="Resource" path="res://resources/abilities/mage/chain_lightning.tres" id="4_imtet"]
+[ext_resource type="Resource" path="res://resources/abilities/mage/fireball.tres" id="5_nymuo"]
+[ext_resource type="Resource" path="res://resources/abilities/mage/arcane_beam.tres" id="6_7gol1"]
 
 [resource]
 script = ExtResource("3_t5pu6")
@@ -13,3 +17,7 @@ max_health = 95.0
 move_speed = 255.0
 dash_distance = 210.0
 attack = ExtResource("2_aehaq")
+skill_q = ExtResource("5_nymuo")
+skill_e = ExtResource("4_imtet")
+ultimate = ExtResource("6_7gol1")
+ai_profile = ExtResource("1_e6cab")

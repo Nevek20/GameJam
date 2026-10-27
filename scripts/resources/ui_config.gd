@@ -11,3 +11,6 @@ extends Resource
 @export var credits_speed: float = 45.0
 @export var credits_fast_multiplier: float = 5.0
 @export var intro_fade: float = 0.3
+## Setas de ponto de interesse: margem da borda e tamanho.
+@export var poi_arrow_margin: float = 34.0
+@export var poi_arrow_size: float = 16.0

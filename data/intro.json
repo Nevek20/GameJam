@@ -1,7 +1,8 @@
 {
-	"_comment": "TODO (narrativa): uma legenda por imagem de contexto (mesma ordem do IntroConfig). Aceita BBCode.",
+	"_comment": "Uma legenda por imagem de contexto (mesma ordem do IntroConfig). Aceita BBCode.",
 	"slides": [
-		"[TODO] Contexto da história - imagem 1",
-		"[TODO] Contexto da história - imagem 2"
+		"Numa vila onde as cores respiram e os cogumelos cantam, a noite começou errada.",
+		"Um exército desceu das colinas e cercou as casas. Os moradores estão presos.",
+		"Duas pessoas podem mudar o destino da vila. Uma de cada vez."
 	]
 }

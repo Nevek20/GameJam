@@ -18,7 +18,7 @@ func enter(msg: Dictionary) -> void:
 func exit() -> void:
 	if enemy.caster.is_casting():
 		enemy.caster.interrupt()
-	enemy.attack_cooldown_left = enemy.stats.attack_interval * randf_range(0.8, 1.2)
+	enemy.attack_cooldown_left = enemy.current_attack_interval() * randf_range(0.8, 1.2)
 
 
 func physics_update(delta: float) -> void:

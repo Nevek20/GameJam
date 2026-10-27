@@ -16,3 +16,4 @@ skin = SubResource("Resource_cglai")
 aggro_range = 900.0
 attack_interval = 1.2
 attacks = Array[ExtResource("1_nb7me")]([ExtResource("2_7l7oc")])
+attack_weights = Array[float]([1.0])

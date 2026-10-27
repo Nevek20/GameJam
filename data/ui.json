@@ -1,8 +1,8 @@
 {
 	"_comment": "Textos da interface.",
 	"menu": {
-		"title": "[TODO] Nome do Jogo",
-		"subtitle": "[TODO] Subtítulo",
+		"title": "Vila Psicodélica",
+		"subtitle": "Uma noite. Dois heróis. Uma escolha.",
 		"play": "Jogar",
 		"options": "Opções",
 		"credits": "Créditos"
@@ -72,22 +72,28 @@
 		"slot_r": "R"
 	},
 	"objective": {
-		"p1": "[TODO] Salve os moradores e encontre o exército",
-		"p2": "[TODO] Encontre o exército",
+		"p1": "Salve os moradores e encontre o exército",
+		"p2": "Encontre o exército inimigo",
 		"confront": "Derrote o exército",
-		"allied": "[TODO] Aliado do exército",
-		"after_fight": "Continue ajudando a vila"
+		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
+		"after_fight": "Continue ajudando a vila",
+		"boss": "Vença a luta final"
 	},
 	"banner": {
 		"allied_title": "Aliança selada",
 		"allied_subtitle": "{name} agora marcha com o exército",
 		"confront_title": "À luta!",
 		"confront_subtitle": "O exército avança",
+		"knights": "Cavaleiros do reino chegaram!",
 		"wave": "Onda {n} de {total}",
 		"cleared": "O exército recuou",
 		"time_up": "O tempo acabou",
 		"p2_subtitle": "entra em cena",
-		"enemies_stronger": "[TODO] Os inimigos estão mais fortes!"
+		"boss_subtitle": "Luta final",
+		"boss_switched": "{name} volta para a luta final",
+		"helper_down": "{name} caiu!",
+		"victory": "Vitória!",
+		"enemies_stronger": "Os inimigos estão mais fortes!"
 	},
 	"ending": {
 		"next": "{key} ▶",

@@ -1,7 +1,11 @@
 [gd_resource type="Resource" script_class="CharacterStats" format=3]
 
+[ext_resource type="Resource" path="res://resources/ai/princess_ai.tres" id="1_uu257"]
 [ext_resource type="Resource" path="res://resources/abilities/princess/sword_slash.tres" id="2_yiutf"]
 [ext_resource type="Script" path="res://scripts/resources/character_stats.gd" id="3_7wxr4"]
+[ext_resource type="Resource" path="res://resources/abilities/princess/spin_slash.tres" id="4_grdoa"]
+[ext_resource type="Resource" path="res://resources/abilities/princess/dash_slash.tres" id="5_tpg41"]
+[ext_resource type="Resource" path="res://resources/abilities/princess/great_slash.tres" id="6_wrd4p"]
 
 [resource]
 script = ExtResource("3_7wxr4")
@@ -12,3 +16,7 @@ move_speed = 270.0
 dash_distance = 200.0
 dash_cooldown = 0.55
 attack = ExtResource("2_yiutf")
+skill_q = ExtResource("5_tpg41")
+skill_e = ExtResource("4_grdoa")
+ultimate = ExtResource("6_wrd4p")
+ai_profile = ExtResource("1_uu257")

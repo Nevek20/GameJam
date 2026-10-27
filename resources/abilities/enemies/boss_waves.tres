@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ProjectileAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/projectile_ability.gd" id="1_pusa6"]
+
+[resource]
+script = ExtResource("1_pusa6")
+radius = 16.0
+speed = 430.0
+max_range = 800.0
+count = 3
+spread_degrees = 40.0
+id = &"boss_waves"
+color = Color(1, 0.35, 0.45, 1)
+damage = 14.0
+knockback = 260.0
+cooldown = 3.5
+windup = 0.6
+active_time = 0.02
+recovery = 0.4
+ai_range = 650.0

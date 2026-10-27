@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ShapeAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/shape_ability.gd" id="1_3wu0u"]
+
+[resource]
+script = ExtResource("1_3wu0u")
+shape = 0
+size = Vector2(580, 90)
+forward_offset = 310.0
+style = 2
+follow_caster = true
+follow_aim = true
+lunge_distance = 0.0
+orbit_radius = 0.0
+orbit_speed = 0.0
+rehit_interval = 0.12
+id = &"arcane_beam"
+color = Color(0.6, 0.85, 1, 1)
+damage = 7.0
+knockback = 60.0
+juice_level = 2
+hit_juice_level = 0
+parryable = true
+cooldown = 14.0
+windup = 0.4
+active_time = 2.0
+recovery = 0.3
+move_multiplier = 0.15
+super_armor = true
+cancel_recovery = true
+ai_range = 520.0
+sfx_cast = &"ult_beam"
+sfx_hit = &"hit"

@@ -1,26 +1,31 @@
 {
-	"_comment": "Tutorial (painel lateral). {move}, {dash}, {attack}... são trocados pelas teclas atuais. TODO (narrativa): objetivo.",
+	"_comment": "Tutorial (painel lateral). {move}, {dash}, {attack}... são trocados pelas teclas atuais.",
 	"hint": "Pressione {confirm} para começar",
 	"p1": {
-		"title": "[TODO] Personagem 1",
+		"title": "A vila foi invadida!",
 		"body": [
-			"[b]Objetivo:[/b] [TODO] ajudar os moradores e decidir o que fazer com o exército.",
+			"[b]Objetivo:[/b] ajude os moradores presos nas casas e decida o que fazer com o exército inimigo. Você tem pouco tempo.",
 			"",
 			"[b]{move}[/b]  mover",
-			"[b]{dash}[/b]  dash",
+			"[b]{dash}[/b]  dash (invencível)",
 			"[b]{attack}[/b]  ataque (segure para repetir)",
-			"[b]{parry}[/b]  defender / parry",
-			"[b]{skill_q}[/b] / [b]{skill_e}[/b]  habilidades",
+			"[b]{parry}[/b]  defender / parry no tempo certo",
+			"[b]{skill_q}[/b]  habilidade principal",
+			"[b]{skill_e}[/b]  habilidade secundária",
 			"[b]{ultimate}[/b]  ultimate",
-			"[b]{pause}[/b]  pausa"
+			"[b]{pause}[/b]  pausa",
+			"",
+			"As setas na borda da tela apontam para os moradores e para o exército."
 		]
 	},
 	"p2": {
-		"title": "[TODO] Personagem 2",
+		"title": "Agora é a sua vez",
 		"body": [
-			"[b]Objetivo:[/b] [TODO] ir até o exército e escolher: enfrentar ou se aliar.",
+			"[b]Objetivo:[/b] vá até o exército inimigo e escolha: enfrentar ou se aliar.",
 			"",
-			"Mesmos comandos do personagem 1."
+			"O que aconteceu antes mudou a vila. Siga as setas na borda da tela.",
+			"",
+			"Mesmos comandos: [b]{move}[/b] mover, [b]{dash}[/b] dash, [b]{attack}[/b] ataque, [b]{parry}[/b] defesa, [b]{skill_q}[/b] / [b]{skill_e}[/b] habilidades e [b]{ultimate}[/b] ultimate."
 		]
 	}
 }
