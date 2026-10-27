@@ -4,7 +4,7 @@ extends Node2D
 ## Forma geométrica desenhada por código enquanto não há sprites.
 ## Fica escondida automaticamente quando o EntityVisual recebe uma textura.
 
-enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER }
+enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER, CHARACTER }
 enum Accent { NONE, CROWN, HAT, HELMET, HORNS, HOOD }
 
 @export var kind: Kind = Kind.CIRCLE:
@@ -44,6 +44,8 @@ enum Accent { NONE, CROWN, HAT, HELMET, HORNS, HOOD }
 	set(value):
 		eyes = value
 		queue_redraw()
+
+var _style := StyleBoxFlat.new()
 
 var look_dir: Vector2 = Vector2.RIGHT:
 	set(value):
@@ -90,6 +92,8 @@ func _draw() -> void:
 			_draw_flame(h)
 		Kind.BANNER:
 			_draw_banner(h)
+		Kind.CHARACTER:
+			_draw_character(h)
 	if eyes:
 		_draw_eyes(h)
 	_draw_accent(h)
@@ -110,12 +114,15 @@ func _outline_poly(points: PackedVector2Array) -> void:
 
 func _draw_eyes(h: Vector2) -> void:
 	var dir := look_dir.normalized() if look_dir != Vector2.ZERO else Vector2.RIGHT
-	var center := dir * h.x * 0.35 + Vector2(0, -h.y * 0.1)
-	var side := Vector2(-dir.y, dir.x) * h.x * 0.32
+	# Personagem retangular: olhos no terço de cima; senão, no centro.
+	var head := Vector2(0, -h.y * 0.45) if kind == Kind.CHARACTER else Vector2(0, -h.y * 0.1)
+	var center := head + Vector2(dir.x * h.x * 0.3, dir.y * h.y * 0.08)
+	var side := Vector2(h.x * 0.3, 0)
+	var r := h.x * 0.2
 	for s: float in [-1.0, 1.0]:
 		var p := center + side * s
-		draw_circle(p, h.x * 0.2, Color(1, 1, 1))
-		draw_circle(p + dir * h.x * 0.07, h.x * 0.11, Color(0.08, 0.02, 0.12))
+		draw_circle(p, r, Color(1, 1, 1))
+		draw_circle(p + dir * r * 0.4, r * 0.55, Color(0.08, 0.02, 0.12))
 
 
 func _draw_accent(h: Vector2) -> void:
@@ -225,6 +232,19 @@ func _draw_banner(h: Vector2) -> void:
 	draw_colored_polygon(flag, color)
 	_outline_poly(flag)
 	draw_circle(Vector2(2 + w * 0.5, -h.y + fh * 0.45), w * 0.18, accent_color)
+
+
+## Corpo de personagem: retângulo vertical com cantos arredondados e parte de baixo mais escura.
+func _draw_character(h: Vector2) -> void:
+	var body := Rect2(-h, size)
+	var corner := minf(h.x, h.y) * 0.45
+	var style := _style
+	style.bg_color = color
+	style.set_corner_radius_all(int(corner))
+	style.border_color = outline_color
+	style.set_border_width_all(int(outline_width))
+	draw_style_box(style, body)
+	draw_rect(Rect2(Vector2(-h.x + outline_width, h.y * 0.25), Vector2(size.x - outline_width * 2.0, h.y * 0.75 - outline_width)), color.darkened(0.25))
 
 
 func _outline_circle_at(center: Vector2, radius: float) -> void:

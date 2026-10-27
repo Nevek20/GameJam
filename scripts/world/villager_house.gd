@@ -12,6 +12,8 @@ signal player_entered(house: VillagerHouse)
 @export var house_texture: Texture2D
 @export var villager_texture: Texture2D
 @export var poi_color: Color = Color(1, 0.85, 0.3)
+## Tamanho do morador (largura x altura).
+@export var villager_size: Vector2 = Vector2(26, 46)
 
 var state: GameState.HouseState = GameState.HouseState.OCCUPIED
 var looted: bool = false
@@ -34,7 +36,11 @@ func _ready() -> void:
 		_house_sprite.visible = true
 		_house_shape.visible = false
 	_villager.apply_look(villager_texture, null, Color(0.55, 0.95, 0.8), Color(0.95, 0.5, 0.9),
-		PlaceholderShape.Accent.HOOD, 12.0, Vector2.ONE)
+		PlaceholderShape.Accent.HOOD, Vector2.ONE)
+	_villager.placeholder.size = villager_size
+	_villager.placeholder.position = Vector2(0, -villager_size.y * 0.5)
+	# A casa já recebe a escala de cenário; o morador usa a escala de NPC.
+	_villager.scale = Vector2.ONE * GameScale.of(GameScale.Kind.NPC) / GameScale.of(GameScale.Kind.SCENERY)
 	_status_tween = create_tween().set_loops()
 	_status_tween.tween_property(_status, "position:y", _status.position.y - 8.0, 0.5).set_trans(Tween.TRANS_SINE)
 	_status_tween.tween_property(_status, "position:y", _status.position.y, 0.5).set_trans(Tween.TRANS_SINE)

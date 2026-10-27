@@ -28,6 +28,8 @@ func activate(shape_ability: ShapeAbility, by: AbilityCaster) -> void:
 	_origin = by.global_position
 	_dir = by.aim_dir
 	_orbit_angle = _dir.angle()
+	# Área não é corpo físico: escalar o nó escala colisão e desenho juntos.
+	scale = Vector2.ONE * by.geometry_scale
 	match shape_ability.shape:
 		ShapeAbility.Shape.RECT:
 			_rect.size = shape_ability.size
@@ -62,13 +64,13 @@ func _update_transform(delta: float) -> void:
 	var origin := caster.global_position if ability.follow_caster else _origin
 	if ability.orbit_radius > 0.0:
 		_orbit_angle += deg_to_rad(ability.orbit_speed) * delta
-		var offset := Vector2.from_angle(_orbit_angle) * ability.orbit_radius
+		var offset := Vector2.from_angle(_orbit_angle) * ability.orbit_radius * caster.geometry_scale
 		global_position = origin + offset
 		rotation = _orbit_angle + PI * 0.5
 		return
 	if ability.follow_aim:
 		_dir = caster.aim_dir
-	global_position = origin + _dir * ability.forward_offset
+	global_position = origin + _dir * ability.forward_offset * caster.geometry_scale
 	rotation = _dir.angle()
 
 

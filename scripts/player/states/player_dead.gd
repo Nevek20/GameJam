@@ -9,7 +9,7 @@ func enter(_msg: Dictionary) -> void:
 	AudioManager.play_sfx(&"death")
 	var cfg := Juice.cfg()
 	if cfg:
-		Juice.burst(cfg.particles_death, player.global_position, player.stats.body_color)
+		Juice.burst(cfg.particles_death, player.hurtbox.global_position, player.stats.body_color)
 		Juice.shake(Ability.JuiceLevel.HEAVY)
 	if _tween:
 		_tween.kill()

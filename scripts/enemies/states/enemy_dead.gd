@@ -10,7 +10,7 @@ func enter(_msg: Dictionary) -> void:
 	AudioManager.play_sfx(&"death")
 	var cfg := Juice.cfg()
 	if cfg and enemy.skin:
-		Juice.burst(cfg.particles_death, enemy.global_position, enemy.skin.body_color)
+		Juice.burst(cfg.particles_death, enemy.hurtbox.global_position, enemy.skin.body_color)
 	if _tween:
 		_tween.kill()
 	_tween = enemy.create_tween()

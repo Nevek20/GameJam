@@ -35,18 +35,19 @@ func _think() -> void:
 		return
 	var to := target.global_position - actor.global_position
 	var dist := to.length()
+	var k := actor.size_scale
 	var dir := to / maxf(dist, 0.001)
 	var forward := Vector2.ZERO
-	if dist > profile.preferred_range + profile.range_tolerance:
+	if dist > (profile.preferred_range + profile.range_tolerance) * k:
 		forward = dir
-	elif dist < profile.preferred_range - profile.range_tolerance:
+	elif dist < (profile.preferred_range - profile.range_tolerance) * k:
 		forward = -dir
 	if randf() < 0.25:
 		_strafe_sign = -_strafe_sign
 	_move = (forward + dir.orthogonal() * _strafe_sign * profile.strafe_amount).limit_length(1.0)
 
 	var stats := actor.stats
-	_hold_attack = stats.attack != null and dist <= stats.attack.ai_range
+	_hold_attack = stats.attack != null and dist <= stats.attack.ai_range * k
 	if _usable(stats.ultimate, dist) and randf() < profile.ultimate_chance:
 		_wants[Actions.ULTIMATE] = true
 	elif _usable(stats.skill_q, dist) and randf() < profile.skill_chance:
@@ -56,13 +57,13 @@ func _think() -> void:
 	if randf() < profile.dash_chance:
 		_wants[Actions.DASH] = true
 	if profile.parry_chance > 0.0 and target.has_method(&"is_attacking") and target.call(&"is_attacking") \
-			and dist < 160.0 and randf() < profile.parry_chance:
+			and dist < profile.parry_trigger_range * k and randf() < profile.parry_chance:
 		_wants[Actions.PARRY] = true
 		_parry_hold_left = 0.35
 
 
 func _usable(ability: Ability, dist: float) -> bool:
-	return ability != null and dist <= ability.ai_range and actor.caster.is_ready(ability)
+	return ability != null and dist <= ability.ai_range * actor.size_scale and actor.caster.is_ready(ability)
 
 
 func _target_valid() -> bool:

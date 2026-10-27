@@ -17,7 +17,12 @@ extends Resource
 ## Posição do desenho em relação ao corpo (pixels da textura). Ajuste se o sprite
 ## ficar deslocado; a hitbox não muda.
 @export var sprite_offset: Vector2 = Vector2.ZERO
-@export var body_radius: float = 18.0
+## Tamanho do corpo (largura x altura): desenho placeholder e área que recebe dano.
+@export var body_size: Vector2 = Vector2(40, 72)
+## Colisão com o cenário: retângulo nos pés (largura x altura).
+@export var collision_size: Vector2 = Vector2(34, 20)
+## Ponto de onde saem golpes e projéteis, relativo ao centro do corpo (nó AttackOrigin).
+@export var attack_origin_offset: Vector2 = Vector2.ZERO
 
 @export_group("Vida")
 @export var max_health: float = 100.0

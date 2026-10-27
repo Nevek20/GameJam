@@ -8,7 +8,7 @@ var _elapsed: float = 0.0
 
 func enter(_msg: Dictionary) -> void:
 	_elapsed = 0.0
-	player.guard.show_guard(player.stats.body_radius)
+	player.guard.show_guard(player.stats.body_size)
 	player.guard.set_parry_window(true)
 	player.visual.play(&"parry")
 	AudioManager.play_sfx(&"parry")
@@ -45,7 +45,7 @@ func try_parry(hit: HitData) -> bool:
 		Juice.hit_stop(cfg.hitstop_parry)
 		Juice.zoom_punch(cfg.zoom_parry)
 		Juice.shake(Ability.JuiceLevel.HEAVY)
-		Juice.burst(cfg.particles_parry, player.global_position - hit.direction * player.stats.body_radius, Color(1, 0.85, 0.3), -hit.direction)
+		Juice.burst(cfg.particles_parry, player.caster.global_position - hit.direction * player.stats.body_size.x * player.size_scale * 0.5, Color(1, 0.85, 0.3), -hit.direction)
 	player.notify_parried()
 	# Recompensa: o parry seguinte fica disponível logo.
 	_elapsed = 0.0

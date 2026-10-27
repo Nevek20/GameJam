@@ -41,7 +41,7 @@ func begin_active(caster: AbilityCaster) -> void:
 
 func active_physics(caster: AbilityCaster, _delta: float) -> void:
 	if lunge_distance > 0.0 and active_time > 0.0:
-		caster.set_forced_velocity(caster.aim_dir * (lunge_distance / active_time))
+		caster.set_forced_velocity(caster.aim_dir * (lunge_distance * caster.geometry_scale / active_time))
 
 
 func end_active(caster: AbilityCaster) -> void:
@@ -49,12 +49,13 @@ func end_active(caster: AbilityCaster) -> void:
 
 
 func draw_telegraph(canvas: CanvasItem, aim: Vector2, progress: float, tint: Color) -> void:
+	var k := AbilityCaster.scale_of(canvas)
 	if orbit_radius > 0.0:
-		canvas.draw_arc(Vector2.ZERO, orbit_radius + size.x, 0.0, TAU, 48, Color(tint, 0.35), 4.0)
-		canvas.draw_arc(Vector2.ZERO, orbit_radius + size.x, 0.0, TAU * progress, 48, Color(tint, 0.85), 4.0)
+		canvas.draw_arc(Vector2.ZERO, (orbit_radius + size.x) * k, 0.0, TAU, 48, Color(tint, 0.35), 4.0)
+		canvas.draw_arc(Vector2.ZERO, (orbit_radius + size.x) * k, 0.0, TAU * progress, 48, Color(tint, 0.85), 4.0)
 		return
-	var reach := forward_offset + lunge_distance
-	canvas.draw_set_transform(aim * reach, aim.angle(), Vector2.ONE)
+	var reach := (forward_offset + lunge_distance) * k
+	canvas.draw_set_transform(aim * reach, aim.angle(), Vector2.ONE * k)
 	draw_local(canvas, Color(tint, 0.18), true)
 	draw_local(canvas, Color(tint, 0.7), false, 2.0)
 	draw_local_scaled(canvas, Color(tint, 0.35), progress)

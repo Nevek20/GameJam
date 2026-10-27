@@ -14,6 +14,8 @@ var dead: bool = false
 var attack_cooldown_left: float = 0.0
 var dash_cooldown_left: float = 0.0
 var block_cooldown_left: float = 0.0
+## Escala do corpo (GameScale). Alcances e distâncias são multiplicados por ela.
+var size_scale: float = 1.0
 
 @onready var visual: EntityVisual = $Visual
 @onready var guard: GuardVisual = $Visual/Guard
@@ -24,6 +26,8 @@ var block_cooldown_left: float = 0.0
 @onready var state_machine: StateMachine = $StateMachine
 @onready var _body_shape: CollisionShape2D = $CollisionShape2D
 @onready var _hurt_shape: CollisionShape2D = $Hurtbox/CollisionShape2D
+## Marcador visível no editor: de onde saem os golpes.
+@onready var attack_origin: Marker2D = $AttackOrigin
 
 var _spawn_tween: Tween
 
@@ -52,13 +56,17 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	caster.interrupt()
 	caster.reset_cooldowns()
 	caster.damage_multiplier = damage_multiplier
-	visual.base_scale = Vector2.ONE * visual_scale
-	movement.configure(stats.move_speed * current_speed_multiplier(), stats.acceleration, stats.friction)
-	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
-	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
+	var s := GameScale.of(scale_kind())
+	movement.configure(stats.move_speed * current_speed_multiplier() * s, stats.acceleration * s, stats.friction * s)
 	if skin:
 		visual.apply_look(skin.texture, skin.sprite_frames, skin.body_color, skin.accent_color,
-			skin.placeholder_accent, stats.body_radius, stats.sprite_scale, skin.sprite_offset)
+			skin.placeholder_accent, stats.sprite_scale, skin.sprite_offset)
+	size_scale = GameScale.of(scale_kind())
+	BodySetup.apply(stats.body_size, stats.collision_size, stats.attack_origin_offset, size_scale,
+		_body_shape, _hurt_shape, hurtbox, caster, attack_origin, visual)
+	caster.geometry_scale = size_scale
+	visual.base_scale *= visual_scale
+	visual.scale = visual.base_scale
 	health.setup(stats.max_health * health_multiplier)
 	global_position = pos
 	velocity = Vector2.ZERO
@@ -88,7 +96,7 @@ func is_attacking() -> bool:
 
 
 func find_target() -> Node2D:
-	return Team.find_nearest(get_tree(), Team.opposite(team), global_position, stats.aggro_range)
+	return Team.find_nearest(get_tree(), Team.opposite(team), global_position, stats.aggro_range * size_scale)
 
 
 func has_valid_target() -> bool:
@@ -115,19 +123,24 @@ func current_speed_multiplier() -> float:
 	return 1.0
 
 
+## Qual escala do GameScale este inimigo usa (o Boss troca para BOSS).
+func scale_kind() -> GameScale.Kind:
+	return GameScale.Kind.ENEMY
+
+
 ## Sorteia um ataque (por peso) entre os que alcançam o alvo.
 func choose_attack(distance: float) -> Ability:
 	var attacks := get_attacks()
 	var weights := get_attack_weights()
 	var total := 0.0
 	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range and caster.is_ready(attacks[i]):
+		if attacks[i] and distance <= attacks[i].ai_range * size_scale and caster.is_ready(attacks[i]):
 			total += weights[i] if i < weights.size() else 1.0
 	if total <= 0.0:
 		return null
 	var roll := randf() * total
 	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range and caster.is_ready(attacks[i]):
+		if attacks[i] and distance <= attacks[i].ai_range * size_scale and caster.is_ready(attacks[i]):
 			roll -= weights[i] if i < weights.size() else 1.0
 			if roll <= 0.0:
 				return attacks[i]
@@ -139,7 +152,7 @@ func max_attack_range() -> float:
 	var best := 0.0
 	for ability: Ability in get_attacks():
 		if ability:
-			best = maxf(best, ability.ai_range)
+			best = maxf(best, ability.ai_range * size_scale)
 	return best
 
 
@@ -175,10 +188,10 @@ func _on_hit_received(hit: HitData) -> void:
 	visual.flash()
 	if cfg:
 		var heavy := hit.juice_level != Ability.JuiceLevel.LIGHT
-		Juice.damage_number(global_position, applied, cfg.color_damage_dealt, heavy)
+		Juice.damage_number(hurtbox.global_position, applied, cfg.color_damage_dealt, heavy)
 		Juice.hit_stop_for(hit.juice_level)
 		Juice.shake(hit.juice_level)
-		Juice.burst(cfg.particles_hit, global_position, hit.color, hit.direction)
+		Juice.burst(cfg.particles_hit, hurtbox.global_position, hit.color, hit.direction)
 		if cfg.knockback_enabled:
 			var knock := hit.knockback * cfg.knockback_multiplier * (1.0 - stats.knockback_resistance)
 			movement.apply_knockback(hit.direction * knock * (0.3 if blocked else 1.0))

@@ -18,13 +18,13 @@
 [ext_resource type="Script" path="res://scripts/player/states/player_hurt.gd" id="16_hurt"]
 [ext_resource type="Script" path="res://scripts/player/states/player_dead.gd" id="17_dead"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 resource_local_to_scene = true
-radius = 18.0
+size = Vector2(34, 20)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
 resource_local_to_scene = true
-radius = 20.0
+size = Vector2(40, 72)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -32,10 +32,9 @@ motion_mode = 1
 script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_body")
+shape = SubResource("RectangleShape2D_body")
 
 [node name="Shadow" type="Node2D" parent="."]
-position = Vector2(0, 16)
 script = ExtResource("3_shape")
 kind = 3
 size = Vector2(40, 14)
@@ -49,7 +48,10 @@ sprite = NodePath("Sprite2D")
 animated = NodePath("AnimatedSprite2D")
 
 [node name="Placeholder" type="Node2D" parent="Visual"]
+position = Vector2(0, -36)
 script = ExtResource("3_shape")
+kind = 13
+size = Vector2(40, 72)
 eyes = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Visual"]
@@ -65,6 +67,10 @@ script = ExtResource("4_guard")
 [node name="AimIndicator" type="Node2D" parent="."]
 script = ExtResource("5_aim")
 
+[node name="AttackOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -36)
+gizmo_extents = 14.0
+
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 128
 collision_mask = 0
@@ -72,7 +78,7 @@ monitoring = false
 script = ExtResource("6_hurt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-shape = SubResource("CircleShape2D_hurt")
+shape = SubResource("RectangleShape2D_hurt")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("7_health")

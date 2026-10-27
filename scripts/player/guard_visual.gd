@@ -9,8 +9,10 @@ var in_parry_window: bool = false
 var _tween: Tween
 
 
-func show_guard(body_radius: float) -> void:
-	radius = body_radius + 10.0
+## Escudo em volta do corpo (coordenadas do Visual, que já está na escala do personagem).
+func show_guard(body_size: Vector2) -> void:
+	radius = maxf(body_size.x, body_size.y) * 0.5 + 8.0
+	position = Vector2(0, -body_size.y * 0.5)
 	visible = true
 	modulate = Color.WHITE
 	scale = Vector2.ONE

@@ -15,6 +15,7 @@ var _title_tween: Tween
 
 
 func _ready() -> void:
+	GameScale.apply_ui(self)
 	_title.text = Texts.ui("menu.title")
 	_subtitle.text = Texts.ui("menu.subtitle")
 	_play.text = Texts.ui("menu.play")

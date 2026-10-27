@@ -44,7 +44,9 @@ func show_ally_figure(stats: CharacterStats) -> void:
 	_ally_figure.visible = stats != null
 	if stats:
 		_ally_figure.apply_look(stats.texture, stats.sprite_frames, stats.body_color, stats.accent_color,
-			stats.placeholder_accent, stats.body_radius, stats.sprite_scale, stats.sprite_offset)
+			stats.placeholder_accent, stats.sprite_scale, stats.sprite_offset)
+		_ally_figure.placeholder.size = stats.body_size
+		_ally_figure.placeholder.position = Vector2(0, -stats.body_size.y * 0.5)
 
 
 func get_spawn_points() -> Array[Vector2]:

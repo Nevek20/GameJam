@@ -10,7 +10,7 @@ radius = 230.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tent"]
 size = Vector2(120, 50)
 
-[node name="ArmyCamp" type="Node2D"]
+[node name="ArmyCamp" type="Node2D" groups=["scenery"]]
 y_sort_enabled = true
 script = ExtResource("1_camp")
 
@@ -54,6 +54,8 @@ y_sort_enabled = true
 [node name="Soldier1" type="Node2D" parent="Soldiers"]
 position = Vector2(-90, 30)
 script = ExtResource("2_shape")
+kind = 13
+size = Vector2(36, 64)
 color = Color(0.8, 0.2, 0.28, 1)
 accent = 3
 accent_color = Color(0.25, 0.05, 0.1, 1)
@@ -62,6 +64,8 @@ eyes = true
 [node name="Soldier2" type="Node2D" parent="Soldiers"]
 position = Vector2(-30, 55)
 script = ExtResource("2_shape")
+kind = 13
+size = Vector2(36, 64)
 color = Color(0.8, 0.2, 0.28, 1)
 accent = 3
 accent_color = Color(0.25, 0.05, 0.1, 1)
@@ -70,6 +74,8 @@ eyes = true
 [node name="Soldier3" type="Node2D" parent="Soldiers"]
 position = Vector2(35, 50)
 script = ExtResource("2_shape")
+kind = 13
+size = Vector2(36, 64)
 color = Color(0.8, 0.2, 0.28, 1)
 accent = 3
 accent_color = Color(0.25, 0.05, 0.1, 1)
@@ -78,6 +84,8 @@ eyes = true
 [node name="Soldier4" type="Node2D" parent="Soldiers"]
 position = Vector2(95, 25)
 script = ExtResource("2_shape")
+kind = 13
+size = Vector2(36, 64)
 color = Color(0.8, 0.2, 0.28, 1)
 accent = 3
 accent_color = Color(0.25, 0.05, 0.1, 1)
@@ -86,7 +94,8 @@ eyes = true
 [node name="Captain" type="Node2D" parent="Soldiers"]
 position = Vector2(0, 10)
 script = ExtResource("2_shape")
-size = Vector2(46, 46)
+kind = 13
+size = Vector2(48, 80)
 color = Color(0.55, 0.1, 0.4, 1)
 accent = 4
 accent_color = Color(1, 0.75, 0.3, 1)
@@ -101,6 +110,7 @@ animated = NodePath("AnimatedSprite2D")
 
 [node name="Placeholder" type="Node2D" parent="AllyFigure"]
 script = ExtResource("2_shape")
+kind = 13
 eyes = true
 
 [node name="Sprite2D" type="Sprite2D" parent="AllyFigure"]

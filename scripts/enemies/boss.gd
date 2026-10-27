@@ -40,6 +40,10 @@ func current_attack_interval() -> float:
 	return phase.attack_interval if phase else stats.attack_interval
 
 
+func scale_kind() -> GameScale.Kind:
+	return GameScale.Kind.BOSS
+
+
 func current_speed_multiplier() -> float:
 	var phase := current_phase()
 	return phase.speed_multiplier if phase else 1.0
@@ -56,7 +60,8 @@ func _on_health_changed(current: float, maximum: float) -> void:
 			next = i
 	if next != phase_index:
 		phase_index = next
-		movement.configure(stats.move_speed * current_speed_multiplier(), stats.acceleration, stats.friction)
+		movement.configure(stats.move_speed * current_speed_multiplier() * size_scale,
+			stats.acceleration * size_scale, stats.friction * size_scale)
 		phase_changed.emit(phase_index)
 		# Adiado: estamos dentro do callback de dano.
 		_start_roar.call_deferred()

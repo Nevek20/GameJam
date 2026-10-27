@@ -12,5 +12,7 @@ extends Resource
 @export_range(0.0, 1.0) var ultimate_chance: float = 0.15
 @export_range(0.0, 1.0) var dash_chance: float = 0.12
 @export_range(0.0, 1.0) var parry_chance: float = 0.0
+## Tenta aparar só se o alvo atacar a esta distância ou menos.
+@export var parry_trigger_range: float = 160.0
 ## Quanto anda de lado (strafe) em vez de ir reto.
 @export_range(0.0, 1.0) var strafe_amount: float = 0.4

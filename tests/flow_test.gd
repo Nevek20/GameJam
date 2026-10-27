@@ -250,6 +250,7 @@ func _bot_fight(game: Game, seconds: float) -> void:
 		# Mantém o bot vivo: o teste é de estabilidade, não de balanceamento.
 		if p.health.current < start_hp * 0.5:
 			p.health.heal(start_hp)
+		p.invulnerable_left = 1.0
 		await _wait(0.1)
 		t += 0.1
 	if is_instance_valid(p):

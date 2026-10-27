@@ -66,7 +66,7 @@ func end_active(_caster: AbilityCaster) -> void:
 
 ## Desenha o aviso visual durante a anticipação (coordenadas locais do lançador).
 func draw_telegraph(canvas: CanvasItem, aim: Vector2, progress: float, tint: Color) -> void:
-	var length := ai_range
+	var length := ai_range * AbilityCaster.scale_of(canvas)
 	canvas.draw_line(Vector2.ZERO, aim * length, Color(tint, 0.35), 3.0)
 	canvas.draw_line(Vector2.ZERO, aim * length * progress, Color(tint, 0.8), 3.0)
 

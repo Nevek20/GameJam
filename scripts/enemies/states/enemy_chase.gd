@@ -43,7 +43,7 @@ func physics_update(delta: float) -> void:
 
 func _try_block(dist: float) -> bool:
 	var s := enemy.stats
-	if s.block_chance <= 0.0 or enemy.block_cooldown_left > 0.0 or dist > 160.0:
+	if s.block_chance <= 0.0 or enemy.block_cooldown_left > 0.0 or dist > s.block_trigger_range * enemy.size_scale:
 		return false
 	if not (enemy.target.has_method(&"is_attacking") and enemy.target.call(&"is_attacking")):
 		return false

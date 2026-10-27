@@ -12,7 +12,7 @@ func enter(_msg: Dictionary) -> void:
 	if dir == Vector2.ZERO:
 		dir = player.aim_dir
 	dir = dir.normalized()
-	_velocity = dir * (stats.dash_distance / maxf(stats.dash_duration, 0.01))
+	_velocity = dir * (stats.dash_distance * player.size_scale / maxf(stats.dash_duration, 0.01))
 	_time_left = stats.dash_duration
 	_trail_left = 0.0
 	player.dash_cooldown_left = stats.dash_cooldown

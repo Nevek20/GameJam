@@ -17,6 +17,8 @@ var aim_dir: Vector2 = Vector2.RIGHT
 var damage_multiplier: float = 1.0
 var windup_multiplier: float = 1.0
 var cooldown_multiplier: float = 1.0
+## Escala do dono (GameScale): tamanho, alcance e avanço dos golpes acompanham.
+var geometry_scale: float = 1.0
 var show_telegraph: bool = false
 var telegraph_color: Color = Color(1, 0.25, 0.35)
 
@@ -197,3 +199,9 @@ func _advance_while_done() -> void:
 func _draw() -> void:
 	if phase == Phase.WINDUP and show_telegraph and current:
 		current.draw_telegraph(self, aim_dir, phase_progress(), telegraph_color)
+
+
+## Escala usada pelos telegraphs (o canvas do desenho é o próprio AbilityCaster).
+static func scale_of(canvas: CanvasItem) -> float:
+	var c := canvas as AbilityCaster
+	return c.geometry_scale if c else 1.0

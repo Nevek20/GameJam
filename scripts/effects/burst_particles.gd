@@ -19,13 +19,14 @@ func play(preset: ParticlePreset, pos: Vector2, tint: Color, dir: Vector2) -> vo
 	amount = maxi(preset.amount, 1)
 	lifetime = preset.lifetime
 	explosiveness = preset.explosiveness
-	initial_velocity_min = preset.speed_min
-	initial_velocity_max = preset.speed_max
+	var k := GameScale.of(GameScale.Kind.EFFECTS)
+	initial_velocity_min = preset.speed_min * k
+	initial_velocity_max = preset.speed_max * k
 	spread = preset.spread
-	scale_amount_min = preset.scale_min
-	scale_amount_max = preset.scale_max
-	damping_min = preset.damping
-	damping_max = preset.damping
+	scale_amount_min = preset.scale_min * k
+	scale_amount_max = preset.scale_max * k
+	damping_min = preset.damping * k
+	damping_max = preset.damping * k
 	gravity = preset.gravity
 	direction = dir if dir != Vector2.ZERO else Vector2.RIGHT
 	_gradient.set_color(0, Color(tint, 1.0))

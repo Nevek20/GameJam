@@ -22,15 +22,16 @@ var _hit_list: Array[HurtboxComponent] = []
 
 func begin_active(caster: AbilityCaster) -> void:
 	var tree := caster.get_tree()
-	var origin := caster.global_position + caster.aim_dir * 18.0
+	var k := caster.geometry_scale
+	var origin := caster.global_position + caster.aim_dir * 18.0 * k
 	var group := Team.hurtbox_group(Team.opposite(caster.team))
 	var candidates := tree.get_nodes_in_group(group)
 	_hit_list.clear()
 	_points.clear()
 	_points.append(origin)
-	var current := _find_first(candidates, origin, caster.aim_dir)
+	var current := _find_first(candidates, origin, caster.aim_dir, first_range * k)
 	if current == null:
-		_points.append(origin + caster.aim_dir * first_range)
+		_points.append(origin + caster.aim_dir * first_range * k)
 		_spawn_line(caster)
 		return
 	var scale := 1.0
@@ -46,18 +47,19 @@ func begin_active(caster: AbilityCaster) -> void:
 			break
 		jumps += 1
 		scale *= damage_falloff
-		current = _find_next(candidates, current.global_position)
+		current = _find_next(candidates, current.global_position, chain_range * k)
 	_spawn_line(caster)
 
 
 func draw_telegraph(canvas: CanvasItem, aim: Vector2, progress: float, tint: Color) -> void:
-	canvas.draw_line(Vector2.ZERO, aim * first_range, Color(tint, 0.2), 2.0)
-	canvas.draw_line(Vector2.ZERO, aim * first_range * progress, Color(tint, 0.8), line_width)
+	var length := first_range * AbilityCaster.scale_of(canvas)
+	canvas.draw_line(Vector2.ZERO, aim * length, Color(tint, 0.2), 2.0)
+	canvas.draw_line(Vector2.ZERO, aim * length * progress, Color(tint, 0.8), line_width)
 
 
-func _find_first(candidates: Array[Node], origin: Vector2, aim: Vector2) -> HurtboxComponent:
+func _find_first(candidates: Array[Node], origin: Vector2, aim: Vector2, max_dist: float) -> HurtboxComponent:
 	var best: HurtboxComponent = null
-	var best_dist := first_range
+	var best_dist := max_dist
 	var cone := deg_to_rad(aim_cone_degrees)
 	for node: Node in candidates:
 		var hb := node as HurtboxComponent
@@ -72,9 +74,9 @@ func _find_first(candidates: Array[Node], origin: Vector2, aim: Vector2) -> Hurt
 	return best
 
 
-func _find_next(candidates: Array[Node], from: Vector2) -> HurtboxComponent:
+func _find_next(candidates: Array[Node], from: Vector2, max_dist: float) -> HurtboxComponent:
 	var best: HurtboxComponent = null
-	var best_dist := chain_range
+	var best_dist := max_dist
 	for node: Node in candidates:
 		var hb := node as HurtboxComponent
 		if hb == null or not hb.is_active() or _hit_list.has(hb):

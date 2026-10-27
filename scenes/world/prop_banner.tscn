@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/prop_visual.gd" id="1_visual"]
 [ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="2_shape"]
 
-[node name="PropBanner" type="Node2D"]
+[node name="PropBanner" type="Node2D" groups=["scenery"]]
 
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("1_visual")

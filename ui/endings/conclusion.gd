@@ -14,6 +14,7 @@ var _waiting: bool = false
 
 
 func _ready() -> void:
+	GameScale.apply_ui(self)
 	AudioManager.play_music(&"ending")
 	_card.hide()
 	for id: StringName in [GameState.p1_id(), GameState.p2_id()]:

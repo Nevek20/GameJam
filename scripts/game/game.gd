@@ -40,7 +40,10 @@ func _ready() -> void:
 		var ids := GameManager.character_ids()
 		GameState.reset(ids)
 		ReputationState.reset(ids)
-	camera.set_bounds(level.bounds)
+	camera.set_bounds(level.camera_bounds())
+	camera.set_base_zoom(GameScale.current().camera_zoom)
+	for ui: Control in [hud, dialog, qte, tutorial, intro, tombstone, pause_menu]:
+		GameScale.apply_ui(ui)
 	camera.set_smoothing(juice.config.camera_smoothing)
 	interactions.setup(match_config, dialog, qte, level.get_houses(), level.camp)
 	interactions.army_choice_made.connect(_on_army_choice)

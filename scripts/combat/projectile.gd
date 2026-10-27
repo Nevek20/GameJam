@@ -7,6 +7,8 @@ var caster: AbilityCaster
 
 var _velocity: Vector2 = Vector2.ZERO
 var _traveled: float = 0.0
+var _range: float = 0.0
+var _size_scale: float = 1.0
 var _pierce_left: int = 0
 var _impacting: bool = false
 var _circle := CircleShape2D.new()
@@ -31,11 +33,14 @@ func launch(projectile_ability: ProjectileAbility, by: AbilityCaster, from: Vect
 	_impacting = false
 	_traveled = 0.0
 	_pierce_left = projectile_ability.pierce
-	_velocity = direction * projectile_ability.speed
+	# Velocidade e alcance acompanham quem atirou; o tamanho também usa a escala de projétil.
+	_size_scale = by.geometry_scale * GameScale.current().projectile_scale
+	_velocity = direction * projectile_ability.speed * by.geometry_scale
+	_range = projectile_ability.max_range * by.geometry_scale
 	_circle.radius = projectile_ability.radius
 	global_position = from
 	rotation = direction.angle()
-	scale = Vector2(1.25, 0.85)
+	scale = Vector2(1.25, 0.85) * _size_scale
 	modulate = Color.WHITE
 	queue_redraw()
 
@@ -53,8 +58,8 @@ func _physics_process(delta: float) -> void:
 		return
 	super(delta)
 	global_position += _velocity * delta
-	_traveled += ability.speed * delta
-	if _traveled >= ability.max_range:
+	_traveled += _velocity.length() * delta
+	if _traveled >= _range:
 		_impact()
 
 
@@ -90,7 +95,7 @@ func _impact() -> void:
 	if _impact_tween:
 		_impact_tween.kill()
 	_impact_tween = create_tween().set_parallel(true)
-	_impact_tween.tween_property(self, "scale", squash * (1.0 + ability.impact_radius / 40.0), 0.09)
+	_impact_tween.tween_property(self, "scale", squash * _size_scale * (1.0 + ability.impact_radius / 40.0), 0.09)
 	_impact_tween.tween_property(self, "modulate:a", 0.0, 0.09)
 	_impact_tween.chain().tween_callback(_release)
 
@@ -101,7 +106,7 @@ func _area_damage() -> void:
 		var hurtbox := node as HurtboxComponent
 		if hurtbox == null or not hurtbox.is_active() or _next_hit_time.has(hurtbox):
 			continue
-		if hurtbox.global_position.distance_to(global_position) <= ability.impact_radius:
+		if hurtbox.global_position.distance_to(global_position) <= ability.impact_radius * _size_scale:
 			var hit := ability.make_hit(caster, global_position.direction_to(hurtbox.global_position), 0.6)
 			hit.hit_position = hurtbox.global_position
 			hurtbox.receive_hit(hit)

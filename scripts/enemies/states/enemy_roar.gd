@@ -15,7 +15,7 @@ func enter(msg: Dictionary) -> void:
 		Juice.shake_custom(cfg.shake_boss_strength, cfg.shake_boss_duration)
 		Juice.zoom_punch(cfg.zoom_boss)
 		if enemy.skin:
-			Juice.burst(cfg.particles_skill, enemy.global_position, enemy.skin.body_color)
+			Juice.burst(cfg.particles_skill, enemy.hurtbox.global_position, enemy.skin.body_color)
 		enemy.visual.squash(Vector2(1.4, 0.7))
 
 

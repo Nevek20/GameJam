@@ -4,7 +4,12 @@ extends Resource
 
 @export var id: StringName = &"soldier"
 @export var skin: EnemySkin
-@export var body_radius: float = 17.0
+## Tamanho do corpo (largura x altura): desenho placeholder e área que recebe dano.
+@export var body_size: Vector2 = Vector2(36, 64)
+## Colisão com o cenário: retângulo nos pés (largura x altura).
+@export var collision_size: Vector2 = Vector2(30, 18)
+## Ponto de onde saem golpes e projéteis, relativo ao centro do corpo (nó AttackOrigin).
+@export var attack_origin_offset: Vector2 = Vector2.ZERO
 @export var sprite_scale: Vector2 = Vector2.ONE
 
 @export_group("Vida e movimento")
@@ -39,6 +44,8 @@ extends Resource
 @export var block_duration: float = 0.8
 @export var block_damage_multiplier: float = 0.15
 @export var block_cooldown: float = 2.5
+## Só ergue a guarda se o alvo atacar a esta distância ou menos.
+@export var block_trigger_range: float = 160.0
 
 @export_group("Recompensa")
 ## Se true, conta para heroísmo ao ser derrotado (quando o jogador enfrenta o exército).

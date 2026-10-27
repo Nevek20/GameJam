@@ -9,7 +9,7 @@ var _trail_left: float
 func enter(msg: Dictionary) -> void:
 	var s := enemy.stats
 	var dir: Vector2 = msg.get("direction", Vector2.RIGHT)
-	_velocity = dir * (s.dash_distance / maxf(s.dash_duration, 0.01))
+	_velocity = dir * (s.dash_distance * enemy.size_scale / maxf(s.dash_duration, 0.01))
 	_time_left = s.dash_duration
 	_trail_left = 0.0
 	enemy.dash_cooldown_left = s.dash_cooldown

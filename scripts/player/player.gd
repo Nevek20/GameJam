@@ -19,6 +19,8 @@ var controller: CharacterController
 var boss_profile: BossCharacterProfile
 var aim_dir: Vector2 = Vector2.RIGHT
 var dead: bool = false
+## Escala do corpo (GameScale). Distâncias como o dash são multiplicadas por ela.
+var size_scale: float = 1.0
 var dash_cooldown_left: float = 0.0
 var parry_cooldown_left: float = 0.0
 var invulnerable_left: float = 0.0
@@ -33,6 +35,8 @@ var invulnerable_left: float = 0.0
 @onready var state_machine: StateMachine = $StateMachine
 @onready var _body_shape: CollisionShape2D = $CollisionShape2D
 @onready var _hurt_shape: CollisionShape2D = $Hurtbox/CollisionShape2D
+## Marcador visível no editor: de onde saem golpes e projéteis.
+@onready var attack_origin: Marker2D = $AttackOrigin
 
 
 func _ready() -> void:
@@ -62,11 +66,16 @@ func setup(character: CharacterStats, side: Team.Faction, new_controller: Charac
 	caster.windup_multiplier = profile.windup_multiplier if profile else 1.0
 	caster.cooldown_multiplier = profile.cooldown_multiplier if profile else 1.0
 	var speed_mult := profile.speed_multiplier if profile else 1.0
-	movement.configure(stats.move_speed * speed_mult, stats.acceleration, stats.friction)
-	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
-	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
+	var s := GameScale.of(GameScale.Kind.BOSS if profile else GameScale.Kind.PLAYER)
+	movement.configure(stats.move_speed * speed_mult * s, stats.acceleration * s, stats.friction * s)
 	visual.apply_look(stats.texture, stats.sprite_frames, stats.body_color, stats.accent_color,
-		stats.placeholder_accent, stats.body_radius, stats.sprite_scale, stats.sprite_offset)
+		stats.placeholder_accent, stats.sprite_scale, stats.sprite_offset)
+	size_scale = GameScale.of(GameScale.Kind.BOSS if profile else GameScale.Kind.PLAYER)
+	BodySetup.apply(stats.body_size, stats.collision_size, stats.attack_origin_offset, size_scale,
+		_body_shape, _hurt_shape, hurtbox, caster, attack_origin, visual)
+	caster.geometry_scale = size_scale
+	aim_indicator.position = caster.position
+	aim_indicator.distance = stats.body_size.x * size_scale * 0.5 + 18.0
 	_set_controller(new_controller)
 	aim_indicator.visible = new_controller.is_human()
 	aim_indicator.color = Color(stats.accent_color, 0.8)
@@ -224,13 +233,13 @@ func _apply_damage(hit: HitData, multiplier: float, blocked: bool) -> void:
 		var knock := hit.knockback * cfg.knockback_multiplier * (0.35 if blocked else 1.0)
 		if cfg.knockback_enabled:
 			movement.apply_knockback(hit.direction * knock)
-		Juice.burst(cfg.particles_hit, global_position, hit.color, hit.direction)
+		Juice.burst(cfg.particles_hit, hurtbox.global_position, hit.color, hit.direction)
 		if is_human():
-			Juice.damage_number(global_position, applied, cfg.color_damage_taken, false)
+			Juice.damage_number(hurtbox.global_position, applied, cfg.color_damage_taken, false)
 			Juice.hit_stop(cfg.hitstop_hurt)
 			Juice.shake_custom(cfg.shake_hurt_strength, cfg.shake_hurt_duration)
 		else:
-			Juice.damage_number(global_position, applied, cfg.color_damage_dealt, hit.juice_level != Ability.JuiceLevel.LIGHT)
+			Juice.damage_number(hurtbox.global_position, applied, cfg.color_damage_dealt, hit.juice_level != Ability.JuiceLevel.LIGHT)
 			Juice.hit_stop_for(hit.juice_level)
 			Juice.shake(hit.juice_level)
 	AudioManager.play_sfx(&"block" if blocked else (&"hurt" if is_human() else hit.sfx_hit))

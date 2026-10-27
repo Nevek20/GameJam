@@ -15,13 +15,13 @@ var _flash_tween: Tween
 var _squash_tween: Tween
 
 
+## O tamanho do placeholder e a escala vêm do BodySetup (corpo retangular).
 func apply_look(texture: Texture2D, frames: SpriteFrames, body_color: Color, accent_color: Color,
-		accent: PlaceholderShape.Accent, radius: float, sprite_scale: Vector2, offset: Vector2 = Vector2.ZERO) -> void:
+		accent: PlaceholderShape.Accent, sprite_scale: Vector2, offset: Vector2 = Vector2.ZERO) -> void:
 	sprite_offset = offset
 	placeholder.color = body_color
 	placeholder.accent_color = accent_color
 	placeholder.accent = accent
-	placeholder.size = Vector2(radius * 2.0, radius * 2.0)
 	animated.visible = frames != null
 	sprite.visible = frames == null and texture != null
 	placeholder.visible = frames == null and texture == null
