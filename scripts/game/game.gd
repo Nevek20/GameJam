@@ -92,6 +92,8 @@ func _place_player(index: int) -> void:
 	GameState.current_index = index
 	player = _players[GameState.current_id()]
 	player.spawn_at(level.marker("PlayerStart"))
+	if index == 0 or level.barrels.config.respawn_each_phase:
+		level.barrels.respawn()
 	player.set_input_enabled(false)
 	camera.set_target(player, true)
 	hud.bind_player(player)

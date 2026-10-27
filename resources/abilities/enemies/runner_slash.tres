@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ShapeAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/shape_ability.gd" id="1_shape"]
+
+[resource]
+script = ExtResource("1_shape")
+size = Vector2(44, 46)
+forward_offset = 32.0
+id = &"runner_slash"
+color = Color(1, 0.75, 0.3, 0.85)
+damage = 5.0
+knockback = 140.0
+windup = 0.35
+active_time = 0.1
+recovery = 0.3
+ai_range = 55.0

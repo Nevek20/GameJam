@@ -7,6 +7,8 @@ script = ExtResource("1_erpth")
 sfx = Dictionary[StringName, AudioStream]({
 &"attack_mana": null,
 &"attack_slash": null,
+&"barrel_break": null,
+&"barrel_hit": null,
 &"block": null,
 &"boss_defeated": null,
 &"boss_roar": null,
@@ -21,6 +23,7 @@ sfx = Dictionary[StringName, AudioStream]({
 &"loot": null,
 &"parry": null,
 &"parry_success": null,
+&"potion_pickup": null,
 &"qte_fail": null,
 &"qte_success": null,
 &"rescue": null,

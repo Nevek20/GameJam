@@ -111,6 +111,16 @@ static func damage_number(pos: Vector2, amount: float, color: Color, big: bool =
 		n.show_number(pos, amount, color, big, c)
 
 
+## Número verde de cura ("+30").
+static func heal_number(pos: Vector2, amount: float) -> void:
+	var c := cfg()
+	if c == null or not c.enabled or not c.damage_numbers_enabled or Pools.instance == null:
+		return
+	var n := Pools.instance.damage_numbers.acquire() as DamageNumber
+	if n:
+		n.show_number(pos, amount, c.color_heal, true, c, "+")
+
+
 static func afterimage(visual: EntityVisual, color: Color) -> void:
 	var c := cfg()
 	if c == null or not c.enabled or not c.trail_enabled or Pools.instance == null:

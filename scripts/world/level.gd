@@ -8,6 +8,7 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 
 @onready var world: Node2D = $World
 @onready var boundary: MapBoundary = $World/MapBoundary
+@onready var barrels: BarrelSpawner = $World/BarrelSpawner
 @onready var _ground: ColorRect = $Ground
 @onready var _decor: DreamDecor = $Decor
 @onready var actors: Node2D = $World/Actors

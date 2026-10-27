@@ -56,8 +56,14 @@ func _scenario(title: String, body: Callable) -> void:
 # --- Cenários ---
 
 func _none_allied(game: Game) -> void:
+	await _barrel_and_potion(game)
 	await _rescue_first_house(game)
 	await _army_choice(game, 0)
+	await _wait(2.0)
+	var has_runner := false
+	for node: Node in Pools.get_pool(&"enemies").get_active():
+		has_runner = has_runner or (node as Enemy).stats.id == &"runner"
+	check(has_runner, "inimigo rápido aparece na onda")
 	await _bot_fight(game, 6.0)
 	await _time_up(game)
 	await _p2_intro(game)
@@ -156,6 +162,32 @@ func _p2_dies_boss(game: Game) -> void:
 
 
 # --- Passos ---
+
+func _barrel_and_potion(game: Game) -> void:
+	var barrels := Pools.get_pool(&"barrels")
+	check(barrels.active_count() > 0, "barris espalhados pela vila")
+	var cfg := game.level.barrels.config
+	var old_chance := cfg.drop_chance
+	cfg.drop_chance = 1.0
+	var barrel := barrels.get_active()[0] as Barrel
+	var hit := HitData.new()
+	hit.damage = 9999.0
+	hit.team = Team.Faction.HEROES
+	barrel.hurtbox.receive_hit(hit)
+	await _wait(0.2)
+	cfg.drop_chance = old_chance
+	var potions := Pools.get_pool(&"potions")
+	check(potions.active_count() == 1, "barril quebrado solta poção")
+	var potion := potions.get_active()[0] as Potion
+	game.player.health.take_damage(50.0)
+	var hurt_hp := game.player.health.current
+	game.player.global_position = potion.global_position
+	await _wait(0.3)
+	check(game.player.health.current > hurt_hp, "poção cura ao tocar")
+	check(potions.active_count() == 0, "poção some depois de pega")
+	game.player.global_position = game.level.marker("PlayerStart")
+	await _wait(0.2)
+
 
 func _wait_game() -> Game:
 	for i in 600:

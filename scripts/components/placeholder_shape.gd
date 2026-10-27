@@ -4,7 +4,7 @@ extends Node2D
 ## Forma geométrica desenhada por código enquanto não há sprites.
 ## Fica escondida automaticamente quando o EntityVisual recebe uma textura.
 
-enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER, CHARACTER }
+enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER, CHARACTER, BARREL, POTION }
 enum Accent { NONE, CROWN, HAT, HELMET, HORNS, HOOD }
 
 @export var kind: Kind = Kind.CIRCLE:
@@ -94,6 +94,10 @@ func _draw() -> void:
 			_draw_banner(h)
 		Kind.CHARACTER:
 			_draw_character(h)
+		Kind.BARREL:
+			_draw_barrel(h)
+		Kind.POTION:
+			_draw_potion(h)
 	if eyes:
 		_draw_eyes(h)
 	_draw_accent(h)
@@ -245,6 +249,23 @@ func _draw_character(h: Vector2) -> void:
 	style.set_border_width_all(int(outline_width))
 	draw_style_box(style, body)
 	draw_rect(Rect2(Vector2(-h.x + outline_width, h.y * 0.25), Vector2(size.x - outline_width * 2.0, h.y * 0.75 - outline_width)), color.darkened(0.25))
+
+
+func _draw_barrel(h: Vector2) -> void:
+	draw_rect(Rect2(-h, size), color)
+	draw_rect(Rect2(Vector2(-h.x, -h.y * 0.55), Vector2(size.x, size.y * 0.12)), secondary_color)
+	draw_rect(Rect2(Vector2(-h.x, h.y * 0.4), Vector2(size.x, size.y * 0.12)), secondary_color)
+	draw_line(Vector2(-h.x * 0.35, -h.y), Vector2(-h.x * 0.35, h.y), color.darkened(0.2), 2.0)
+	draw_line(Vector2(h.x * 0.35, -h.y), Vector2(h.x * 0.35, h.y), color.darkened(0.2), 2.0)
+	_outline_poly(PackedVector2Array([-h, Vector2(h.x, -h.y), h, Vector2(-h.x, h.y)]))
+
+
+func _draw_potion(h: Vector2) -> void:
+	draw_circle(Vector2(0, h.y * 0.25), h.x, color)
+	draw_rect(Rect2(Vector2(-h.x * 0.3, -h.y), Vector2(h.x * 0.6, h.y * 0.8)), color.lightened(0.3))
+	draw_rect(Rect2(Vector2(-h.x * 0.4, -h.y - 4.0), Vector2(h.x * 0.8, 5.0)), secondary_color)
+	draw_circle(Vector2(-h.x * 0.35, h.y * 0.1), h.x * 0.25, Color(1, 1, 1, 0.7))
+	_outline_circle_at(Vector2(0, h.y * 0.25), h.x)
 
 
 func _outline_circle_at(center: Vector2, radius: float) -> void:

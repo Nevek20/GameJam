@@ -12,6 +12,8 @@ static var instance: Pools
 @export var afterimages: ObjectPool
 @export var lightning: ObjectPool
 @export var enemies: ObjectPool
+@export var barrels: ObjectPool
+@export var potions: ObjectPool
 
 
 func _enter_tree() -> void:

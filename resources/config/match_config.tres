@@ -11,6 +11,7 @@
 [ext_resource type="Resource" path="res://resources/bosses/knight_boss.tres" id="9_pv5gv"]
 [ext_resource type="Script" path="res://scripts/resources/qte_config.gd" id="10_qhdo4"]
 [ext_resource type="Script" path="res://scripts/resources/match_config.gd" id="11_ifoeb"]
+[ext_resource type="Resource" path="res://resources/enemies/runner.tres" id="12_runner"]
 
 [sub_resource type="Resource" id="Resource_qxo0s"]
 script = ExtResource("1_ddvub")
@@ -34,6 +35,9 @@ script = ExtResource("1_ddvub")
 delay_before = 0.8
 primary_enemy = ExtResource("7_fdsxe")
 primary_count = 4
+fast_enemy = ExtResource("12_runner")
+fast_groups = 1
+fast_group_size = 3
 
 [sub_resource type="Resource" id="Resource_d2eq7"]
 script = ExtResource("1_ddvub")
@@ -42,6 +46,9 @@ primary_enemy = ExtResource("7_fdsxe")
 primary_count = 5
 elite_enemy = ExtResource("8_6sms3")
 elite_count = 1
+fast_enemy = ExtResource("12_runner")
+fast_groups = 1
+fast_group_size = 3
 
 [sub_resource type="Resource" id="Resource_4xlcw"]
 script = ExtResource("1_ddvub")
@@ -50,6 +57,9 @@ primary_enemy = ExtResource("7_fdsxe")
 primary_count = 4
 elite_enemy = ExtResource("8_6sms3")
 elite_count = 2
+fast_enemy = ExtResource("12_runner")
+fast_groups = 2
+fast_group_size = 3
 
 [sub_resource type="Resource" id="Resource_xjlkt"]
 script = ExtResource("10_qhdo4")

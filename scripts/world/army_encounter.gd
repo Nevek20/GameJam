@@ -99,17 +99,22 @@ func _spawn_wave(wave: WaveData) -> void:
 		push_warning("ArmyEncounter: sem pontos de surgimento")
 		return
 	for i in wave.primary_count:
-		_queue_enemy(wave.primary_enemy, points)
+		_queue_enemy(wave.primary_enemy, points.pick_random(), wave.spawn_spread)
 	for i in wave.elite_count:
-		_queue_enemy(wave.elite_enemy, points)
+		_queue_enemy(wave.elite_enemy, points.pick_random(), wave.spawn_spread)
+	# Inimigos rápidos chegam em grupos, cada grupo num ponto.
+	for g in wave.fast_groups:
+		var point: Vector2 = points.pick_random()
+		for i in wave.fast_group_size:
+			_queue_enemy(wave.fast_enemy, point, wave.fast_group_spread)
 	_flush_queue()
 
 
-func _queue_enemy(stats: EnemyStats, points: Array[Vector2]) -> void:
+func _queue_enemy(stats: EnemyStats, point: Vector2, spread: float) -> void:
 	if stats == null:
 		return
 	_queue.append(stats)
-	_queue_points.append(points.pick_random() + Vector2(randf_range(-60, 60), randf_range(-60, 60)))
+	_queue_points.append(point + Vector2(randf_range(-spread, spread), randf_range(-spread, spread)))
 
 
 ## Respeita o limite de inimigos ativos; o resto entra quando houver vaga.

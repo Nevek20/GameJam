@@ -30,6 +30,8 @@
 [ext_resource type="PackedScene" path="res://ui/pause/pause_menu.tscn" id="28_pause"]
 [ext_resource type="Resource" path="res://resources/config/cutscene_switch.tres" id="29_switch"]
 [ext_resource type="Resource" path="res://resources/config/cutscene_boss.tres" id="30_boss_cut"]
+[ext_resource type="PackedScene" path="res://scenes/world/barrel.tscn" id="31_barrel"]
+[ext_resource type="PackedScene" path="res://scenes/world/potion.tscn" id="32_potion"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
@@ -44,7 +46,7 @@ script = ExtResource("5_juice")
 config = ExtResource("6_juice_cfg")
 camera = NodePath("../Camera")
 
-[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies")]
+[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies", "barrels", "potions")]
 script = ExtResource("7_pools")
 hitboxes = NodePath("../Effects/Hitboxes")
 projectiles = NodePath("../Effects/Projectiles")
@@ -53,6 +55,8 @@ damage_numbers = NodePath("../DamageNumbers")
 afterimages = NodePath("../Afterimages")
 lightning = NodePath("../Effects/Lightning")
 enemies = NodePath("../Level/World/Actors/Enemies")
+barrels = NodePath("../Level/World/Actors/Barrels")
+potions = NodePath("../Level/World/Actors/Potions")
 
 [node name="Level" parent="." instance=ExtResource("8_level")]
 
@@ -61,6 +65,18 @@ y_sort_enabled = true
 script = ExtResource("9_pool")
 scene = ExtResource("10_enemy")
 initial_size = 18
+
+[node name="Barrels" type="Node2D" parent="Level/World/Actors"]
+y_sort_enabled = true
+script = ExtResource("9_pool")
+scene = ExtResource("31_barrel")
+initial_size = 12
+
+[node name="Potions" type="Node2D" parent="Level/World/Actors"]
+y_sort_enabled = true
+script = ExtResource("9_pool")
+scene = ExtResource("32_potion")
+initial_size = 8
 
 [node name="Afterimages" type="Node2D" parent="."]
 z_index = -1

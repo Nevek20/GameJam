@@ -7,9 +7,9 @@ var _tween: Tween
 @onready var _label: Label = $Label
 
 
-func show_number(pos: Vector2, amount: float, color: Color, big: bool, cfg: JuiceConfig) -> void:
+func show_number(pos: Vector2, amount: float, color: Color, big: bool, cfg: JuiceConfig, prefix: String = "") -> void:
 	global_position = pos + Vector2(randf_range(-10, 10), -20)
-	_label.text = str(roundi(amount))
+	_label.text = prefix + str(roundi(amount))
 	_label.modulate = color
 	modulate.a = 1.0
 	var s := (cfg.damage_number_big_scale if big else 1.0) * GameScale.of(GameScale.Kind.EFFECTS)

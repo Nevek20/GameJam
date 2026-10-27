@@ -64,6 +64,7 @@ extends Resource
 @export var damage_number_big_scale: float = 1.6
 @export var color_damage_dealt: Color = Color(1, 0.95, 0.6)
 @export var color_damage_taken: Color = Color(1, 0.35, 0.4)
+@export var color_heal: Color = Color(0.45, 1, 0.55)
 
 @export_group("Rastro do dash")
 @export var trail_enabled: bool = true
