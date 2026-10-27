@@ -35,7 +35,5 @@ extends Resource
 @export var knight_boss: BossStats
 ## Ajustes do personagem que vira boss (a IA vem do CharacterStats.ai_profile).
 @export var character_boss_profile: BossCharacterProfile
-## Personagem 2 vai para o boss assim que a luta com o exército termina (senão, quando o tempo acaba).
-@export var p2_boss_after_encounter: bool = true
 ## Caído e revive na luta final com ajudante.
 @export var revive: ReviveConfig

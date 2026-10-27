@@ -11,3 +11,5 @@ extends Resource
 @export_range(0.0, 1.0) var window_start_max: float = 0.55
 ## Atraso antes de a barra começar a cair.
 @export var start_delay: float = 0.35
+## O jogador fica invulnerável durante o QTE.
+@export var invulnerable: bool = true

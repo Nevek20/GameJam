@@ -25,7 +25,10 @@ var dead: bool = false
 var size_scale: float = 1.0
 var dash_cooldown_left: float = 0.0
 var parry_cooldown_left: float = 0.0
+## Invulnerabilidade curta por tempo (depois de tomar dano, parry, revive).
 var invulnerable_left: float = 0.0
+## Fontes de invulnerabilidade ligadas (diálogo, QTE, dash...). Várias convivem sem conflito.
+var _invulnerable_sources: Dictionary = {}
 ## Caído e revive (só na luta final com ajudante): parceiro e configuração.
 var partner: Player
 var revive_config: ReviveConfig
@@ -106,6 +109,7 @@ func spawn_at(pos: Vector2) -> void:
 	dash_cooldown_left = 0.0
 	parry_cooldown_left = 0.0
 	invulnerable_left = 0.0
+	_invulnerable_sources.clear()
 	var hp_mult := boss_profile.health_multiplier if boss_profile else 1.0
 	health.setup(stats.max_health * hp_mult)
 	hurtbox.enabled = true
@@ -131,6 +135,18 @@ func set_input_enabled(value: bool) -> void:
 	if controller:
 		controller.enabled = value
 		controller.clear_buffer()
+
+
+## Liga/desliga uma fonte de invulnerabilidade (ex.: &"dialog", &"qte", &"dash").
+func set_invulnerable(source: StringName, value: bool) -> void:
+	if value:
+		_invulnerable_sources[source] = true
+	else:
+		_invulnerable_sources.erase(source)
+
+
+func is_invulnerable() -> bool:
+	return invulnerable_left > 0.0 or not _invulnerable_sources.is_empty()
 
 
 func is_human() -> bool:
@@ -234,9 +250,7 @@ func _set_controller(new_controller: CharacterController) -> void:
 
 
 func _on_hit_received(hit: HitData) -> void:
-	if dead or invulnerable_left > 0.0:
-		return
-	if state_machine.is_in(&"Dash") and stats.dash_invulnerable:
+	if dead or is_invulnerable():
 		return
 	var multiplier := 1.0
 	var blocked := false

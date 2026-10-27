@@ -95,6 +95,20 @@ separado da colisão, então trocar arte não muda o timing.
 10. **Finais e créditos** – `Endings.character_ending()` / `Endings.kingdom_ending()` (puros), `ui/endings/conclusion`.
 11. **Juice, áudio, transições** – `scripts/core/juice.gd` (+ `JuiceConfig`), `AudioManager`, `ScreenFade`.
 
+### Correções e melhorias (segunda rodada)
+
+Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](GUIA_DE_EDICAO.md)**.
+
+- Muralhas (`MapBoundary`) definem o limite do mapa e da câmera; escala global em `resources/config/game_scale.tres`.
+- Menu com título fixo, borda de hover corrigida; telas de imagem avançam com Enter ou clique esquerdo.
+- Inimigo rápido em grupos (`resources/enemies/runner.tres`), barris com poção (`barrel_config.tres`).
+- `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
+- Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
+- `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).
+- Cair/reviver na luta final (`revive_config.tres`, tecla F); os dois caídos = morte.
+- Objetivos completos → pergunta avançar/explorar (Tab avança depois); invulnerabilidade por fonte.
+- Cutscenes na troca Princesa → Mago e depois da escolha do boss (`cutscene_switch.tres`, `cutscene_boss.tres`).
+
 ### Regras de final (resumo)
 
 - Personagem: morto → lápide; aliado → vitorioso, ou preso se derrotado pelo outro; senão Positivo/Questionável

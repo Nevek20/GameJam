@@ -16,6 +16,7 @@ func enter(_msg: Dictionary) -> void:
 	_time_left = stats.dash_duration
 	_trail_left = 0.0
 	player.dash_cooldown_left = stats.dash_cooldown
+	player.set_invulnerable(&"dash", stats.dash_invulnerable)
 	player.visual.play(&"dash")
 	player.visual.face(dir)
 	AudioManager.play_sfx(&"dash")
@@ -24,6 +25,10 @@ func enter(_msg: Dictionary) -> void:
 		player.visual.squash(cfg.squash_dash)
 		Juice.shake_custom(cfg.shake_dash_strength, cfg.shake_dash_duration)
 		Juice.burst(cfg.particles_dash, player.global_position, player.stats.body_color, -dir)
+
+
+func exit() -> void:
+	player.set_invulnerable(&"dash", false)
 
 
 func physics_update(delta: float) -> void:

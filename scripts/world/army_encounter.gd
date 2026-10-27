@@ -10,6 +10,8 @@ signal enemy_killed(enemy: Enemy)
 enum Mode { NONE, CONFRONT, ALLIANCE }
 
 var mode: Mode = Mode.NONE
+## Modo do último encontro iniciado (continua valendo depois que termina).
+var last_mode: Mode = Mode.NONE
 var config: MatchConfig
 ## Fortalecimento dos inimigos (o Game liga quando o Personagem 1 morre).
 var health_multiplier: float = 1.0
@@ -42,6 +44,7 @@ func setup(match_config: MatchConfig, army_points: Array[Vector2], knight_points
 func start(new_mode: Mode, loop: bool) -> void:
 	stop()
 	mode = new_mode
+	last_mode = new_mode
 	_loop = loop
 	_waves = config.confront_waves if new_mode == Mode.CONFRONT else config.alliance_waves
 	_wave_index = -1

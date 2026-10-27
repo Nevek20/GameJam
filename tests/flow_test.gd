@@ -27,6 +27,7 @@ func _run_all() -> void:
 	await _scenario("ambos aliados", _both_allied)
 	await _scenario("P2 morre na fase", _p2_dies)
 	await _scenario("P2 morre no boss", _p2_dies_boss)
+	await _scenario("objetivos completos: avançar e explorar", _objectives)
 	for line: String in _log:
 		print(line)
 	print("FLUXO: %d falhas" % _failures)
@@ -164,6 +165,65 @@ func _p2_dies_boss(game: Game) -> void:
 	check(game.player.dead and helper.dead, "os dois caídos ao mesmo tempo morrem")
 	_press(Actions.CONFIRM)
 	await _check_conclusion(Endings.KINGDOM_NEGATIVE, [Endings.DEATH, Endings.DEATH])
+
+
+func _objectives(game: Game) -> void:
+	var houses := game.level.get_houses()
+	for i in range(1, houses.size()):
+		houses[i].set_state(GameState.HouseState.RESCUED, false)
+	await _army_choice(game, 0)
+	await _defeat_army(game)
+	check(not game.dialog.is_open, "sem pergunta enquanto falta morador")
+	# Último morador pelo QTE; depois do diálogo vem a pergunta.
+	game.player.global_position = houses[0].global_position + Vector2(0, 90)
+	await _choose(game, 0)
+	for i in 100:
+		if game.qte._running and game.qte._delay_left <= 0.0:
+			break
+		await _wait(0.02)
+	game.qte._bar.value = game.qte._bar.window_start + game.qte._bar.window_size * 0.5
+	_press(Actions.ATTACK)
+	await _wait(0.8)
+	await _choose(game, 0) # fecha o "obrigado" (sem escolhas) e o saque (deixar)
+	await _wait(0.4)
+	check(game.dialog.is_open, "pergunta de objetivos completos (P1)")
+	var hp := game.player.health.current
+	var hit := HitData.new()
+	hit.damage = 50.0
+	hit.team = Team.Faction.FOES
+	game.player.hurtbox.receive_hit(hit)
+	check(game.player.health.current == hp, "invulnerável durante o diálogo")
+	var time_before := game._time_left
+	_press(Actions.CONFIRM)
+	await _wait(0.1)
+	game.dialog._on_choice_pressed(0) # avançar
+	await _p2_intro(game)
+	check(time_before > 30.0, "P1 avançou sem esperar o tempo")
+	await _army_choice(game, 0)
+	await _defeat_army(game)
+	await _wait(0.4)
+	check(game.dialog.is_open, "pergunta de objetivos completos (P2)")
+	_press(Actions.CONFIRM)
+	await _wait(0.1)
+	game.dialog._on_choice_pressed(1) # explorar
+	await _wait(0.3)
+	check(game.phase == Game.Phase.PLAYING and game._can_advance, "explorando, com tecla para avançar")
+	_press(Actions.ADVANCE)
+	await _wait_boss(game, 0)
+	await _win_boss(game)
+	await _check_conclusion(Endings.KINGDOM_POSITIVE, [&"", &""])
+
+
+func _defeat_army(game: Game) -> void:
+	for i in 300:
+		if game._army_defeated:
+			break
+		for node: Node in Pools.get_pool(&"enemies").get_active():
+			var e := node as Enemy
+			if not e.dead:
+				e.health.take_damage(99999.0)
+		await _wait(0.1)
+	check(game._army_defeated, "exército derrotado")
 
 
 # --- Passos ---

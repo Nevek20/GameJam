@@ -13,6 +13,7 @@ const SKILL_Q := &"skill_q"
 const SKILL_E := &"skill_e"
 const ULTIMATE := &"ultimate"
 const INTERACT := &"interact"
+const ADVANCE := &"advance_stage"
 const CONFIRM := &"confirm"
 const PAUSE := &"pause"
 
@@ -28,5 +29,5 @@ static func is_advance(event: InputEvent) -> bool:
 ## Ordem em que aparecem na tela de remapeamento.
 const REMAPPABLE: Array[StringName] = [
 	MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DASH, ATTACK, PARRY,
-	SKILL_Q, SKILL_E, ULTIMATE, INTERACT, CONFIRM, PAUSE,
+	SKILL_Q, SKILL_E, ULTIMATE, INTERACT, ADVANCE, CONFIRM, PAUSE,
 ]

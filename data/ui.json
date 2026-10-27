@@ -32,7 +32,8 @@
 		"ultimate": "Ultimate",
 		"confirm": "Confirmar",
 		"pause": "Pausa",
-		"interact": "Interagir / reviver"
+		"interact": "Interagir / reviver",
+		"advance_stage": "Avançar etapa"
 	},
 	"keys": {
 		"mouse_1": "Mouse Esq.",
@@ -73,7 +74,8 @@
 		"slot_r": "R",
 		"revive_prompt": "Segure {key} para reviver {name}",
 		"downed_self": "Caído! {name} pode te reviver ({time}s)",
-		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)"
+		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)",
+		"advance_prompt": "Objetivos completos! Pressione {key} para avançar"
 	},
 	"objective": {
 		"p1": "Salve os moradores e encontre o exército",

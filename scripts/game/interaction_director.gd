@@ -6,6 +6,8 @@ extends Node
 
 signal army_choice_made(choice: StringName)
 signal busy_changed(busy: bool)
+## Uma casa deixou de estar ocupada (resgatado ou perdido).
+signal house_resolved(house: VillagerHouse)
 
 const CHOICE_HELP := &"help"
 const CHOICE_LEAVE := &"leave"
@@ -66,6 +68,25 @@ func is_busy() -> bool:
 	return _busy
 
 
+## Nenhuma casa com morador esperando (todos resgatados ou já perdidos).
+func all_houses_resolved() -> bool:
+	for house: VillagerHouse in _houses:
+		if house.state == GameState.HouseState.OCCUPIED:
+			return false
+	return true
+
+
+## Pergunta genérica na caixa de diálogo (jogador parado e invulnerável enquanto responde).
+## Retorna o id escolhido, ou CANCEL se a pergunta foi interrompida.
+func ask(speaker: String, text: String, choices: Array[Dictionary]) -> StringName:
+	var token := _begin()
+	var choice: StringName = await _dialog.ask(speaker, text, choices)
+	if token != _token:
+		return DialogBox.CANCEL
+	_end()
+	return choice
+
+
 func is_army_decided() -> bool:
 	return _army_decided
 
@@ -73,6 +94,9 @@ func is_army_decided() -> bool:
 func cancel() -> void:
 	_token += 1
 	enabled = false
+	if player:
+		player.set_invulnerable(&"dialog", false)
+		player.set_invulnerable(&"qte", false)
 	_dialog.cancel()
 	_qte.cancel()
 	_set_busy(false)
@@ -126,17 +150,24 @@ func _run_rescue(house: VillagerHouse) -> void:
 	if choice != CHOICE_HELP:
 		_end()
 		return
+	# O diálogo some durante o QTE; a invulnerabilidade do QTE é configurável.
+	player.set_invulnerable(&"dialog", false)
+	player.set_invulnerable(&"qte", config.qte.invulnerable)
 	var success: bool = await _qte.run(config.qte, Texts.text("dialogues", "qte_title"))
+	player.set_invulnerable(&"qte", false)
+	player.set_invulnerable(&"dialog", true)
 	if token != _token:
 		return
 	if not success:
 		house.set_state(GameState.HouseState.LOST, false)
+		house_resolved.emit(house)
 		refresh_pois()
 		await _dialog.ask(speaker, Texts.text("dialogues", "houses.%s.failed" % key), [])
 		if token == _token:
 			_end()
 		return
 	house.set_state(GameState.HouseState.RESCUED, false)
+	house_resolved.emit(house)
 	ReputationState.register_rescue(current_id())
 	AudioManager.play_sfx(&"rescue")
 	var cfg := Juice.cfg()
@@ -220,13 +251,19 @@ func _begin() -> int:
 	_set_busy(true)
 	if player:
 		player.set_input_enabled(false)
+		# Em diálogo / escolha o jogador não toma dano.
+		player.set_invulnerable(&"dialog", true)
 	return _token
 
 
 func _end() -> void:
-	_set_busy(false)
+	if player:
+		player.set_invulnerable(&"dialog", false)
+		player.set_invulnerable(&"qte", false)
 	if player and enabled and not player.dead:
 		player.set_input_enabled(true)
+	# Por último: quem escuta busy_changed pode abrir outra pergunta na hora.
+	_set_busy(false)
 
 
 func _set_busy(value: bool) -> void:

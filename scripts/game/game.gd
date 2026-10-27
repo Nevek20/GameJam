@@ -19,6 +19,10 @@ var player: Player
 var _players: Dictionary = {}
 var _time_left: float = 0.0
 var _timer_running: bool = false
+## Objetivos do personagem atual (7.1).
+var _army_defeated: bool = false
+var _objectives_asked: bool = false
+var _can_advance: bool = false
 
 @onready var level: Level = $Level
 @onready var camera: CameraRig = $Camera
@@ -55,6 +59,8 @@ func _ready() -> void:
 	encounter.setup(match_config, level.camp.get_spawn_points(), level.marker_group("KnightSpawns"))
 	encounter.enemy_killed.connect(_on_enemy_killed)
 	encounter.encounter_cleared.connect(_on_encounter_cleared)
+	interactions.house_resolved.connect(func(_h: VillagerHouse) -> void: _check_objectives())
+	interactions.busy_changed.connect(func(busy: bool) -> void: if not busy: _check_objectives())
 	encounter.wave_started.connect(_on_wave_started)
 	boss_director.boss_defeated.connect(_on_boss_defeated)
 	_create_players()
@@ -104,6 +110,10 @@ func _place_player(index: int) -> void:
 
 func _start_character_phase() -> void:
 	var index := GameState.current_index
+	_army_defeated = false
+	_objectives_asked = false
+	_can_advance = false
+	hud.set_prompt("")
 	phase = Phase.PLAYING
 	GameManager.set_flow(GameManager.Flow.CHARACTER_1 if index == 0 else GameManager.Flow.CHARACTER_2)
 	_time_left = match_config.character_durations[index]
@@ -189,12 +199,61 @@ func _on_encounter_cleared() -> void:
 	AudioManager.play_sfx(&"fight_end")
 	if phase != Phase.PLAYING:
 		return
-	if GameState.current_index == 1 and match_config.p2_boss_after_encounter:
+	if encounter.last_mode == ArmyEncounter.Mode.CONFRONT:
+		_army_defeated = true
+	hud.show_banner(Texts.ui("banner.cleared"), "")
+	hud.set_objective(Texts.ui("objective.after_fight"))
+	_check_objectives()
+
+
+# --- Objetivos completos (7.1) ---
+
+## P1: todos os moradores resolvidos E exército derrotado. P2: exército derrotado.
+## Só para quem NÃO se aliou; a pergunta aparece uma vez.
+func _check_objectives() -> void:
+	if phase != Phase.PLAYING or _objectives_asked or interactions.is_busy():
+		return
+	var id := GameState.current_id()
+	if ReputationState.is_allied(id) or not _army_defeated:
+		return
+	if GameState.current_index == 0 and not interactions.all_houses_resolved():
+		return
+	_objectives_asked = true
+	@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+	_ask_advance()
+
+
+func _ask_advance() -> void:
+	var path := "objectives.p1" if GameState.current_index == 0 else "objectives.p2"
+	var choice: StringName = await interactions.ask(Texts.text("dialogues", "objectives.speaker"),
+		Texts.text("dialogues", path), [
+			{"id": &"advance", "label": Texts.text("dialogues", "choices.advance")},
+			{"id": &"explore", "label": Texts.text("dialogues", "choices.explore")}])
+	if phase != Phase.PLAYING:
+		return
+	if choice == &"advance":
+		_advance_stage()
+	elif choice == &"explore":
+		_can_advance = true
+		hud.set_prompt(Texts.ui("hud.advance_prompt", {"key": Settings.get_binding_text(Actions.ADVANCE)}))
+
+
+## Vai para a próxima etapa sem esperar o tempo.
+func _advance_stage() -> void:
+	_can_advance = false
+	hud.set_prompt("")
+	if GameState.current_index == 0:
+		@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+		_switch_to_second(false)
+	else:
 		@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
 		_start_boss()
-	else:
-		hud.show_banner(Texts.ui("banner.cleared"), "")
-		hud.set_objective(Texts.ui("objective.after_fight"))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _can_advance and phase == Phase.PLAYING and not interactions.is_busy() and event.is_action_pressed(Actions.ADVANCE):
+		get_viewport().set_input_as_handled()
+		_advance_stage()
 
 
 # --- Troca de personagem e morte ---
