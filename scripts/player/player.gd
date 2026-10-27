@@ -61,7 +61,8 @@ func setup(character: CharacterStats, side: Team.Faction, new_controller: Charac
 	collision_mask = Team.body_mask(side)
 	hurtbox.set_team(side)
 	caster.setup(self, side)
-	caster.show_telegraph = side == Team.Faction.FOES
+	# Telegraph visível para todo personagem controlado pela IA (boss ou ajudante).
+	caster.show_telegraph = side == Team.Faction.FOES or not new_controller.is_human()
 	caster.damage_multiplier = profile.damage_multiplier if profile else 1.0
 	caster.windup_multiplier = profile.windup_multiplier if profile else 1.0
 	caster.cooldown_multiplier = profile.cooldown_multiplier if profile else 1.0
@@ -182,9 +183,10 @@ func _physics_process(delta: float) -> void:
 	_update_cast_aim(delta)
 
 
-# A mira de um ataque fica travada ao lançar; só o feixe acompanha a mira.
+# A mira de um ataque fica travada ao lançar; só o feixe acompanha a mira
+# e o dash de ataque segue o alvo durante o telegraph (trava no fim).
 func _update_cast_aim(delta: float) -> void:
-	if not caster.is_casting():
+	if not caster.is_casting() or caster.is_aim_tracking():
 		caster.set_aim(aim_dir)
 		return
 	var shape := caster.current as ShapeAbility

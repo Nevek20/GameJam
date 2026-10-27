@@ -31,6 +31,10 @@ func physics_update(delta: float) -> void:
 		if cfg:
 			enemy.visual.squash(cfg.squash_attack)
 	_was_active = active
+	# Dash de ataque: a direção segue o alvo no telegraph e trava no fim dele.
+	if enemy.caster.is_aim_tracking() and enemy.has_valid_target():
+		enemy.caster.set_aim(enemy.global_position.direction_to(enemy.target.global_position))
+		enemy.caster.queue_redraw()
 	if enemy.caster.has_forced_velocity():
 		enemy.movement.move_with_velocity(enemy.caster.get_forced_velocity())
 	else:

@@ -9,6 +9,7 @@ var _checks: int = 0
 func _ready() -> void:
 	_test_boss_selector()
 	_test_endings()
+	_test_dash_curve()
 	_test_reputation()
 	_test_texts()
 	_load_everything("res://")
@@ -43,6 +44,21 @@ func _test_boss_selector() -> void:
 	# c) ambos aliados
 	s = BossSelector.select(&"p1", &"p2", true, true, true)
 	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.double_alliance and s.player_id == &"p2", "c) aliança dupla")
+
+
+func _test_dash_curve() -> void:
+	# A distância percorrida (soma da velocidade) tem que bater com dash_distance.
+	for power: float in [1.0, 2.0, 3.0]:
+		var traveled := 0.0
+		var steps := 1000
+		var duration := 0.2
+		for i in steps:
+			var u := (float(i) + 0.5) / float(steps)
+			traveled += DashAttackAbility.speed_at(u, 180.0, power, duration) * duration / float(steps)
+		check(absf(traveled - 180.0) < 0.5, "dash percorre a distância exata (curva %d)" % int(power))
+	var start := DashAttackAbility.speed_at(0.0, 180.0, 2.0, 0.2)
+	var end := DashAttackAbility.speed_at(0.95, 180.0, 2.0, 0.2)
+	check(start > end * 5.0, "dash começa rápido e desacelera")
 
 
 func _test_endings() -> void:

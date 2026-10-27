@@ -49,6 +49,11 @@ func in_recovery() -> bool:
 	return phase == Phase.RECOVERY
 
 
+## A mira ainda pode mudar (anticipação de habilidade que segue o alvo).
+func is_aim_tracking() -> bool:
+	return phase == Phase.WINDUP and current != null and current.tracks_aim_during_windup()
+
+
 func can_cancel() -> bool:
 	return phase == Phase.RECOVERY and current != null and current.cancel_recovery
 
@@ -82,7 +87,7 @@ func cast(ability: Ability, aim: Vector2) -> bool:
 	var cd := ability.cooldown * cooldown_multiplier
 	_cooldowns[ability] = cd
 	_cooldown_totals[ability] = cd
-	_enter(Phase.WINDUP, ability.windup * windup_multiplier)
+	_enter(Phase.WINDUP, ability.get_windup(self) * windup_multiplier)
 	ability.begin_windup(self)
 	cast_started.emit(ability)
 	if ability.sfx_cast != &"":

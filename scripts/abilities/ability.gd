@@ -48,6 +48,16 @@ enum JuiceLevel { LIGHT, HEAVY, ULTIMATE }
 
 # --- Ganchos da Strategy (sobrescrever nas subclasses) ---
 
+## Duração da anticipação para este lançador (o dash de ataque zera para o jogador).
+func get_windup(_caster: AbilityCaster) -> float:
+	return windup
+
+
+## Se true, a mira segue o alvo durante a anticipação e só trava no fim dela.
+func tracks_aim_during_windup() -> bool:
+	return false
+
+
 func begin_windup(_caster: AbilityCaster) -> void:
 	pass
 

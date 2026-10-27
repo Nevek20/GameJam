@@ -201,7 +201,7 @@ func _on_hit_received(hit: HitData) -> void:
 	if blocked:
 		guard.parry_flash()
 		return
-	if stats.armor_while_attacking and caster.is_casting():
+	if stats.armor_while_attacking and caster.is_casting() and not caster.in_recovery():
 		return
 	if state_machine.is_in(&"Roar"):
 		return
