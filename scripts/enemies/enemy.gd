@@ -58,7 +58,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
 	if skin:
 		visual.apply_look(skin.texture, skin.sprite_frames, skin.body_color, skin.accent_color,
-			skin.placeholder_accent, stats.body_radius, stats.sprite_scale)
+			skin.placeholder_accent, stats.body_radius, stats.sprite_scale, skin.sprite_offset)
 	health.setup(stats.max_health * health_multiplier)
 	global_position = pos
 	velocity = Vector2.ZERO

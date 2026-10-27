@@ -66,7 +66,7 @@ func setup(character: CharacterStats, side: Team.Faction, new_controller: Charac
 	(_body_shape.shape as CircleShape2D).radius = stats.body_radius
 	(_hurt_shape.shape as CircleShape2D).radius = stats.body_radius + 2.0
 	visual.apply_look(stats.texture, stats.sprite_frames, stats.body_color, stats.accent_color,
-		stats.placeholder_accent, stats.body_radius, stats.sprite_scale)
+		stats.placeholder_accent, stats.body_radius, stats.sprite_scale, stats.sprite_offset)
 	_set_controller(new_controller)
 	aim_indicator.visible = new_controller.is_human()
 	aim_indicator.color = Color(stats.accent_color, 0.8)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Resource" path="res://resources/ai/mage_ai.tres" id="1_e6cab"]
 [ext_resource type="Resource" path="res://resources/abilities/mage/mana_bolt.tres" id="2_aehaq"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/mage_frames.tres" id="9_frames"]
 [ext_resource type="Script" path="res://scripts/resources/character_stats.gd" id="3_t5pu6"]
 [ext_resource type="Resource" path="res://resources/abilities/mage/chain_lightning.tres" id="4_imtet"]
 [ext_resource type="Resource" path="res://resources/abilities/mage/fireball.tres" id="5_nymuo"]
@@ -13,6 +14,9 @@ id = &"mage"
 body_color = Color(0.55, 0.45, 1, 1)
 accent_color = Color(0.3, 0.9, 0.85, 1)
 placeholder_accent = 2
+sprite_frames = ExtResource("9_frames")
+sprite_scale = Vector2(0.4, 0.4)
+sprite_offset = Vector2(56, -92)
 max_health = 95.0
 move_speed = 255.0
 dash_distance = 210.0

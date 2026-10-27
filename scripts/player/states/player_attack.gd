@@ -9,7 +9,8 @@ func enter(msg: Dictionary) -> void:
 	# Se não lançar, physics_update volta para Idle/Move no próximo frame.
 	if _ability == null or not player.caster.cast(_ability, player.aim_dir):
 		return
-	player.visual.play(&"attack")
+	# Animação com o mesmo nome do id da habilidade (ex.: "fireball"); senão "attack".
+	player.visual.play(_ability.id, &"attack", true)
 	var cfg := Juice.cfg()
 	if cfg:
 		player.visual.squash(cfg.squash_attack)

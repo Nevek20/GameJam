@@ -14,6 +14,9 @@ extends Resource
 ## Animações (idle, move, attack, dash, hurt, dead). Tem prioridade sobre texture.
 @export var sprite_frames: SpriteFrames
 @export var sprite_scale: Vector2 = Vector2.ONE
+## Posição do desenho em relação ao corpo (pixels da textura). Ajuste se o sprite
+## ficar deslocado; a hitbox não muda.
+@export var sprite_offset: Vector2 = Vector2.ZERO
 @export var body_radius: float = 18.0
 
 @export_group("Vida")

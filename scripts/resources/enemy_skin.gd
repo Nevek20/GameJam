@@ -7,4 +7,6 @@ extends Resource
 @export var placeholder_accent: PlaceholderShape.Accent = PlaceholderShape.Accent.HELMET
 @export var texture: Texture2D
 @export var sprite_frames: SpriteFrames
+## Posição do desenho em relação ao corpo (pixels da textura).
+@export var sprite_offset: Vector2 = Vector2.ZERO
 @export var name_key: StringName = &""
