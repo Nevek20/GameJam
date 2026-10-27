@@ -12,6 +12,7 @@ var _wants: Dictionary = {}
 var _hold_attack: bool = false
 var _parry_hold_left: float = 0.0
 var _strafe_sign: float = 1.0
+var _reviving: bool = false
 
 
 func _physics_process(delta: float) -> void:
@@ -27,6 +28,8 @@ func _physics_process(delta: float) -> void:
 
 func _think() -> void:
 	_wants.clear()
+	if _think_revive():
+		return
 	if not _target_valid():
 		target = Team.find_nearest(actor.get_tree(), Team.opposite(actor.team), actor.global_position, 4000.0)
 	if target == null:
@@ -62,6 +65,22 @@ func _think() -> void:
 		_parry_hold_left = 0.35
 
 
+## Parceiro caído: corre até ele e segura "interagir" para reviver.
+func _think_revive() -> bool:
+	_reviving = false
+	var p := actor.partner
+	if p == null or not is_instance_valid(p) or not p.downed or actor.revive_config == null:
+		return false
+	_hold_attack = false
+	var to := p.global_position - actor.global_position
+	if to.length() > actor.revive_config.revive_distance * actor.size_scale * 0.6:
+		_move = to.normalized()
+	else:
+		_move = Vector2.ZERO
+		_reviving = true
+	return true
+
+
 func _usable(ability: Ability, dist: float) -> bool:
 	return ability != null and dist <= ability.ai_range * actor.size_scale and actor.caster.is_ready(ability)
 
@@ -89,6 +108,8 @@ func is_held(action: StringName) -> bool:
 		return _hold_attack
 	if action == Actions.PARRY:
 		return _parry_hold_left > 0.0
+	if action == Actions.INTERACT:
+		return _reviving
 	return false
 
 

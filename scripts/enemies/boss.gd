@@ -6,13 +6,39 @@ signal phase_changed(index: int)
 
 var boss_stats: BossStats
 var phase_index: int = 0
+var _last_attack: Ability
+var _same_in_row: int = 0
 
 
-func activate_boss(stats_data: BossStats, pos: Vector2, army_skin: bool) -> void:
+## Os multiplicadores fortalecem o boss (ex.: depois que o Personagem 1 morre).
+func activate_boss(stats_data: BossStats, pos: Vector2, army_skin: bool,
+		health_multiplier: float = 1.0, damage_multiplier: float = 1.0) -> void:
 	boss_stats = stats_data
 	phase_index = 0
-	activate(stats_data, pos, stats_data.army_skin if army_skin else stats_data.kingdom_skin)
-	visual.base_scale = Vector2.ONE
+	_last_attack = null
+	_same_in_row = 0
+	activate(stats_data, pos, stats_data.army_skin if army_skin else stats_data.kingdom_skin,
+		health_multiplier, damage_multiplier)
+	_apply_phase_speed()
+
+
+func _apply_phase_speed() -> void:
+	var phase := current_phase()
+	var speed := maxf(phase.attack_speed, 0.1) if phase else 1.0
+	caster.windup_multiplier = 1.0 / speed
+	caster.recovery_multiplier = 1.0 / speed
+
+
+# Seletor simples: evita o mesmo ataque mais de max_same_attack_in_row vezes seguidas.
+func _can_choose(ability: Ability, distance: float) -> bool:
+	if not super(ability, distance):
+		return false
+	return ability != _last_attack or _same_in_row < boss_stats.max_same_attack_in_row
+
+
+func _on_attack_chosen(ability: Ability) -> void:
+	_same_in_row = _same_in_row + 1 if ability == _last_attack else 1
+	_last_attack = ability
 
 
 func display_name_key() -> StringName:
@@ -60,6 +86,7 @@ func _on_health_changed(current: float, maximum: float) -> void:
 			next = i
 	if next != phase_index:
 		phase_index = next
+		_apply_phase_speed()
 		movement.configure(stats.move_speed * current_speed_multiplier() * size_scale,
 			stats.acceleration * size_scale, stats.friction * size_scale)
 		phase_changed.emit(phase_index)

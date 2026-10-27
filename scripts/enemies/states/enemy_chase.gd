@@ -36,7 +36,8 @@ func physics_update(delta: float) -> void:
 			return
 
 	# Para um pouco antes do alcance para não grudar no alvo.
-	var stop_distance := enemy.max_attack_range() * 0.7
+	var stop_distance := enemy.stats.preferred_distance * enemy.size_scale if enemy.stats.preferred_distance > 0.0 \
+		else enemy.max_attack_range() * 0.7
 	var move_dir := dir if dist > stop_distance else Vector2.ZERO
 	enemy.movement.move(move_dir, 1.0, delta)
 

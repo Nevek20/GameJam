@@ -27,6 +27,8 @@ extends Resource
 @export var aggro_range: float = 700.0
 ## Intervalo entre decisões da IA (procura de alvo, dash etc.).
 @export var think_interval: float = 0.3
+## Distância em que para de andar até o alvo (0 = automático, 70% do maior alcance).
+@export var preferred_distance: float = 0.0
 ## Pausa mínima entre ataques.
 @export var attack_interval: float = 1.1
 ## Ataques possíveis (cada um é um Ability) e seus pesos.

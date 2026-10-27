@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/resources/qte_config.gd" id="10_qhdo4"]
 [ext_resource type="Script" path="res://scripts/resources/match_config.gd" id="11_ifoeb"]
 [ext_resource type="Resource" path="res://resources/enemies/runner.tres" id="12_runner"]
+[ext_resource type="Resource" path="res://resources/config/revive_config.tres" id="13_revive"]
 
 [sub_resource type="Resource" id="Resource_qxo0s"]
 script = ExtResource("1_ddvub")
@@ -72,3 +73,4 @@ confront_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_ukvfe"), S
 alliance_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_qxo0s"), SubResource("Resource_inrfv"), SubResource("Resource_eit5g")])
 knight_boss = ExtResource("9_pv5gv")
 character_boss_profile = ExtResource("3_dodi1")
+revive = ExtResource("13_revive")

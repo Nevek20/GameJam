@@ -31,6 +31,7 @@ var _timer_running: bool = false
 @onready var intro: IntroSequence = %Intro
 @onready var tombstone: TombstoneView = %Tombstone
 @onready var pause_menu: PauseMenu = %PauseMenu
+@onready var character_choice: CharacterChoice = %CharacterChoice
 @onready var interactions: InteractionDirector = $InteractionDirector
 @onready var encounter: ArmyEncounter = $ArmyEncounter
 @onready var boss_director: BossDirector = $BossDirector
@@ -46,7 +47,7 @@ func _ready() -> void:
 		ReputationState.reset(ids)
 	camera.set_bounds(level.camera_bounds())
 	camera.set_base_zoom(GameScale.current().camera_zoom)
-	for ui: Control in [hud, dialog, qte, tutorial, intro, tombstone, pause_menu]:
+	for ui: Control in [hud, dialog, qte, tutorial, intro, tombstone, pause_menu, character_choice]:
 		GameScale.apply_ui(ui)
 	camera.set_smoothing(juice.config.camera_smoothing)
 	interactions.setup(match_config, dialog, qte, level.get_houses(), level.camp)
@@ -116,6 +117,9 @@ func _start_character_phase() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if phase == Phase.BOSS:
+		_update_revive_prompt()
+		return
 	if phase != Phase.PLAYING or not _timer_running:
 		return
 	if match_config.pause_timer_during_dialogue and interactions.is_busy():
@@ -125,6 +129,20 @@ func _physics_process(delta: float) -> void:
 	if _time_left <= 0.0:
 		_timer_running = false
 		_on_time_up()
+
+
+## Avisos do caído e revive na luta final.
+func _update_revive_prompt() -> void:
+	var text := ""
+	var other := boss_director.helper
+	if other and is_instance_valid(other) and not other.dead:
+		if player.downed:
+			text = Texts.ui("hud.downed_self", {"name": Texts.character_name(other.stats.id), "time": ceili(player.downed_left)})
+		elif other.downed:
+			var params := {"name": Texts.character_name(other.stats.id), "key": Settings.get_binding_text(Actions.INTERACT),
+				"time": ceili(other.downed_left)}
+			text = Texts.ui("hud.revive_prompt" if player.revive_target() else "hud.downed_ally", params)
+	hud.set_prompt(text)
 
 
 func _on_time_up() -> void:
@@ -243,7 +261,9 @@ func _on_player_died(who: Player) -> void:
 				@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
 				_finish_after_death(id)
 		Phase.BOSS:
-			GameState.record_final_fight(false, boss_director.setup_data.player_fights_for_army)
+			var for_army := boss_director.setup_data.player_fights_for_army if boss_director.setup_data \
+				else ReputationState.is_allied(id)
+			GameState.record_final_fight(false, for_army)
 			@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
 			_finish_after_death(id)
 		_:
@@ -277,7 +297,7 @@ func _start_boss() -> void:
 	player.set_input_enabled(false)
 	var p1 := GameState.p1_id()
 	var p2 := GameState.p2_id()
-	var data := BossSelector.select(p1, p2, GameState.is_alive(p1),
+	var data := BossSelector.select(p1, p2, GameState.is_alive(p1), GameState.is_alive(p2),
 		ReputationState.is_allied(p1), ReputationState.is_allied(p2))
 	if _time_left <= 0.0:
 		hud.show_banner(Texts.ui("banner.time_up"), "")
@@ -285,7 +305,23 @@ func _start_boss() -> void:
 	pools.clear_combat()
 	for p: Player in _players.values():
 		p.deactivate()
-	player = boss_director.start(data, _players, level, match_config)
+	# Escolha de personagem (só nos casos da regra 6.4).
+	if data.choice:
+		var stats_by_id := {}
+		for s: CharacterStats in match_config.characters:
+			stats_by_id[s.id] = s
+		character_choice.open(data.choice_options, stats_by_id)
+		# O fade abre sem esperar: um clique durante o fade já vale como escolha.
+		@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+		GameManager.fade_in()
+		var picked: StringName = await character_choice.chosen
+		AudioManager.play_sfx(&"ui_click")
+		data.apply_choice(picked)
+		await GameManager.fade_out()
+	await _play_cutscene(boss_cutscene)
+	# GDD 4.2: se o P1 morreu, o boss também vem mais forte.
+	player = boss_director.start(data, _players, level, match_config,
+		encounter.health_multiplier, encounter.damage_multiplier)
 	camera.set_target(player, true)
 	hud.bind_player(player)
 	hud.show_timer(false)

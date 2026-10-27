@@ -74,6 +74,26 @@ func end_active(_caster: AbilityCaster) -> void:
 	pass
 
 
+## Chamado a cada frame da anticipação (ex.: o boss que some e segue o jogador).
+func windup_physics(_caster: AbilityCaster, _delta: float) -> void:
+	pass
+
+
+## O ataque foi interrompido: desfaça qualquer estado especial (ex.: boss invisível).
+func cancel(_caster: AbilityCaster) -> void:
+	pass
+
+
+## true se a habilidade desenha algo durante a fase ativa (draw_active).
+func has_active_visual() -> bool:
+	return false
+
+
+## Desenho durante a fase ativa (coordenadas locais do lançador).
+func draw_active(_canvas: CanvasItem, _aim: Vector2, _progress: float) -> void:
+	pass
+
+
 ## Desenha o aviso visual durante a anticipação (coordenadas locais do lançador).
 func draw_telegraph(canvas: CanvasItem, aim: Vector2, progress: float, tint: Color) -> void:
 	var length := ai_range * AbilityCaster.scale_of(canvas)

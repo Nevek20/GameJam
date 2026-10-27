@@ -69,10 +69,11 @@ func _none_allied(game: Game) -> void:
 	await _p2_intro(game)
 	await _army_choice(game, 0)
 	await _time_up(game)
-	await _wait_boss(game)
+	await _wait_boss(game, 1)
 	var data := game.boss_director.setup_data
 	check(data.kind == BossSelector.Kind.KNIGHT_ARMY_SKIN, "boss = cavaleiro com skin do exército")
-	check(data.helper_id == GameState.p1_id(), "P1 vivo ajuda na luta")
+	check(data.player_id == GameState.p2_id() and data.helper_id == GameState.p1_id(), "escolheu P2, P1 vira ajudante")
+	await _downed_and_revived(game)
 	await _bot_fight(game, 4.0)
 	await _win_boss(game)
 	await _check_conclusion(Endings.KINGDOM_POSITIVE, [&"", &""])
@@ -133,9 +134,9 @@ func _both_allied(game: Game) -> void:
 	await _p2_intro(game)
 	await _army_choice(game, 1)
 	await _time_up(game)
-	await _wait_boss(game)
+	await _wait_boss(game, 0)
 	var data := game.boss_director.setup_data
-	check(data.kind == BossSelector.Kind.KNIGHT_KINGDOM_SKIN and data.double_alliance, "aliança dupla x cavaleiro do reino")
+	check(data.kind == BossSelector.Kind.KNIGHT_KINGDOM_SKIN and data.double_alliance, "aliança dupla x cavaleiro do reino (com escolha)")
 	await _win_boss(game)
 	await _check_conclusion(Endings.KINGDOM_DOUBLE_ALLIANCE, [Endings.NEGATIVE_VICTORIOUS, Endings.NEGATIVE_VICTORIOUS])
 
@@ -154,11 +155,15 @@ func _p2_dies_boss(game: Game) -> void:
 	await _time_up(game)
 	await _p2_intro(game)
 	await _time_up(game)
-	await _wait_boss(game)
+	await _wait_boss(game, 1)
+	# Os dois caem ao mesmo tempo: os dois morrem.
+	var helper := game.boss_director.helper
 	game.player.health.take_damage(99999.0)
+	helper.health.take_damage(99999.0)
 	await _wait(0.5)
+	check(game.player.dead and helper.dead, "os dois caídos ao mesmo tempo morrem")
 	_press(Actions.CONFIRM)
-	await _check_conclusion(Endings.KINGDOM_NEGATIVE, [&"", Endings.DEATH])
+	await _check_conclusion(Endings.KINGDOM_NEGATIVE, [Endings.DEATH, Endings.DEATH])
 
 
 # --- Passos ---
@@ -301,12 +306,37 @@ func _time_up(game: Game) -> void:
 		await _wait(0.05)
 
 
-func _wait_boss(game: Game) -> void:
-	for i in 400:
-		if game.phase == Game.Phase.BOSS and game.player.controller.enabled:
+## choice_index: qual opção escolher se aparecer a tela de escolha (-1 = não deve aparecer).
+func _wait_boss(game: Game, choice_index: int = -1) -> void:
+	var saw_choice := false
+	for i in 600:
+		if game.phase == Game.Phase.BOSS and game.player.controller.enabled and not game.intro.is_playing:
 			break
-		await _wait(0.05)
+		if game.character_choice.visible:
+			saw_choice = true
+			await _wait(0.3)
+			game.character_choice._on_pressed(maxi(choice_index, 0))
+		elif game.intro.is_playing:
+			_press(Actions.CONFIRM) # cutscene do boss
+		await _wait(0.1)
 	check(game.phase == Game.Phase.BOSS, "luta do boss começou")
+	check(saw_choice == (choice_index >= 0), "tela de escolha %s" % ("apareceu" if choice_index >= 0 else "não apareceu"))
+
+
+## Jogador cai, o ajudante (IA) vem e revive.
+func _downed_and_revived(game: Game) -> void:
+	var helper := game.boss_director.helper
+	helper.invulnerable_left = 999.0
+	game.player.health.take_damage(99999.0)
+	await _wait(0.2)
+	check(game.player.downed and not game.player.dead, "jogador caído (não morre na hora)")
+	for i in 120:
+		if not game.player.downed:
+			break
+		helper.invulnerable_left = 999.0
+		await _wait(0.1)
+	check(not game.player.downed and not game.player.dead, "ajudante da IA reviveu o jogador")
+	check(game.player.health.current > 0.0, "voltou com vida")
 
 
 func _win_boss(game: Game) -> void:

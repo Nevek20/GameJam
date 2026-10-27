@@ -9,6 +9,7 @@ func enter(msg: Dictionary) -> void:
 	_ability = msg.get("ability") as Ability
 	_was_active = false
 	var dir: Vector2 = msg.get("direction", Vector2.RIGHT)
+	enemy.caster.target = enemy.target
 	if _ability == null or not enemy.caster.cast(_ability, dir):
 		return
 	enemy.visual.play(&"attack")
@@ -31,6 +32,7 @@ func physics_update(delta: float) -> void:
 		if cfg:
 			enemy.visual.squash(cfg.squash_attack)
 	_was_active = active
+	enemy.caster.target = enemy.target if enemy.has_valid_target() else null
 	# Dash de ataque: a direção segue o alvo no telegraph e trava no fim dele.
 	if enemy.caster.is_aim_tracking() and enemy.has_valid_target():
 		enemy.caster.set_aim(enemy.global_position.direction_to(enemy.target.global_position))

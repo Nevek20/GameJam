@@ -17,6 +17,8 @@
 [ext_resource type="Script" path="res://scripts/player/states/player_parry.gd" id="15_parry"]
 [ext_resource type="Script" path="res://scripts/player/states/player_hurt.gd" id="16_hurt"]
 [ext_resource type="Script" path="res://scripts/player/states/player_dead.gd" id="17_dead"]
+[ext_resource type="Script" path="res://scripts/player/states/player_downed.gd" id="18_downed"]
+[ext_resource type="Script" path="res://scripts/player/revive_ring.gd" id="19_ring"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 resource_local_to_scene = true
@@ -114,3 +116,11 @@ script = ExtResource("16_hurt")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("17_dead")
+
+[node name="Downed" type="Node" parent="StateMachine"]
+script = ExtResource("18_downed")
+
+[node name="ReviveRing" type="Node2D" parent="."]
+visible = false
+z_index = 10
+script = ExtResource("19_ring")

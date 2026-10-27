@@ -31,6 +31,7 @@ var _time_warning: bool = false
 @onready var _slot_e: CooldownSlot = %SlotE
 @onready var _slot_r: CooldownSlot = %SlotR
 @onready var banner: Banner = %Banner
+@onready var _prompt: Label = %Prompt
 @onready var poi_arrows: PoiArrows = %PoiArrows
 
 
@@ -89,6 +90,13 @@ func show_timer(value: bool) -> void:
 
 func set_objective(text: String) -> void:
 	_objective.text = text
+
+
+## Aviso no centro de baixo (revive, avançar etapa). Texto vazio esconde.
+func set_prompt(text: String) -> void:
+	if _prompt.text != text:
+		_prompt.text = text
+	_prompt.visible = not text.is_empty()
 
 
 func show_boss(display_name: String, source: Node, current: float, maximum: float) -> void:

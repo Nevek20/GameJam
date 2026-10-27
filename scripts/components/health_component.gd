@@ -37,6 +37,12 @@ func take_damage(amount: float) -> float:
 	return applied
 
 
+## Volta da morte (revive) com uma quantidade de vida.
+func revive(amount: float) -> void:
+	current = clampf(amount, 1.0, max_health)
+	health_changed.emit(current, max_health)
+
+
 func heal(amount: float) -> void:
 	if is_dead():
 		return

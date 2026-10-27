@@ -8,6 +8,8 @@ signal died(player: Player)
 signal health_changed(current: float, maximum: float)
 signal parried(player: Player)
 signal hurt(player: Player)
+## Caiu (vida zerou com parceiro vivo) ou foi revivido.
+signal downed_changed(player: Player, is_downed: bool)
 
 enum Slot { ATTACK, SKILL_Q, SKILL_E, ULTIMATE }
 
@@ -24,6 +26,13 @@ var size_scale: float = 1.0
 var dash_cooldown_left: float = 0.0
 var parry_cooldown_left: float = 0.0
 var invulnerable_left: float = 0.0
+## Caído e revive (só na luta final com ajudante): parceiro e configuração.
+var partner: Player
+var revive_config: ReviveConfig
+var downed: bool = false
+var downed_left: float = 0.0
+## Progresso do revive feito pelo parceiro (0 a revive_time).
+var revive_progress: float = 0.0
 
 @onready var visual: EntityVisual = $Visual
 @onready var guard: GuardVisual = $Visual/Guard
@@ -37,6 +46,7 @@ var invulnerable_left: float = 0.0
 @onready var _hurt_shape: CollisionShape2D = $Hurtbox/CollisionShape2D
 ## Marcador visível no editor: de onde saem golpes e projéteis.
 @onready var attack_origin: Marker2D = $AttackOrigin
+@onready var revive_ring: ReviveRing = $ReviveRing
 
 
 func _ready() -> void:
@@ -64,8 +74,11 @@ func setup(character: CharacterStats, side: Team.Faction, new_controller: Charac
 	# Telegraph visível para todo personagem controlado pela IA (boss ou ajudante).
 	caster.show_telegraph = side == Team.Faction.FOES or not new_controller.is_human()
 	caster.damage_multiplier = profile.damage_multiplier if profile else 1.0
-	caster.windup_multiplier = profile.windup_multiplier if profile else 1.0
+	var attack_speed := maxf(profile.attack_speed_multiplier, 0.1) if profile else 1.0
+	caster.windup_multiplier = (profile.windup_multiplier if profile else 1.0) / attack_speed
+	caster.recovery_multiplier = 1.0 / attack_speed
 	caster.cooldown_multiplier = profile.cooldown_multiplier if profile else 1.0
+	caster.cooldown_overrides = profile.cooldown_table(character) if profile else {}
 	var speed_mult := profile.speed_multiplier if profile else 1.0
 	var s := GameScale.of(GameScale.Kind.BOSS if profile else GameScale.Kind.PLAYER)
 	movement.configure(stats.move_speed * speed_mult * s, stats.acceleration * s, stats.friction * s)
@@ -88,6 +101,8 @@ func spawn_at(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	dead = false
+	downed = false
+	revive_progress = 0.0
 	dash_cooldown_left = 0.0
 	parry_cooldown_left = 0.0
 	invulnerable_left = 0.0
@@ -123,7 +138,7 @@ func is_human() -> bool:
 
 
 func is_targetable() -> bool:
-	return not dead and visible
+	return not dead and not downed and visible
 
 
 func is_attacking() -> bool:
@@ -164,7 +179,7 @@ func notify_parried() -> void:
 
 ## Chamado quando um golpe nosso é aparado pelo inimigo.
 func on_parried(by: Node2D, stun: float, push: float) -> void:
-	if dead:
+	if dead or downed:
 		return
 	caster.interrupt()
 	movement.apply_knockback(by.global_position.direction_to(global_position) * push)
@@ -175,8 +190,15 @@ func _physics_process(delta: float) -> void:
 	dash_cooldown_left -= delta
 	parry_cooldown_left -= delta
 	invulnerable_left -= delta
+	if downed:
+		downed_left -= delta
+		if downed_left <= 0.0:
+			finish_death()
+		return
 	if dead or controller == null:
 		return
+	if revive_config:
+		_update_revive(delta)
 	aim_dir = controller.get_aim_direction()
 	visual.face(aim_dir)
 	aim_indicator.rotation = aim_dir.angle()
@@ -260,7 +282,45 @@ func _on_health_changed(current: float, maximum: float) -> void:
 
 
 func _on_died() -> void:
+	# Com parceiro de pé, cai em vez de morrer. Se o parceiro também está caído, morrem os dois.
+	if revive_config and partner and is_instance_valid(partner) and not partner.dead:
+		if partner.downed:
+			partner.finish_death()
+		else:
+			_go_down()
+			return
+	finish_death()
+
+
+## Liga o "caído e revive" com um parceiro (luta final com ajudante).
+func enable_revive(other: Player, config: ReviveConfig) -> void:
+	partner = other
+	revive_config = config
+
+
+func disable_revive() -> void:
+	partner = null
+	revive_config = null
+	downed = false
+
+
+func _go_down() -> void:
+	downed = true
+	downed_left = revive_config.downed_time
+	revive_progress = 0.0
+	hurtbox.enabled = false
+	caster.interrupt()
+	guard.hide_guard()
+	state_machine.transition_to(&"Downed")
+	downed_changed.emit(self, true)
+
+
+## Morte de verdade (lápide e fluxo normal de morte).
+func finish_death() -> void:
+	if dead:
+		return
 	dead = true
+	downed = false
 	hurtbox.enabled = false
 	caster.interrupt()
 	guard.hide_guard()
@@ -268,10 +328,54 @@ func _on_died() -> void:
 	died.emit(self)
 
 
-# Ponto de interesse (só quando é o boss).
+## Revivido pelo parceiro.
+func revive() -> void:
+	if not downed or dead:
+		return
+	downed = false
+	revive_progress = 0.0
+	health.revive(health.max_health * revive_config.revive_health)
+	hurtbox.enabled = true
+	invulnerable_left = revive_config.invulnerability_after
+	visual.reset_effects()
+	visual.rotation = 0.0
+	var cfg := Juice.cfg()
+	if cfg:
+		Juice.burst(cfg.particles_skill, hurtbox.global_position, revive_config.ring_color)
+		Juice.heal_number(hurtbox.global_position, health.current)
+	AudioManager.play_sfx(&"revive")
+	state_machine.transition_to(&"Idle")
+	downed_changed.emit(self, false)
+
+
+## Parceiro caído que este personagem pode reviver agora (dentro da distância).
+func revive_target() -> Player:
+	if partner == null or not is_instance_valid(partner) or not partner.downed or dead or downed:
+		return null
+	var max_dist := revive_config.revive_distance * size_scale
+	return partner if global_position.distance_to(partner.global_position) <= max_dist else null
+
+
+func _update_revive(delta: float) -> void:
+	var target := revive_target()
+	if partner and is_instance_valid(partner) and partner.downed and target == null:
+		partner.revive_progress = maxf(partner.revive_progress - revive_config.revive_time * revive_config.progress_decay * delta, 0.0)
+	if target == null:
+		return
+	if controller.is_held(Actions.INTERACT):
+		target.revive_progress += delta
+		if target.revive_progress >= revive_config.revive_time:
+			target.revive()
+	else:
+		target.revive_progress = maxf(target.revive_progress - revive_config.revive_time * revive_config.progress_decay * delta, 0.0)
+
+
+# Ponto de interesse: o boss-personagem e o ajudante caído.
 func is_poi_active() -> bool:
-	return boss_profile != null and not dead and visible
+	if dead or not visible:
+		return false
+	return boss_profile != null or (downed and not is_human())
 
 
 func get_poi_color() -> Color:
-	return Color(1, 0.2, 0.3)
+	return Color(0.5, 1, 0.6) if downed else Color(1, 0.2, 0.3)

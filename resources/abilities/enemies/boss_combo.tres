@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ComboAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/combo_ability.gd" id="1_combo"]
+[ext_resource type="Script" path="res://scripts/abilities/shape_ability.gd" id="2_shape"]
+
+[sub_resource type="Resource" id="Resource_slash"]
+script = ExtResource("2_shape")
+size = Vector2(110, 100)
+forward_offset = 70.0
+id = &"boss_combo_slash"
+color = Color(1, 0.3, 0.35, 0.85)
+damage = 14.0
+knockback = 300.0
+hit_juice_level = 1
+active_time = 0.12
+
+[resource]
+script = ExtResource("1_combo")
+slash = SubResource("Resource_slash")
+hits = 3
+hit_interval = 0.5
+warn_fraction = 0.55
+step_distance = 60.0
+id = &"boss_combo"
+color = Color(1, 0.3, 0.35, 0.85)
+damage = 14.0
+cooldown = 5.0
+windup = 0.5
+active_time = 1.5
+recovery = 0.7
+move_multiplier = 0.0
+ai_range = 170.0

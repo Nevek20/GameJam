@@ -26,24 +26,30 @@ func check(condition: bool, label: String) -> void:
 
 func _test_boss_selector() -> void:
 	var K := BossSelector.Kind
-	# a) ninguém se aliou
-	var s := BossSelector.select(&"p1", &"p2", true, false, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.player_id == &"p2" and s.helper_id == &"p1", "a) P1 vivo ajuda")
-	s = BossSelector.select(&"p1", &"p2", false, false, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.helper_id == &"", "a) P1 morto: P2 sozinho")
-	# b) só P1 se aliou
-	s = BossSelector.select(&"p1", &"p2", true, true, false)
-	check(s.kind == K.CHARACTER and s.boss_character_id == &"p1" and s.player_id == &"p2", "b) P2 x P1 aliado")
-	s = BossSelector.select(&"p1", &"p2", false, true, false)
-	check(s.kind == K.KNIGHT_ARMY_SKIN and s.helper_id == &"", "b) P1 aliado e morto não aparece")
-	# b) só P2 se aliou
-	s = BossSelector.select(&"p1", &"p2", true, false, true)
-	check(s.kind == K.CHARACTER and s.boss_character_id == &"p2" and s.player_id == &"p1" and s.control_switched, "b) controle troca para P1")
-	s = BossSelector.select(&"p1", &"p2", false, false, true)
-	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.player_id == &"p2" and s.player_fights_for_army, "b) P1 morto: P2 aliado x cavaleiro do reino")
-	# c) ambos aliados
-	s = BossSelector.select(&"p1", &"p2", true, true, true)
-	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.double_alliance and s.player_id == &"p2", "c) aliança dupla")
+	# a) ninguém aliado
+	var s := BossSelector.select(&"p1", &"p2", true, true, false, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and s.choice and s.choice_options.size() == 2, "a) os dois vivos: escolha")
+	s.apply_choice(&"p1")
+	check(s.player_id == &"p1" and s.helper_id == &"p2" and s.control_switched and not s.player_fights_for_army, "a) escolheu P1, P2 ajuda")
+	s = BossSelector.select(&"p1", &"p2", false, true, false, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and not s.choice and s.player_id == &"p2" and s.helper_id == &"", "a) P1 morto: P2 sozinho")
+	# b) ambos aliados: skin do reino
+	s = BossSelector.select(&"p1", &"p2", true, true, true, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.choice and s.double_alliance, "b) aliança dupla: escolha e skin do reino")
+	s.apply_choice(&"p2")
+	check(s.player_id == &"p2" and s.helper_id == &"p1" and s.player_fights_for_army, "b) escolheu P2, P1 ajuda")
+	s = BossSelector.select(&"p1", &"p2", false, true, true, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and not s.choice and s.player_id == &"p2", "b) P1 morto: P2 sozinho")
+	# c) só um aliado, os dois vivos
+	s = BossSelector.select(&"p1", &"p2", true, true, true, false)
+	check(s.kind == K.CHARACTER and s.boss_character_id == &"p1" and s.player_id == &"p2" and not s.choice and s.helper_id == &"", "c) P1 aliado é o boss")
+	s = BossSelector.select(&"p1", &"p2", true, true, false, true)
+	check(s.kind == K.CHARACTER and s.boss_character_id == &"p2" and s.player_id == &"p1" and s.control_switched, "c) P2 aliado é o boss, controle troca")
+	# d) só um aliado e um morto
+	s = BossSelector.select(&"p1", &"p2", false, true, true, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and s.player_id == &"p2" and not s.player_fights_for_army, "d) aliado morto: boss normal")
+	s = BossSelector.select(&"p1", &"p2", false, true, false, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.player_id == &"p2" and s.player_fights_for_army, "d) não aliado morto: variação do bem")
 
 
 func _test_dash_curve() -> void:

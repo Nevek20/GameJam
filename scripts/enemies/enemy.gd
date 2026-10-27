@@ -134,17 +134,27 @@ func choose_attack(distance: float) -> Ability:
 	var weights := get_attack_weights()
 	var total := 0.0
 	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range * size_scale and caster.is_ready(attacks[i]):
+		if _can_choose(attacks[i], distance):
 			total += weights[i] if i < weights.size() else 1.0
 	if total <= 0.0:
 		return null
 	var roll := randf() * total
 	for i in attacks.size():
-		if attacks[i] and distance <= attacks[i].ai_range * size_scale and caster.is_ready(attacks[i]):
+		if _can_choose(attacks[i], distance):
 			roll -= weights[i] if i < weights.size() else 1.0
 			if roll <= 0.0:
+				_on_attack_chosen(attacks[i])
 				return attacks[i]
 	return null
+
+
+func _can_choose(ability: Ability, distance: float) -> bool:
+	return ability != null and distance <= ability.ai_range * size_scale and caster.is_ready(ability)
+
+
+## O Boss usa para não repetir o mesmo ataque muitas vezes seguidas.
+func _on_attack_chosen(_ability: Ability) -> void:
+	pass
 
 
 ## Maior alcance entre os ataques (para saber quando parar de andar).
@@ -157,6 +167,15 @@ func max_attack_range() -> float:
 
 
 ## Nosso golpe foi aparado: atordoado.
+## Some da tela (ataque "desaparece e cai"): sem corpo, sem hurtbox e invisível.
+func set_vanished(value: bool) -> void:
+	visual.visible = not value
+	$Shadow.visible = not value
+	hurtbox.enabled = not value and not dead
+	collision_layer = 0 if value else Team.body_layer(team)
+	collision_mask = 0 if value else Team.body_mask(team)
+
+
 func on_parried(by: Node2D, stun: float, push: float) -> void:
 	if dead:
 		return

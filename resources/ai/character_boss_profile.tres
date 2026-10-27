@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource("1_mu5hr")
 health_multiplier = 6.5
+attack_cooldown = 0.6

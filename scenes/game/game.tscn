@@ -32,6 +32,7 @@
 [ext_resource type="Resource" path="res://resources/config/cutscene_boss.tres" id="30_boss_cut"]
 [ext_resource type="PackedScene" path="res://scenes/world/barrel.tscn" id="31_barrel"]
 [ext_resource type="PackedScene" path="res://scenes/world/potion.tscn" id="32_potion"]
+[ext_resource type="PackedScene" path="res://ui/choice/character_choice.tscn" id="33_choice"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
@@ -148,6 +149,12 @@ unique_name_in_owner = true
 layer = 20
 
 [node name="Intro" parent="IntroLayer" instance=ExtResource("26_intro")]
+unique_name_in_owner = true
+
+[node name="ChoiceLayer" type="CanvasLayer" parent="."]
+layer = 25
+
+[node name="CharacterChoice" parent="ChoiceLayer" instance=ExtResource("33_choice")]
 unique_name_in_owner = true
 
 [node name="TombLayer" type="CanvasLayer" parent="."]

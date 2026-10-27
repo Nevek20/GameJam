@@ -15,9 +15,14 @@ var _knight: Boss
 
 
 ## players: id -> Player. Retorna o personagem controlado pelo jogador na luta.
-func start(data: BossSelector.Setup, players: Dictionary, level: Level, config: MatchConfig) -> Player:
+## health_multiplier e damage_multiplier: reforço do cavaleiro (ex.: o P1 morreu).
+func start(data: BossSelector.Setup, players: Dictionary, level: Level, config: MatchConfig,
+		health_multiplier: float = 1.0, damage_multiplier: float = 1.0) -> Player:
 	setup_data = data
+	helper = null
 	human = players[data.player_id]
+	for p: Player in players.values():
+		p.disable_revive()
 	human.spawn_at(level.marker("ArenaPlayer"))
 	human.set_input_enabled(false)
 	if data.control_switched:
@@ -39,7 +44,7 @@ func start(data: BossSelector.Setup, players: Dictionary, level: Level, config: 
 				level.actors.add_child(_knight)
 				_knight.died.connect(_on_boss_down)
 			_knight.activate_boss(config.knight_boss, level.marker("ArenaBoss"),
-				data.kind == BossSelector.Kind.KNIGHT_ARMY_SKIN)
+				data.kind == BossSelector.Kind.KNIGHT_ARMY_SKIN, health_multiplier, damage_multiplier)
 			_knight.state_machine.transition_to(&"Roar", {"duration": config.knight_boss.phase_change_duration})
 			boss_node = _knight
 	if data.helper_id != &"":
@@ -48,6 +53,10 @@ func start(data: BossSelector.Setup, players: Dictionary, level: Level, config: 
 		helper_ai.profile = helper.stats.ai_profile
 		helper.setup(helper.stats, Team.Faction.HEROES, helper_ai)
 		helper.spawn_at(level.marker("ArenaHelper"))
+		# Dois vivos na luta: quem zera a vida cai e pode ser revivido pelo outro.
+		if config.revive:
+			human.enable_revive(helper, config.revive)
+			helper.enable_revive(human, config.revive)
 	return human
 
 

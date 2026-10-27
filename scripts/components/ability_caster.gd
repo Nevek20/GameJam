@@ -19,6 +19,15 @@ var windup_multiplier: float = 1.0
 var cooldown_multiplier: float = 1.0
 ## Escala do dono (GameScale): tamanho, alcance e avanço dos golpes acompanham.
 var geometry_scale: float = 1.0
+## Multiplica a recuperação (velocidade de ataque do personagem-boss).
+var recovery_multiplier: float = 1.0
+## Cooldown próprio de uma habilidade (Ability -> segundos), usado pelo personagem-boss.
+var cooldown_overrides: Dictionary = {}
+## Alvo atual (o dono atualiza): ataques que seguem o alvo usam isto.
+var target: Node2D
+## Estado do golpe atual (as habilidades são Resources compartilhados, então o
+## que muda durante um golpe fica aqui). Limpo a cada cast.
+var cast_state: Dictionary = {}
 var show_telegraph: bool = false
 var telegraph_color: Color = Color(1, 0.25, 0.35)
 
@@ -82,9 +91,11 @@ func cast(ability: Ability, aim: Vector2) -> bool:
 	if is_casting():
 		interrupt()
 	current = ability
+	cast_state.clear()
 	if aim != Vector2.ZERO:
 		aim_dir = aim.normalized()
-	var cd := ability.cooldown * cooldown_multiplier
+	var base_cd: float = cooldown_overrides.get(ability, ability.cooldown)
+	var cd := base_cd * cooldown_multiplier
 	_cooldowns[ability] = cd
 	_cooldown_totals[ability] = cd
 	_enter(Phase.WINDUP, ability.get_windup(self) * windup_multiplier)
@@ -100,6 +111,8 @@ func cast(ability: Ability, aim: Vector2) -> bool:
 func interrupt() -> void:
 	if phase == Phase.ACTIVE and current:
 		current.end_active(self)
+	if current:
+		current.cancel(self)
 	release_tracked()
 	phase = Phase.NONE
 	current = null
@@ -172,8 +185,12 @@ func _physics_process(delta: float) -> void:
 	_phase_left -= delta
 	if phase == Phase.ACTIVE:
 		current.active_physics(self, delta)
-	elif phase == Phase.WINDUP and show_telegraph:
-		queue_redraw()
+		if current.has_active_visual():
+			queue_redraw()
+	elif phase == Phase.WINDUP:
+		current.windup_physics(self, delta)
+		if show_telegraph:
+			queue_redraw()
 	_advance_while_done()
 
 
@@ -193,7 +210,8 @@ func _advance_while_done() -> void:
 				queue_redraw()
 			Phase.ACTIVE:
 				current.end_active(self)
-				_enter(Phase.RECOVERY, current.recovery)
+				_enter(Phase.RECOVERY, current.recovery * recovery_multiplier)
+				queue_redraw()
 			Phase.RECOVERY:
 				var finished := current
 				phase = Phase.NONE
@@ -202,8 +220,22 @@ func _advance_while_done() -> void:
 
 
 func _draw() -> void:
-	if phase == Phase.WINDUP and show_telegraph and current:
+	if current == null:
+		return
+	if phase == Phase.WINDUP and show_telegraph:
 		current.draw_telegraph(self, aim_dir, phase_progress(), telegraph_color)
+	elif phase == Phase.ACTIVE and current.has_active_visual():
+		current.draw_active(self, aim_dir, phase_progress())
+
+
+## Pés do dono em coordenadas locais do lançador (o lançador fica no centro do corpo).
+func feet_offset() -> Vector2:
+	return -position
+
+
+## Tempo já passado na fase atual.
+func phase_elapsed() -> float:
+	return _phase_total - _phase_left
 
 
 ## Escala usada pelos telegraphs (o canvas do desenho é o próprio AbilityCaster).

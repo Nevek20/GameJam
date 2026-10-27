@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LeapSlamAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/leap_slam_ability.gd" id="1_leap"]
+
+[resource]
+script = ExtResource("1_leap")
+follow_time = 1.6
+follow_speed = 420.0
+warn_time = 0.7
+impact_radius = 140.0
+id = &"boss_leap"
+color = Color(0.8, 0.2, 0.4, 1)
+damage = 30.0
+knockback = 480.0
+juice_level = 2
+hit_juice_level = 2
+cooldown = 9.0
+active_time = 0.15
+recovery = 1.0
+move_multiplier = 0.0
+ai_range = 1500.0

@@ -31,7 +31,8 @@
 		"skill_e": "Habilidade secundária",
 		"ultimate": "Ultimate",
 		"confirm": "Confirmar",
-		"pause": "Pausa"
+		"pause": "Pausa",
+		"interact": "Interagir / reviver"
 	},
 	"keys": {
 		"mouse_1": "Mouse Esq.",
@@ -69,7 +70,10 @@
 		"slot_parry": "Def",
 		"slot_q": "Q",
 		"slot_e": "E",
-		"slot_r": "R"
+		"slot_r": "R",
+		"revive_prompt": "Segure {key} para reviver {name}",
+		"downed_self": "Caído! {name} pode te reviver ({time}s)",
+		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)"
 	},
 	"objective": {
 		"p1": "Salve os moradores e encontre o exército",
@@ -104,5 +108,10 @@
 	"credits": {
 		"hint": "Segure {key} para acelerar",
 		"end_hint": "{key} para voltar ao menu"
+	},
+	"choice": {
+		"title": "Quem vai enfrentar o cavaleiro?",
+		"subtitle": "O outro personagem luta ao seu lado, controlado pela IA.",
+		"hint": "Clique ou use as setas e Enter"
 	}
 }
