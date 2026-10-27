@@ -28,12 +28,16 @@
 [ext_resource type="PackedScene" path="res://ui/intro/intro_sequence.tscn" id="26_intro"]
 [ext_resource type="PackedScene" path="res://ui/endings/tombstone_view.tscn" id="27_tomb"]
 [ext_resource type="PackedScene" path="res://ui/pause/pause_menu.tscn" id="28_pause"]
+[ext_resource type="Resource" path="res://resources/config/cutscene_switch.tres" id="29_switch"]
+[ext_resource type="Resource" path="res://resources/config/cutscene_boss.tres" id="30_boss_cut"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_game")
 match_config = ExtResource("2_match")
 ui_config = ExtResource("3_ui")
 player_scene = ExtResource("4_player")
+switch_cutscene = ExtResource("29_switch")
+boss_cutscene = ExtResource("30_boss_cut")
 
 [node name="Juice" type="Node" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("5_juice")

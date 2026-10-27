@@ -11,6 +11,9 @@ extends Resource
 @export var credits_speed: float = 45.0
 @export var credits_fast_multiplier: float = 5.0
 @export var intro_fade: float = 0.3
+## Ao voltar para a gameplay (depois de tela de imagem ou diálogo), o ataque fica
+## bloqueado por este tempo, para o clique que avançou a tela não virar ataque.
+@export var attack_block_after_screen: float = 0.2
 ## Setas de ponto de interesse: margem da borda e tamanho.
 @export var poi_arrow_margin: float = 34.0
 @export var poi_arrow_size: float = 16.0

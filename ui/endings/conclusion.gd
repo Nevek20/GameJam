@@ -56,8 +56,9 @@ func _next() -> void:
 	_waiting = true
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if _waiting and event.is_action_pressed(Actions.CONFIRM):
+# _input: recebe o clique antes da interface (os painéis consumiriam o clique).
+func _input(event: InputEvent) -> void:
+	if _waiting and Actions.is_advance(event):
 		get_viewport().set_input_as_handled()
 		AudioManager.play_sfx(&"ui_click")
 		_waiting = false

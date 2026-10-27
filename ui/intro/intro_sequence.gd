@@ -1,7 +1,7 @@
 class_name IntroSequence
 extends Control
-## Imagens de contextualização (lista no IntroConfig) com legendas de data/intro.json.
-## Enter avança; na última, termina. O cronômetro ainda não corre aqui.
+## Player de cutscene: imagens (IntroConfig) com legendas de data/intro.json.
+## Enter ou clique esquerdo avança; na última, termina. O cronômetro não corre aqui.
 
 signal finished
 
@@ -26,8 +26,11 @@ func _ready() -> void:
 	hide()
 
 
-func play() -> void:
-	_captions = Texts.array("intro", "slides")
+## Sem argumento toca a introdução (config exportado); senão, a cutscene indicada.
+func play(cutscene: IntroConfig = null) -> void:
+	if cutscene:
+		config = cutscene
+	_captions = Texts.array("intro", config.captions_key if config else "slides")
 	var images := config.images.size() if config else 0
 	_count = maxi(maxi(images, _captions.size()), 1)
 	_index = 0
@@ -54,8 +57,9 @@ func _show_slide() -> void:
 	_tween.tween_property(_content, "modulate:a", 1.0, ui_config.intro_fade if ui_config else 0.3)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not is_playing or not event.is_action_pressed(Actions.CONFIRM):
+# _input: recebe o clique antes da interface (os painéis consumiriam o clique).
+func _input(event: InputEvent) -> void:
+	if not is_playing or not Actions.is_advance(event):
 		return
 	get_viewport().set_input_as_handled()
 	AudioManager.play_sfx(&"ui_click")

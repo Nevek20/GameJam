@@ -1,6 +1,6 @@
 {
 	"_comment": "Tutorial (painel lateral). {move}, {dash}, {attack}... são trocados pelas teclas atuais.",
-	"hint": "Pressione {confirm} para começar",
+	"hint": "Pressione {confirm} ou clique esquerdo para começar",
 	"p1": {
 		"title": "A vila foi invadida!",
 		"body": [

@@ -63,8 +63,9 @@ func close() -> void:
 	closed.emit()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if is_open and event.is_action_pressed(Actions.CONFIRM):
+# _input: recebe o clique antes da interface (os painéis consumiriam o clique).
+func _input(event: InputEvent) -> void:
+	if is_open and Actions.is_advance(event):
 		get_viewport().set_input_as_handled()
 		AudioManager.play_sfx(&"ui_click")
 		close()

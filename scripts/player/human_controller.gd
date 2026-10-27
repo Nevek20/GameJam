@@ -7,14 +7,20 @@ const BUFFERED: Array[StringName] = [
 	Actions.DASH, Actions.PARRY, Actions.ATTACK, Actions.SKILL_Q, Actions.SKILL_E, Actions.ULTIMATE,
 ]
 const NEVER := -1000000
+const UI_CONFIG_PATH := "res://resources/config/ui_config.tres"
 
 var buffer_ms: int = 150
 var _pressed_at: Dictionary = {}
+var _attack_blocked_until: int = 0
+var _block_ms: int = 200
 
 
 func setup(player: Player) -> void:
 	super(player)
 	buffer_ms = int(player.stats.input_buffer * 1000.0)
+	var ui := load(UI_CONFIG_PATH) as UIConfig
+	if ui:
+		_block_ms = int(ui.attack_block_after_screen * 1000.0)
 
 
 func _physics_process(_delta: float) -> void:
@@ -41,11 +47,11 @@ func get_aim_direction() -> Vector2:
 
 
 func is_held(action: StringName) -> bool:
-	return enabled and Input.is_action_pressed(action)
+	return enabled and not _attack_blocked(action) and Input.is_action_pressed(action)
 
 
 func peek(action: StringName) -> bool:
-	if not enabled:
+	if not enabled or _attack_blocked(action):
 		return false
 	return Time.get_ticks_msec() - int(_pressed_at.get(action, NEVER)) <= buffer_ms
 
@@ -59,6 +65,12 @@ func consume(action: StringName) -> bool:
 
 func clear_buffer() -> void:
 	_pressed_at.clear()
+	# Chamado sempre que o input liga/desliga: bloqueia o ataque por um instante.
+	_attack_blocked_until = Time.get_ticks_msec() + _block_ms
+
+
+func _attack_blocked(action: StringName) -> bool:
+	return action == Actions.ATTACK and Time.get_ticks_msec() < _attack_blocked_until
 
 
 func is_human() -> bool:

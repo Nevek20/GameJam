@@ -15,6 +15,15 @@ const ULTIMATE := &"ultimate"
 const CONFIRM := &"confirm"
 const PAUSE := &"pause"
 
+## Telas de imagem (introdução, tutorial, cutscenes, finais): Enter OU clique esquerdo.
+## O clique só conta nessas telas; na gameplay ele continua sendo o ataque.
+static func is_advance(event: InputEvent) -> bool:
+	if event.is_action_pressed(CONFIRM):
+		return true
+	var mouse := event as InputEventMouseButton
+	return mouse != null and mouse.pressed and mouse.button_index == MOUSE_BUTTON_LEFT
+
+
 ## Ordem em que aparecem na tela de remapeamento.
 const REMAPPABLE: Array[StringName] = [
 	MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DASH, ATTACK, PARRY,

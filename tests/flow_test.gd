@@ -181,7 +181,9 @@ func _p2_intro(game: Game) -> void:
 	for i in 300:
 		if game.tutorial.is_open:
 			break
-		await _wait(0.05)
+		if game.intro.is_playing:
+			_press(Actions.CONFIRM) # cutscene da troca
+		await _wait(0.1)
 	check(game.tutorial.is_open, "tutorial do P2")
 	_press(Actions.CONFIRM)
 	await _wait(0.2)

@@ -58,8 +58,8 @@
 		"fail": "Errou..."
 	},
 	"intro": {
-		"next": "{key} ▶",
-		"start": "{key} para continuar"
+		"next": "{key} ou clique esquerdo para continuar",
+		"start": "{key} ou clique esquerdo para começar"
 	},
 	"hud": {
 		"heroism": "Heroísmo",
@@ -96,7 +96,7 @@
 		"enemies_stronger": "Os inimigos estão mais fortes!"
 	},
 	"ending": {
-		"next": "{key} ▶",
+		"next": "{key} ou clique esquerdo para continuar",
 		"tag_p1": "Personagem 1 · {name}",
 		"tag_p2": "Personagem 2 · {name}",
 		"tag_kingdom": "O Reino"

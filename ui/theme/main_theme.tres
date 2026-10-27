@@ -1,15 +1,17 @@
 [gd_resource type="Theme" format=3]
 
+[sub_resource type="StyleBoxEmpty" id="btn_focus"]
+
 [sub_resource type="StyleBoxFlat" id="btn_normal"]
 content_margin_left = 20.0
 content_margin_top = 8.0
 content_margin_right = 20.0
 content_margin_bottom = 8.0
 bg_color = Color(0.16, 0.08, 0.3, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 4
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_color = Color(0.5, 0.3, 0.8, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
@@ -21,16 +23,17 @@ content_margin_left = 20.0
 content_margin_top = 8.0
 content_margin_right = 20.0
 content_margin_bottom = 8.0
-bg_color = Color(0.3, 0.14, 0.5, 0.98)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 4
-border_color = Color(1, 0.55, 0.9, 1)
+bg_color = Color(0.34, 0.16, 0.55, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.85, 0.4, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+anti_aliasing_size = 1.0
 
 [sub_resource type="StyleBoxFlat" id="btn_pressed"]
 content_margin_left = 20.0
@@ -47,22 +50,6 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-
-[sub_resource type="StyleBoxFlat" id="btn_focus"]
-draw_center = false
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 0.85, 0.4, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-expand_margin_left = 3.0
-expand_margin_top = 3.0
-expand_margin_right = 3.0
-expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxFlat" id="btn_disabled"]
 content_margin_left = 20.0
@@ -140,6 +127,7 @@ Button/colors/font_disabled_color = Color(0.5, 0.45, 0.6, 1)
 Button/font_sizes/font_size = 20
 Button/styles/normal = SubResource("btn_normal")
 Button/styles/hover = SubResource("btn_hover")
+Button/styles/hover_pressed = SubResource("btn_pressed")
 Button/styles/pressed = SubResource("btn_pressed")
 Button/styles/focus = SubResource("btn_focus")
 Button/styles/disabled = SubResource("btn_disabled")

@@ -11,7 +11,6 @@ extends Control
 @onready var _title: Label = %Title
 @onready var _subtitle: Label = %Subtitle
 
-var _title_tween: Tween
 
 
 func _ready() -> void:
@@ -30,10 +29,6 @@ func _ready() -> void:
 	_credits_panel.hide()
 	AudioManager.play_music(&"menu")
 	_play.grab_focus.call_deferred()
-	_title.pivot_offset = _title.size * 0.5
-	_title_tween = create_tween().set_loops()
-	_title_tween.tween_property(_title, "rotation", deg_to_rad(1.5), 1.6).set_trans(Tween.TRANS_SINE)
-	_title_tween.tween_property(_title, "rotation", deg_to_rad(-1.5), 1.6).set_trans(Tween.TRANS_SINE)
 
 
 func _on_play() -> void:

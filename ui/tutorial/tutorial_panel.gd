@@ -46,8 +46,9 @@ func open(key: String) -> void:
 	_tween.tween_property(self, "position:x", 0.0, 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if is_open and event.is_action_pressed(Actions.CONFIRM):
+# _input: recebe o clique antes da interface (os painéis consumiriam o clique).
+func _input(event: InputEvent) -> void:
+	if is_open and Actions.is_advance(event):
 		get_viewport().set_input_as_handled()
 		is_open = false
 		if _tween:

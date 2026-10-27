@@ -1,8 +1,16 @@
 {
-	"_comment": "Uma legenda por imagem de contexto (mesma ordem do IntroConfig). Aceita BBCode.",
+	"_comment": "Legendas das cutscenes (BBCode). Cada lista corresponde a um IntroConfig (campo captions_key), na mesma ordem das imagens.",
 	"slides": [
 		"Numa vila onde as cores respiram e os cogumelos cantam, a noite começou errada.",
 		"Um exército desceu das colinas e cercou as casas. Os moradores estão presos.",
 		"Duas pessoas podem mudar o destino da vila. Uma de cada vez."
+	],
+	"switch": [
+		"[TODO] A cavaleira cumpriu sua parte. Agora o mago entra na vila...",
+		"[TODO] O que foi feito antes mudou tudo."
+	],
+	"boss": [
+		"[TODO] O confronto final se aproxima.",
+		"[TODO] Não há mais volta."
 	]
 }

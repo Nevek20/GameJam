@@ -9,6 +9,10 @@ enum Phase { INTRO, TUTORIAL, PLAYING, SWITCHING, BOSS, ENDED }
 @export var match_config: MatchConfig
 @export var ui_config: UIConfig
 @export var player_scene: PackedScene
+## Cutscene ao passar do Personagem 1 para o 2.
+@export var switch_cutscene: IntroConfig
+## Cutscene antes da luta final (depois da escolha de personagem, quando há).
+@export var boss_cutscene: IntroConfig
 
 var phase: Phase = Phase.INTRO
 var player: Player
@@ -195,6 +199,7 @@ func _switch_to_second(first_died: bool) -> void:
 	await GameManager.fade_out()
 	pools.clear_combat()
 	player.deactivate()
+	await _play_cutscene(switch_cutscene)
 	_place_player(1)
 	interactions.prepare_world_for(1)
 	_update_pois()
@@ -206,6 +211,16 @@ func _switch_to_second(first_died: bool) -> void:
 	tutorial.open("p2")
 	await tutorial.confirmed
 	_start_character_phase()
+
+
+## Toca uma cutscene (se configurada) com a tela já escura; o fade abre por cima dela.
+func _play_cutscene(cutscene: IntroConfig) -> void:
+	if cutscene == null:
+		return
+	intro.play(cutscene)
+	await GameManager.fade_in()
+	await intro.finished
+	await GameManager.fade_out()
 
 
 func _on_player_died(who: Player) -> void:
