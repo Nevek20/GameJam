@@ -1,0 +1,369 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://ui/hud/cooldown_slot.gd" id="2_slot"]
+[ext_resource type="Script" path="res://ui/hud/poi_arrows.gd" id="3_poi"]
+[ext_resource type="Script" path="res://ui/hud/banner.gd" id="4_banner"]
+[ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="5_ui"]
+
+[sub_resource type="Gradient" id="Gradient_vignette"]
+offsets = PackedFloat32Array(0.55, 1)
+colors = PackedColorArray(1, 0.1, 0.2, 0, 1, 0.1, 0.25, 0.75)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vignette"]
+gradient = SubResource("Gradient_vignette")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="Style_health"]
+bg_color = Color(0.95, 0.3, 0.45, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_chip"]
+bg_color = Color(1, 0.95, 0.85, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="Style_empty"]
+
+[sub_resource type="StyleBoxFlat" id="Style_heroism"]
+bg_color = Color(1, 0.82, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_boss"]
+bg_color = Color(0.85, 0.15, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hud")
+ui_config = ExtResource("5_ui")
+
+[node name="Vignette" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_vignette")
+expand_mode = 1
+
+[node name="PoiArrows" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_poi")
+ui_config = ExtResource("5_ui")
+
+[node name="TopLeft" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 380.0
+offset_bottom = 132.0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="TopLeft"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="CharName" type="Label" parent="TopLeft/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83, 0.61, 0.31, 1)
+theme_override_font_sizes/font_size = 20
+text = "Personagem"
+
+[node name="HealthStack" type="Control" parent="TopLeft/VBox"]
+custom_minimum_size = Vector2(320, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HealthChip" type="ProgressBar" parent="TopLeft/VBox/HealthStack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/fill = SubResource("Style_chip")
+value = 100.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="TopLeft/VBox/HealthStack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("Style_empty")
+theme_override_styles/fill = SubResource("Style_health")
+value = 100.0
+show_percentage = false
+
+[node name="HeroRow" type="HBoxContainer" parent="TopLeft/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="HeroismLabel" type="Label" parent="TopLeft/VBox/HeroRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Heroísmo"
+
+[node name="HeroismBar" type="ProgressBar" parent="TopLeft/VBox/HeroRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/fill = SubResource("Style_heroism")
+value = 50.0
+show_percentage = false
+
+[node name="AllianceTag" type="Label" parent="TopLeft/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "Aliado"
+
+[node name="TimerLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 10.0
+offset_right = 100.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 38
+text = "2:00"
+horizontal_alignment = 1
+
+[node name="Objective" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 58.0
+offset_right = 380.0
+offset_bottom = 84.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[node name="BossPanel" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 90.0
+offset_right = 330.0
+offset_bottom = 140.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="BossName" type="Label" parent="BossPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "Boss"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="BossPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(660, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/fill = SubResource("Style_boss")
+value = 100.0
+show_percentage = false
+
+[node name="ParryLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -170.0
+offset_right = 200.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.83, 0.61, 0.31, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 46
+text = "PARRY!"
+horizontal_alignment = 1
+
+[node name="Prompt" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -130.0
+offset_right = 400.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.83, 0.61, 0.31, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+
+[node name="Cooldowns" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -84.0
+offset_right = 180.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SlotDash" type="Control" parent="Cooldowns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_slot")
+action = &"dash"
+accent = Color(0.6, 0.9, 1.0, 1)
+
+[node name="SlotParry" type="Control" parent="Cooldowns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_slot")
+action = &"parry"
+accent = Color(1.0, 0.85, 0.35, 1)
+
+[node name="SlotQ" type="Control" parent="Cooldowns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_slot")
+action = &"skill_q"
+accent = Color(1.0, 0.55, 0.85, 1)
+
+[node name="SlotE" type="Control" parent="Cooldowns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_slot")
+action = &"skill_e"
+accent = Color(0.65, 0.6, 1.0, 1)
+
+[node name="SlotR" type="Control" parent="Cooldowns"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_slot")
+action = &"ultimate"
+accent = Color(1.0, 0.45, 0.4, 1)
+
+[node name="Banner" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 150.0
+offset_right = 420.0
+offset_bottom = 250.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("4_banner")
+ui_config = ExtResource("5_ui")
+
+[node name="VBox" type="VBoxContainer" parent="Banner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="BannerTitle" type="Label" parent="Banner/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83, 0.61, 0.31, 1)
+theme_override_colors/font_outline_color = Color(0.3, 0.05, 0.35, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 42
+text = "Banner"
+horizontal_alignment = 1
+
+[node name="BannerSubtitle" type="Label" parent="Banner/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Sub"
+horizontal_alignment = 1
+autowrap_mode = 3

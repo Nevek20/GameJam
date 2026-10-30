@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/ability.gd" id="1_nb7me"]
+[ext_resource type="Resource" path="res://resources/abilities/enemies/soldier_slash.tres" id="2_7l7oc"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="3_a2qag"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="4_wv2y2"]
+
+[ext_resource type="SpriteFrames" path="res://resources/sprites/sombra_frames.tres" id="enemy_frames"]
+[sub_resource type="Resource" id="Resource_cglai"]
+script = ExtResource("4_wv2y2")
+body_color = Color(0.82, 0.22, 0.3, 1)
+sprite_frames = ExtResource("enemy_frames")
+sprite_offset = Vector2(0, -285)
+sfx_attack = &"enemy_sombra"
+accent_color = Color(0.25, 0.05, 0.1, 1)
+
+[resource]
+script = ExtResource("3_a2qag")
+skin = SubResource("Resource_cglai")
+sprite_scale = Vector2(0.16, 0.16)
+aggro_range = 900.0
+attack_interval = 1.2
+attacks = Array[ExtResource("1_nb7me")]([ExtResource("2_7l7oc")])
+attack_weights = Array[float]([1.0])

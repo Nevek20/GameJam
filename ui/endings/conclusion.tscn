@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/endings/conclusion.gd" id="1_conclusion"]
+[ext_resource type="Resource" path="res://resources/config/ending_images.tres" id="2_images"]
+[ext_resource type="PackedScene" path="res://ui/endings/ending_card.tscn" id="3_card"]
+[ext_resource type="PackedScene" path="res://ui/endings/tombstone_view.tscn" id="4_tomb"]
+
+[node name="Conclusion" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_conclusion")
+ending_images = ExtResource("2_images")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.01, 0.05, 1)
+
+[node name="EndingCard" parent="." instance=ExtResource("3_card")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Tombstone" parent="." instance=ExtResource("4_tomb")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Hint" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -420.0
+offset_top = -50.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+text = "Enter"
+horizontal_alignment = 2

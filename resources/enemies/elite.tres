@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/ability.gd" id="1_ax4ip"]
+[ext_resource type="Resource" path="res://resources/abilities/enemies/elite_slash.tres" id="2_nsjh8"]
+[ext_resource type="Resource" path="res://resources/abilities/enemies/elite_lunge.tres" id="3_lljg2"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="4_sag76"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="5_lg61o"]
+
+[ext_resource type="SpriteFrames" path="res://resources/sprites/coguolho_frames.tres" id="enemy_frames"]
+[sub_resource type="Resource" id="Resource_7cgfu"]
+script = ExtResource("5_lg61o")
+body_color = Color(0.55, 0.1, 0.42, 1)
+accent_color = Color(1, 0.75, 0.3, 1)
+placeholder_accent = 4
+sprite_frames = ExtResource("enemy_frames")
+sprite_offset = Vector2(0, -360)
+sfx_attack = &"enemy_coguolho"
+
+[resource]
+script = ExtResource("4_sag76")
+id = &"elite"
+sprite_scale = Vector2(0.18, 0.18)
+skin = SubResource("Resource_7cgfu")
+body_size = Vector2(44, 76)
+collision_size = Vector2(36, 20)
+max_health = 110.0
+move_speed = 170.0
+knockback_resistance = 0.4
+armor_while_attacking = true
+aggro_range = 1000.0
+attack_interval = 0.9
+attacks = Array[ExtResource("1_ax4ip")]([ExtResource("2_nsjh8"), ExtResource("3_lljg2")])
+attack_weights = Array[float]([3.0, 2.0])
+dash_chance = 0.25
+dash_distance = 200.0
+dash_duration = 0.18
+block_chance = 0.45
+block_duration = 0.9
+block_cooldown = 3.0

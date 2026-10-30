@@ -1,0 +1,16 @@
+{
+  "_comment": "Legendas das cutscenes (BBCode). Cada lista corresponde a um IntroConfig (campo captions_key), na mesma ordem das imagens.",
+  "slides": [
+    "Em Valedouro, onde as árvores se curvam e as estrelas nadam, a noite começou errada.",
+    "Criaturas deformadas desceram sobre as casas. Os moradores estão presos.",
+    "Duas pessoas podem mudar o destino da vila. Uma de cada vez."
+  ],
+  "switch": [
+    "Três dias depois, Kael Draven chega a Valedouro, em busca de um remédio para a filha.",
+    "Tudo o que Elara fez ficou marcado nas ruas."
+  ],
+  "boss": [
+    "O sino toca, o céu se abre e a lua vira um olho.",
+    "Não há mais volta."
+  ]
+}

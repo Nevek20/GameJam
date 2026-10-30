@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://edl1ybs6wlxo"]
+
+[ext_resource type="Script" uid="uid://cckh2613uhs7x" path="res://ui/menu/main_menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://bmr7xqudmrfv8" path="res://assets/images/Os Contos de Carcosa.png" id="2_8gmgf"]
+[ext_resource type="AudioStream" uid="uid://bj1eir3ceekh4" path="res://assets/audio/music/somMenu.wav" id="2_h2671"]
+[ext_resource type="Shader" uid="uid://d5pc1cvfxsrv" path="res://assets/shaders/psychedelic.gdshader" id="2_shader"]
+[ext_resource type="Script" uid="uid://ohaqtg4qif2q" path="res://ui/theme/juicy_button.gd" id="3_button"]
+[ext_resource type="PackedScene" path="res://ui/options/options_panel.tscn" id="4_options"]
+[ext_resource type="PackedScene" path="res://ui/credits/credits_view.tscn" id="5_credits"]
+[ext_resource type="Script" uid="uid://gahrp0vxf67i" path="res://scripts/world/dream_decor.gd" id="6_decor"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("2_shader")
+shader_parameter/color_a = Color(0.07, 0.03, 0.16, 1)
+shader_parameter/color_b = Color(0.2, 0.08, 0.38, 1)
+shader_parameter/color_c = Color(0.6, 0.18, 0.58, 1)
+shader_parameter/world_size = Vector2(1280, 720)
+shader_parameter/pattern_scale = 0.005
+shader_parameter/speed = 0.3
+
+[sub_resource type="StyleBoxEmpty" id="menu_button_clear"]
+
+[node name="MainMenu" type="Control" unique_id=155356760]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="SomMenu" type="AudioStreamPlayer" parent="." unique_id=179096044]
+stream = ExtResource("2_h2671")
+autoplay = true
+bus = &"Music"
+
+[node name="OsContosDeCarcosa" type="Sprite2D" parent="." unique_id=1041917359]
+position = Vector2(640.7777, 359.00003)
+scale = Vector2(0.67037034, 0.67037034)
+texture = ExtResource("2_8gmgf")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1251764495]
+visible = false
+material = SubResource("ShaderMaterial_bg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Decor" type="Node2D" parent="." unique_id=187227770]
+visible = false
+script = ExtResource("6_decor")
+area = Rect2(0, 0, 1280, 720)
+count = 60
+seed_value = 3
+palette = PackedColorArray(0.98, 0.45, 0.85, 1, 0.45, 0.95, 0.9, 1, 1, 0.85, 0.35, 1, 0.65, 0.5, 1, 1, 0.5, 1, 0.55, 1)
+
+[node name="Title" type="Label" parent="." unique_id=696407447]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -567.0
+offset_top = 67.0
+offset_right = -151.0
+offset_bottom = 256.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.050980393, 0.011764706, 0.101960786, 0)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 68
+text = "OS CONTOS 
+DE CARCOSA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="." unique_id=1235339836]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_top = 175.0
+offset_right = 500.0
+offset_bottom = 210.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+theme_override_font_sizes/font_size = 20
+text = "Subtítulo"
+horizontal_alignment = 1
+
+[node name="MenuBox" type="VBoxContainer" parent="." unique_id=639131429]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = 10.0
+offset_right = -200.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="PlayButton" type="Button" parent="MenuBox" unique_id=18619106]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("menu_button_clear")
+theme_override_styles/pressed = SubResource("menu_button_clear")
+theme_override_styles/hover = SubResource("menu_button_clear")
+theme_override_styles/disabled = SubResource("menu_button_clear")
+text = "Jogar"
+script = ExtResource("3_button")
+
+[node name="OptionsButton" type="Button" parent="MenuBox" unique_id=401708584]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("menu_button_clear")
+theme_override_styles/pressed = SubResource("menu_button_clear")
+theme_override_styles/hover = SubResource("menu_button_clear")
+theme_override_styles/disabled = SubResource("menu_button_clear")
+text = "Opções"
+script = ExtResource("3_button")
+
+[node name="CreditsButton" type="Button" parent="MenuBox" unique_id=85702706]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("menu_button_clear")
+theme_override_styles/pressed = SubResource("menu_button_clear")
+theme_override_styles/hover = SubResource("menu_button_clear")
+theme_override_styles/disabled = SubResource("menu_button_clear")
+text = "Créditos"
+script = ExtResource("3_button")
+
+[node name="Options" parent="." unique_id=1913976390 instance=ExtResource("4_options")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="CreditsPanel" type="Control" parent="." unique_id=2073389047]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="CreditsPanel" unique_id=1890130227]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.025, 0.045, 0.78)
+
+[node name="Panel" type="PanelContainer" parent="CreditsPanel" unique_id=1667308707]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -430.0
+offset_top = -320.0
+offset_right = 430.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CreditsPanel/Panel" unique_id=1993701759]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="CreditsView" parent="CreditsPanel/Panel/VBox" unique_id=1951322776 instance=ExtResource("5_credits")]
+custom_minimum_size = Vector2(0, 520)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreditsBack" type="Button" parent="CreditsPanel/Panel/VBox" unique_id=186456184]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Voltar"
+script = ExtResource("3_button")

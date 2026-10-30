@@ -1,0 +1,136 @@
+extends Node
+## Testes headless: regras puras (boss, finais, reputação) e carga de todas as cenas/resources.
+## Rodar: godot --headless --path . res://tests/test_runner.tscn
+
+var _failures: int = 0
+var _checks: int = 0
+
+
+func _ready() -> void:
+	_test_boss_selector()
+	_test_endings()
+	_test_dash_curve()
+	_test_reputation()
+	_test_texts()
+	_load_everything("res://")
+	print("TESTES: %d verificações, %d falhas" % [_checks, _failures])
+	get_tree().quit(1 if _failures > 0 else 0)
+
+
+func check(condition: bool, label: String) -> void:
+	_checks += 1
+	if not condition:
+		_failures += 1
+		push_error("FALHOU: " + label)
+
+
+func _test_boss_selector() -> void:
+	var K := BossSelector.Kind
+	# a) ninguém aliado
+	var s := BossSelector.select(&"p1", &"p2", true, true, false, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and s.choice and s.choice_options.size() == 2, "a) os dois vivos: escolha")
+	s.apply_choice(&"p1")
+	check(s.player_id == &"p1" and s.helper_id == &"p2" and s.control_switched and not s.player_fights_for_army, "a) escolheu P1, P2 ajuda")
+	s = BossSelector.select(&"p1", &"p2", false, true, false, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and not s.choice and s.player_id == &"p2" and s.helper_id == &"", "a) P1 morto: P2 sozinho")
+	# b) ambos aliados: skin do reino
+	s = BossSelector.select(&"p1", &"p2", true, true, true, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.choice and s.double_alliance, "b) aliança dupla: escolha e skin do reino")
+	s.apply_choice(&"p2")
+	check(s.player_id == &"p2" and s.helper_id == &"p1" and s.player_fights_for_army, "b) escolheu P2, P1 ajuda")
+	s = BossSelector.select(&"p1", &"p2", false, true, true, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and not s.choice and s.player_id == &"p2", "b) P1 morto: P2 sozinho")
+	# c) só um aliado, os dois vivos
+	s = BossSelector.select(&"p1", &"p2", true, true, true, false)
+	check(s.kind == K.CHARACTER and s.boss_character_id == &"p1" and s.player_id == &"p2" and not s.choice and s.helper_id == &"", "c) P1 aliado é o boss")
+	s = BossSelector.select(&"p1", &"p2", true, true, false, true)
+	check(s.kind == K.CHARACTER and s.boss_character_id == &"p2" and s.player_id == &"p1" and s.control_switched, "c) P2 aliado é o boss, controle troca")
+	# d) só um aliado e um morto
+	s = BossSelector.select(&"p1", &"p2", false, true, true, false)
+	check(s.kind == K.KNIGHT_ARMY_SKIN and s.player_id == &"p2" and not s.player_fights_for_army, "d) aliado morto: boss normal")
+	s = BossSelector.select(&"p1", &"p2", false, true, false, true)
+	check(s.kind == K.KNIGHT_KINGDOM_SKIN and s.player_id == &"p2" and s.player_fights_for_army, "d) não aliado morto: variação do bem")
+
+
+func _test_dash_curve() -> void:
+	# A distância percorrida (soma da velocidade) tem que bater com dash_distance.
+	for power: float in [1.0, 2.0, 3.0]:
+		var traveled := 0.0
+		var steps := 1000
+		var duration := 0.2
+		for i in steps:
+			var u := (float(i) + 0.5) / float(steps)
+			traveled += DashAttackAbility.speed_at(u, 180.0, power, duration) * duration / float(steps)
+		check(absf(traveled - 180.0) < 0.5, "dash percorre a distância exata (curva %d)" % int(power))
+	var start := DashAttackAbility.speed_at(0.0, 180.0, 2.0, 0.2)
+	var end := DashAttackAbility.speed_at(0.95, 180.0, 2.0, 0.2)
+	check(start > end * 5.0, "dash começa rápido e desacelera")
+
+
+func _test_endings() -> void:
+	var St := Reputation.Standing
+	check(Endings.character_ending(false, St.POSITIVE, false) == Endings.DEATH, "morte tem prioridade")
+	check(Endings.character_ending(true, St.POSITIVE, false) == Endings.POSITIVE, "positivo")
+	check(Endings.character_ending(true, St.QUESTIONABLE, false) == Endings.QUESTIONABLE, "questionável")
+	check(Endings.character_ending(true, St.NEGATIVE, false) == Endings.NEGATIVE_VICTORIOUS, "aliado vitorioso")
+	check(Endings.character_ending(true, St.NEGATIVE, true) == Endings.NEGATIVE_IMPRISONED, "aliado preso")
+	check(Endings.kingdom_ending(false, false, true, true, false) == Endings.KINGDOM_POSITIVE, "reino positivo")
+	check(Endings.kingdom_ending(false, false, false, false, false) == Endings.KINGDOM_NEGATIVE, "P2 morreu antes do boss")
+	check(Endings.kingdom_ending(false, false, true, false, false) == Endings.KINGDOM_NEGATIVE, "herói perdeu o boss")
+	check(Endings.kingdom_ending(true, false, true, true, false) == Endings.KINGDOM_POSITIVE, "P2 venceu P1 aliado")
+	check(Endings.kingdom_ending(false, true, true, true, true) == Endings.KINGDOM_NEGATIVE, "aliado venceu o reino")
+	check(Endings.kingdom_ending(true, true, true, true, true) == Endings.KINGDOM_DOUBLE_ALLIANCE, "aliança dupla")
+	check(Endings.kingdom_ending(true, true, true, false, true) == Endings.KINGDOM_POSITIVE, "aliado duplo derrotado")
+
+
+func _test_reputation() -> void:
+	var cfg := ReputationConfig.new()
+	cfg.positive_threshold = 60.0
+	check(Reputation.compute_standing(80, false, cfg) == Reputation.Standing.POSITIVE, "faixa positiva")
+	check(Reputation.compute_standing(40, false, cfg) == Reputation.Standing.QUESTIONABLE, "faixa questionável")
+	check(Reputation.compute_standing(100, true, cfg) == Reputation.Standing.NEGATIVE, "aliado = negativo")
+	var ids: Array[StringName] = [&"princess", &"mage"]
+	ReputationState.reset(ids)
+	var start := ReputationState.get_heroism(&"princess")
+	ReputationState.register_rescue(&"princess")
+	check(ReputationState.get_heroism(&"princess") > start, "resgate aumenta heroísmo")
+	ReputationState.register_loot(&"princess")
+	ReputationState.register_loot(&"princess")
+	check(ReputationState.get_heroism(&"princess") < start + ReputationState.config.rescue_gain, "saque diminui heroísmo")
+	ReputationState.set_allied(&"mage")
+	check(ReputationState.get_standing(&"mage") == Reputation.Standing.NEGATIVE, "aliança muda o estado")
+
+
+func _test_texts() -> void:
+	for id: StringName in [&"princess", &"mage"]:
+		for ending: StringName in [Endings.POSITIVE, Endings.QUESTIONABLE, Endings.NEGATIVE_VICTORIOUS, Endings.NEGATIVE_IMPRISONED]:
+			check(Texts.get_value("endings", "characters.%s.%s.title" % [id, ending]) != null, "texto final %s %s" % [id, ending])
+		check(Texts.get_value("endings", "tombstone.%s.text" % id) != null, "lápide %s" % id)
+		check(Texts.get_value("names", String(id)) != null, "nome %s" % id)
+	for ending: StringName in [Endings.KINGDOM_POSITIVE, Endings.KINGDOM_NEGATIVE, Endings.KINGDOM_DOUBLE_ALLIANCE]:
+		check(Texts.get_value("endings", "kingdom.%s.title" % ending) != null, "final do reino %s" % ending)
+	for action: StringName in Actions.REMAPPABLE:
+		check(InputMap.has_action(action), "ação %s no InputMap" % action)
+		check(Texts.get_value("ui", "actions.%s" % action) != null, "nome da ação %s" % action)
+
+
+func _load_everything(path: String) -> void:
+	var dir := DirAccess.open(path)
+	if dir == null:
+		return
+	for sub: String in dir.get_directories():
+		if sub.begins_with("."):
+			continue
+		_load_everything(path.path_join(sub))
+	for file: String in dir.get_files():
+		var full := path.path_join(file)
+		if file.ends_with(".gd") or file.ends_with(".tres"):
+			check(load(full) != null, "carregar " + full)
+		elif file.ends_with(".tscn"):
+			var packed := load(full) as PackedScene
+			check(packed != null, "carregar " + full)
+			if packed and not full.begins_with("res://tests"):
+				var node := packed.instantiate()
+				check(node != null, "instanciar " + full)
+				if node:
+					node.free()

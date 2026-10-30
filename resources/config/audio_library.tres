@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="AudioLibrary" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/audio_library.gd" id="1_erpth"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_ultimate.wav" id="sfx_mage_ultimate"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_lightning.wav" id="sfx_mage_lightning"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_fire.wav" id="sfx_mage_fire"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_defense.wav" id="sfx_mage_defense"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_dash.wav" id="sfx_mage_dash"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage_run.wav" id="sfx_mage_run"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/olho_seco.mp3" id="sfx_olho_seco"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/sombra.wav" id="sfx_sombra"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/coguolho.wav" id="sfx_coguolho"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/somMenu.wav" id="music_menu"]
+
+[resource]
+script = ExtResource("1_erpth")
+sfx = Dictionary[StringName, AudioStream]({
+&"attack_mana": null,
+&"attack_slash": null,
+&"barrel_break": null,
+&"barrel_hit": null,
+&"block": null,
+&"boss_defeated": null,
+&"boss_radial": null,
+&"boss_shockwave": null,
+&"boss_slam": null,
+&"boss_roar": null,
+&"boss_start": null,
+&"dash": null,
+&"death": null,
+&"downed": null,
+&"enemy_attack": null,
+&"fight_end": null,
+&"fight_start": null,
+&"hit": null,
+&"hurt": null,
+&"loot": null,
+&"parry": null,
+&"parry_success": null,
+&"potion_pickup": null,
+&"qte_fail": null,
+&"qte_success": null,
+&"rescue": null,
+&"revive": null,
+&"skill_dash_slash": null,
+&"skill_fireball": ExtResource("sfx_mage_fire"),
+&"skill_lightning": ExtResource("sfx_mage_lightning"),
+&"skill_spin": null,
+&"ui_click": null,
+&"ui_focus": null,
+&"ult_beam": ExtResource("sfx_mage_ultimate"),
+&"mage_run": ExtResource("sfx_mage_run"),
+&"mage_dash": ExtResource("sfx_mage_dash"),
+&"mage_defense": ExtResource("sfx_mage_defense"),
+&"enemy_coguolho": ExtResource("sfx_coguolho"),
+&"enemy_sombra": ExtResource("sfx_sombra"),
+&"enemy_olho_seco": ExtResource("sfx_olho_seco"),
+&"ult_great_slash": null
+})
+sfx_volume_db = Dictionary[StringName, float]({
+&"enemy_coguolho": -14.0,
+&"enemy_olho_seco": -4.0
+})
+music = Dictionary[StringName, AudioStream]({
+&"boss": null,
+&"credits": null,
+&"ending": null,
+&"gameplay": null,
+&"intro": null,
+&"menu": ExtResource("music_menu")
+})

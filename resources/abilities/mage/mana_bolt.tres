@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ProjectileAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/projectile_ability.gd" id="1_4338c"]
+
+[resource]
+script = ExtResource("1_4338c")
+speed = 720.0
+id = &"mana_bolt"
+color = Color(0.55, 0.85, 1, 1)
+damage = 9.0
+knockback = 120.0
+cooldown = 0.26
+windup = 0.04
+active_time = 0.02
+recovery = 0.08
+move_multiplier = 0.7
+ai_range = 520.0
+sfx_cast = &"attack_mana"

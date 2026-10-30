@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ChainAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/chain_ability.gd" id="1_w1aww"]
+
+[resource]
+script = ExtResource("1_w1aww")
+id = &"chain_lightning"
+color = Color(0.75, 0.85, 1, 1)
+damage = 22.0
+knockback = 160.0
+hit_juice_level = 1
+cooldown = 4.5
+windup = 0.12
+active_time = 0.02
+recovery = 0.2
+move_multiplier = 0.3
+ai_range = 440.0
+sfx_cast = &"skill_lightning"

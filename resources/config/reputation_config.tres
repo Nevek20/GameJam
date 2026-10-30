@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ReputationConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/reputation_config.gd" id="1_qg8ch"]
+
+[resource]
+script = ExtResource("1_qg8ch")

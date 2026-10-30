@@ -1,0 +1,91 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/dialog/dialog_box.gd" id="1_dialog"]
+[ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="2_ui"]
+[ext_resource type="Script" path="res://ui/theme/juicy_button.gd" id="3_button"]
+
+[node name="DialogBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_dialog")
+ui_config = ExtResource("2_ui")
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 150.0
+offset_top = -210.0
+offset_right = -150.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Speaker" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83, 0.61, 0.31, 1)
+theme_override_font_sizes/font_size = 20
+text = "Nome"
+
+[node name="Text" type="RichTextLabel" parent="Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 19
+bbcode_enabled = true
+text = "Texto"
+fit_content = true
+scroll_active = false
+
+[node name="Bottom" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Choices" type="HBoxContainer" parent="Panel/VBox/Bottom"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="Choice1" type="Button" parent="Panel/VBox/Bottom/Choices"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 42)
+layout_mode = 2
+text = "A"
+script = ExtResource("3_button")
+
+[node name="Choice2" type="Button" parent="Panel/VBox/Bottom/Choices"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 42)
+layout_mode = 2
+text = "B"
+script = ExtResource("3_button")
+
+[node name="Choice3" type="Button" parent="Panel/VBox/Bottom/Choices"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 42)
+layout_mode = 2
+text = "C"
+script = ExtResource("3_button")
+
+[node name="Hint" type="Label" parent="Panel/VBox/Bottom"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.75)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 14
+text = "Enter"
+horizontal_alignment = 2

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="DashAttackAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/dash_attack_ability.gd" id="1_dash"]
+
+[resource]
+script = ExtResource("1_dash")
+dash_distance = 260.0
+ease_power = 2.0
+skip_telegraph_for_player = true
+telegraph_color = Color(1, 0.3, 0.35, 1)
+shape = 1
+size = Vector2(120, 100)
+forward_offset = 44.0
+id = &"boss_lunge"
+color = Color(1, 0.3, 0.35, 0.85)
+damage = 24.0
+knockback = 420.0
+juice_level = 1
+hit_juice_level = 1
+cooldown = 4.0
+windup = 0.7
+active_time = 0.28
+recovery = 0.8
+move_multiplier = 0.0
+cancel_recovery = false
+ai_range = 360.0
+sfx_cast = &""

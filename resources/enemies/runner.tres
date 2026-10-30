@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/ability.gd" id="1_ability"]
+[ext_resource type="Resource" path="res://resources/abilities/enemies/runner_slash.tres" id="2_slash"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="3_stats"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="4_skin"]
+
+[ext_resource type="SpriteFrames" path="res://resources/sprites/olho_seco_frames.tres" id="enemy_frames"]
+[sub_resource type="Resource" id="Resource_skin"]
+script = ExtResource("4_skin")
+body_color = Color(1, 0.62, 0.2, 1)
+accent_color = Color(0.35, 0.12, 0.05, 1)
+placeholder_accent = 4
+sprite_frames = ExtResource("enemy_frames")
+sprite_offset = Vector2(0, -175)
+sfx_attack = &"enemy_olho_seco"
+
+[resource]
+script = ExtResource("3_stats")
+id = &"runner"
+sprite_scale = Vector2(0.13, 0.13)
+skin = SubResource("Resource_skin")
+body_size = Vector2(28, 44)
+collision_size = Vector2(24, 14)
+max_health = 18.0
+move_speed = 270.0
+acceleration = 1800.0
+hurt_stun = 0.2
+aggro_range = 1100.0
+think_interval = 0.2
+attack_interval = 0.8
+attacks = Array[ExtResource("1_ability")]([ExtResource("2_slash")])
+attack_weights = Array[float]([1.0])

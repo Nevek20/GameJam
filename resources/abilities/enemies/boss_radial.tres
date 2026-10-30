@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="RadialBurstAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/radial_burst_ability.gd" id="1_radial"]
+
+[resource]
+script = ExtResource("1_radial")
+per_wave = 12
+waves = 3
+wave_interval = 0.45
+angle_step_per_wave = 15.0
+radius = 12.0
+speed = 330.0
+max_range = 750.0
+spawn_offset = 40.0
+id = &"boss_radial"
+color = Color(1, 0.35, 0.5, 1)
+damage = 10.0
+knockback = 200.0
+cooldown = 6.0
+windup = 0.8
+active_time = 1.0
+recovery = 0.7
+move_multiplier = 0.0
+ai_range = 900.0
+sfx_cast = &"boss_radial"

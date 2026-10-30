@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/prop_visual.gd" id="1_visual"]
+[ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="2_shape"]
+
+[node name="PropBanner" type="Node2D" groups=["scenery"]]
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("1_visual")
+sway_degrees = 3.0
+
+[node name="Placeholder" type="Node2D" parent="Visual"]
+position = Vector2(0, -50)
+script = ExtResource("2_shape")
+kind = 12
+size = Vector2(40, 100)
+color = Color(0.8, 0.15, 0.25, 1)
+secondary_color = Color(0.3, 0.2, 0.15, 1)
+accent_color = Color(0.1, 0.02, 0.05, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+visible = false

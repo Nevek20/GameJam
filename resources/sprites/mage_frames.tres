@@ -1,0 +1,477 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/00.png" id="1_50qgw"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/01.png" id="2_30rfu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/02.png" id="3_1m6ui"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/03.png" id="4_yksfg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/04.png" id="5_j2syk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/05.png" id="6_64uhk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/06.png" id="7_ed23x"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/07.png" id="8_kwsbi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/08.png" id="9_bfo4n"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/09.png" id="10_mv4mx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/10.png" id="11_yh0eq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/11.png" id="12_0rmbt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/12.png" id="13_jslks"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/13.png" id="14_7fxee"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/14.png" id="15_pmi3a"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/arcane_beam/15.png" id="16_5780g"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/00.png" id="17_yfsj6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/01.png" id="18_ggi62"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/02.png" id="19_iboev"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/03.png" id="20_tjnrf"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/04.png" id="21_0fa8f"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/05.png" id="22_q3c8s"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/06.png" id="23_rycwu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/07.png" id="24_h27ue"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/08.png" id="25_ktpjg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/09.png" id="26_edu1b"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/10.png" id="27_ivpmh"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/11.png" id="28_qosq7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/attack/12.png" id="29_ugg26"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/00.png" id="30_lh2m3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/01.png" id="31_q4cks"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/02.png" id="32_c8dwo"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/03.png" id="33_rklah"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/04.png" id="34_23nrl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/05.png" id="35_ywey2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/06.png" id="36_xf83y"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/07.png" id="37_sfaef"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/08.png" id="38_l6b24"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/09.png" id="39_5g75d"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/10.png" id="40_4wncu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/11.png" id="41_tywq4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/chain_lightning/12.png" id="42_4gybk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/00.png" id="43_4lbl6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/01.png" id="44_xg2fj"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/02.png" id="45_pp5fr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/03.png" id="46_iyve5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/04.png" id="47_ognsk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/05.png" id="48_vsevb"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/06.png" id="49_b1r3t"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/07.png" id="50_pvlxi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/08.png" id="51_xflud"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/09.png" id="52_t5br5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/10.png" id="53_0c7cd"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/dash/11.png" id="54_btjyl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/00.png" id="55_xpury"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/01.png" id="56_hcss8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/02.png" id="57_haly7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/03.png" id="58_48ovx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/04.png" id="59_6bqck"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/05.png" id="60_x5lyq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/06.png" id="61_exy4d"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/07.png" id="62_vc1vn"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/08.png" id="63_pxo5q"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/09.png" id="64_2jnst"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/fireball/10.png" id="65_spj4c"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/00.png" id="66_gq2hl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/01.png" id="67_qosbx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/02.png" id="68_uunbl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/03.png" id="69_oo5hs"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/04.png" id="70_6m3dq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/05.png" id="71_hi38x"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/06.png" id="72_8hign"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/07.png" id="73_vh1lg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/08.png" id="74_lonc7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/09.png" id="75_j056o"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/10.png" id="76_40is7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/11.png" id="77_vrsu8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/12.png" id="78_crasu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/13.png" id="79_q5tcu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/idle/14.png" id="80_su3kk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/00.png" id="81_wqq0k"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/01.png" id="82_ha033"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/02.png" id="83_b3xnq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/03.png" id="84_7i04u"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/04.png" id="85_7a5l6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/05.png" id="86_kmjv1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/06.png" id="87_d0qni"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/07.png" id="88_dwonw"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/08.png" id="89_0e6p0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/09.png" id="90_v8pss"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/10.png" id="91_dk2rm"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/11.png" id="92_6s7v2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/12.png" id="93_rhvn6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/13.png" id="94_0qcvl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/move/14.png" id="95_socgv"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/00.png" id="96_1w0cn"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/01.png" id="97_7h0ng"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/02.png" id="98_wwi5p"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/03.png" id="99_c73a3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/04.png" id="100_4eeau"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/05.png" id="101_od631"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/06.png" id="102_e7cbk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/07.png" id="103_i3rx5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/08.png" id="104_1p2qp"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/09.png" id="105_jr2cy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/10.png" id="106_2veyu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/11.png" id="107_gef5c"]
+[ext_resource type="Texture2D" path="res://assets/sprites/mage/parry/12.png" id="108_pcp7c"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_50qgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_30rfu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1m6ui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yksfg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_j2syk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_64uhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ed23x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kwsbi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_bfo4n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_mv4mx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_yh0eq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_0rmbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_jslks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_7fxee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_pmi3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_5780g")
+}],
+"loop": 0,
+"name": &"arcane_beam",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_yfsj6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ggi62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_iboev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_tjnrf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_0fa8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_q3c8s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_rycwu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_h27ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_ktpjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_edu1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_ivpmh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_qosq7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ugg26")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_lh2m3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_q4cks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_c8dwo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_rklah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_23nrl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_ywey2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_xf83y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_sfaef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_l6b24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_5g75d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_4wncu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_tywq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_4gybk")
+}],
+"loop": 0,
+"name": &"chain_lightning",
+"speed": 26.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("43_4lbl6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_xg2fj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_pp5fr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_iyve5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_ognsk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_vsevb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_b1r3t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_pvlxi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_xflud")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_t5br5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_0c7cd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_btjyl")
+}],
+"loop": 0,
+"name": &"dash",
+"speed": 50.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("55_xpury")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_hcss8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_haly7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_48ovx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_6bqck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_x5lyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_exy4d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_vc1vn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_pxo5q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_2jnst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_spj4c")
+}],
+"loop": 0,
+"name": &"fireball",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("66_gq2hl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_qosbx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_uunbl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_oo5hs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_6m3dq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_hi38x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_8hign")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_vh1lg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_lonc7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_j056o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_40is7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_vrsu8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_crasu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_q5tcu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_su3kk")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("81_wqq0k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_ha033")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_b3xnq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_7i04u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_7a5l6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_kmjv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_d0qni")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_dwonw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_0e6p0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_v8pss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_dk2rm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_6s7v2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_rhvn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_0qcvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_socgv")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("96_1w0cn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_7h0ng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_wwi5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_c73a3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_4eeau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_od631")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_e7cbk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_i3rx5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_1p2qp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_jr2cy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_2veyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_gef5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_pcp7c")
+}],
+"loop": 0,
+"name": &"parry",
+"speed": 24.0
+}]

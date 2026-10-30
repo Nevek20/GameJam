@@ -1,0 +1,119 @@
+{
+	"_comment": "Textos da interface.",
+	"menu": {
+		"title": "Vila Psicodélica",
+		"subtitle": "Uma noite. Dois heróis. Uma escolha.",
+		"play": "Jogar",
+		"options": "Opções",
+		"credits": "Créditos"
+	},
+	"options": {
+		"title": "Opções",
+		"audio": "Áudio",
+		"controls": "Controles",
+		"master": "Volume geral",
+		"music": "Música",
+		"sfx": "Efeitos",
+		"restore": "Restaurar padrão",
+		"back": "Voltar",
+		"press_key": "Pressione...",
+		"remap_hint": "Pressione a nova tecla ou botão (Esc cancela)"
+	},
+	"actions": {
+		"move_up": "Mover para cima",
+		"move_down": "Mover para baixo",
+		"move_left": "Mover para a esquerda",
+		"move_right": "Mover para a direita",
+		"dash": "Dash",
+		"attack": "Ataque",
+		"parry": "Defesa / Parry",
+		"skill_q": "Habilidade principal",
+		"skill_e": "Habilidade secundária",
+		"ultimate": "Ultimate",
+		"confirm": "Confirmar",
+		"pause": "Pausa",
+		"interact": "Interagir / reviver",
+		"advance_stage": "Avançar etapa"
+	},
+	"keys": {
+		"mouse_1": "Mouse Esq.",
+		"mouse_2": "Mouse Dir.",
+		"mouse_3": "Mouse Meio",
+		"mouse_4": "Roda Cima",
+		"mouse_5": "Roda Baixo",
+		"mouse_8": "Mouse 4",
+		"mouse_9": "Mouse 5"
+	},
+	"pause": {
+		"title": "Pausa",
+		"resume": "Continuar",
+		"menu": "Menu principal"
+	},
+	"dialog": {
+		"skip": "Enter: pular",
+		"choose": "Escolha",
+		"continue": "Enter ▶"
+	},
+	"qte": {
+		"hint": "Clique ({key}) quando a barra estiver na faixa dourada!",
+		"success": "Conseguiu!",
+		"fail": "Errou..."
+	},
+	"intro": {
+		"next": "{key} ou clique esquerdo para continuar",
+		"start": "{key} ou clique esquerdo para começar"
+	},
+	"hud": {
+		"heroism": "Heroísmo",
+		"allied": "ALIADO DO EXÉRCITO",
+		"parry": "PARRY!",
+		"slot_dash": "Dash",
+		"slot_parry": "Def",
+		"slot_q": "Q",
+		"slot_e": "E",
+		"slot_r": "R",
+		"revive_prompt": "Segure {key} para reviver {name}",
+		"downed_self": "Caído! {name} pode te reviver ({time}s)",
+		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)",
+		"advance_prompt": "Objetivos completos! Pressione {key} para avançar"
+	},
+	"objective": {
+		"p1": "Salve os moradores e encontre o exército",
+		"p2": "Encontre o exército inimigo",
+		"confront": "Derrote o exército",
+		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
+		"after_fight": "Continue ajudando a vila",
+		"boss": "Vença a luta final"
+	},
+	"banner": {
+		"allied_title": "Aliança selada",
+		"allied_subtitle": "{name} agora marcha com o exército",
+		"confront_title": "À luta!",
+		"confront_subtitle": "O exército avança",
+		"knights": "Cavaleiros do reino chegaram!",
+		"wave": "Onda {n} de {total}",
+		"cleared": "O exército recuou",
+		"time_up": "O tempo acabou",
+		"p2_subtitle": "entra em cena",
+		"boss_subtitle": "Luta final",
+		"boss_switched": "{name} volta para a luta final",
+		"helper_down": "{name} caiu!",
+		"victory": "Vitória!",
+		"enemies_stronger": "Os inimigos estão mais fortes!"
+	},
+	"ending": {
+		"next": "{key} ou clique esquerdo para continuar",
+		"tag_p1": "Personagem 1 · {name}",
+		"tag_p2": "Personagem 2 · {name}",
+		"tag_kingdom": "O Reino"
+	},
+	"credits": {
+		"hint": "Segure {key} para acelerar",
+		"end_hint": "{key} para voltar ao menu"
+	},
+	"choice": {
+		"title": "Quem vai enfrentar o cavaleiro?",
+		"subtitle": "O outro personagem se juntará a você nesta batalha.",
+		"hint": "Clique ou use as setas e Enter"
+	}
+}
