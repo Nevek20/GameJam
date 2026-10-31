@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterStats" format=3]
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=8 format=3]
 
 [ext_resource type="Resource" path="res://resources/ai/princess_ai.tres" id="1_uu257"]
 [ext_resource type="Resource" path="res://resources/abilities/princess/sword_slash.tres" id="2_yiutf"]
@@ -6,11 +6,16 @@
 [ext_resource type="Resource" path="res://resources/abilities/princess/spin_slash.tres" id="4_grdoa"]
 [ext_resource type="Resource" path="res://resources/abilities/princess/dash_slash.tres" id="5_tpg41"]
 [ext_resource type="Resource" path="res://resources/abilities/princess/great_slash.tres" id="6_wrd4p"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/princess_frames.tres" id="7_frames"]
 
 [resource]
 script = ExtResource("3_7wxr4")
 id = &"princess"
 body_color = Color(1, 0.62, 0.85, 1)
+sprite_frames = ExtResource("7_frames")
+sprite_scale = Vector2(0.3, 0.3)
+sprite_offset = Vector2(40, -126)
+body_size = Vector2(36, 62)
 max_health = 120.0
 move_speed = 270.0
 dash_distance = 200.0
