@@ -13,7 +13,7 @@ func enter(msg: Dictionary) -> void:
 	if _ability == null or not enemy.caster.cast(_ability, dir):
 		return
 	enemy.visual.play(&"attack")
-	AudioManager.play_sfx(&"enemy_attack")
+	AudioManager.play_sfx_for(&"enemy_attack", enemy.stats.id)
 
 
 func exit() -> void:

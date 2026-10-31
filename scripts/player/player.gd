@@ -36,6 +36,8 @@ var downed: bool = false
 var downed_left: float = 0.0
 ## Progresso do revive feito pelo parceiro (0 a revive_time).
 var revive_progress: float = 0.0
+## Passos em loop enquanto anda (som "move_<id>" do AudioLibrary).
+var steps: AudioStreamPlayer
 
 @onready var visual: EntityVisual = $Visual
 @onready var guard: GuardVisual = $Visual/Guard
@@ -56,6 +58,8 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	health.health_changed.connect(_on_health_changed)
 	hurtbox.hit_received.connect(_on_hit_received)
+	steps = AudioStreamPlayer.new()
+	add_child(steps)
 	state_machine.setup(self)
 	guard.hide_guard()
 

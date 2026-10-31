@@ -14,7 +14,7 @@ func enter(msg: Dictionary) -> void:
 	_trail_left = 0.0
 	enemy.dash_cooldown_left = s.dash_cooldown
 	enemy.visual.play(&"dash")
-	AudioManager.play_sfx(&"dash")
+	AudioManager.play_sfx_for(&"dash", enemy.stats.id)
 	var cfg := Juice.cfg()
 	if cfg:
 		enemy.visual.squash(cfg.squash_dash)

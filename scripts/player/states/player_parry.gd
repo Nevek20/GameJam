@@ -11,7 +11,7 @@ func enter(_msg: Dictionary) -> void:
 	player.guard.show_guard(player.stats.body_size)
 	player.guard.set_parry_window(true)
 	player.visual.play(&"parry")
-	AudioManager.play_sfx(&"parry")
+	AudioManager.play_sfx_for(&"parry", player.stats.id)
 
 
 func exit() -> void:
@@ -39,7 +39,7 @@ func try_parry(hit: HitData) -> bool:
 	player.invulnerable_left = 0.25
 	player.guard.parry_flash()
 	player.visual.flash(Color(1, 0.9, 0.5))
-	AudioManager.play_sfx(&"parry_success")
+	AudioManager.play_sfx_for(&"parry_success", player.stats.id)
 	var cfg := Juice.cfg()
 	if cfg:
 		Juice.hit_stop(cfg.hitstop_parry)

@@ -7,7 +7,7 @@ var _tween: Tween
 func enter(_msg: Dictionary) -> void:
 	enemy.velocity = Vector2.ZERO
 	enemy.visual.play(&"dead")
-	AudioManager.play_sfx(&"death")
+	AudioManager.play_sfx_for(&"death", enemy.stats.id)
 	var cfg := Juice.cfg()
 	if cfg and enemy.skin:
 		Juice.burst(cfg.particles_death, enemy.hurtbox.global_position, enemy.skin.body_color)

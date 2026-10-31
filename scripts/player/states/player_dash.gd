@@ -19,7 +19,7 @@ func enter(_msg: Dictionary) -> void:
 	player.set_invulnerable(&"dash", stats.dash_invulnerable)
 	player.visual.play(&"dash")
 	player.visual.face(dir)
-	AudioManager.play_sfx(&"dash")
+	AudioManager.play_sfx_for(&"dash", player.stats.id)
 	var cfg := Juice.cfg()
 	if cfg:
 		player.visual.squash(cfg.squash_dash)

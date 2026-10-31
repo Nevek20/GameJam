@@ -3,6 +3,11 @@ extends PlayerState
 
 func enter(_msg: Dictionary) -> void:
 	player.visual.play(&"move")
+	AudioManager.play_loop(player.steps, StringName("move_%s" % player.stats.id))
+
+
+func exit() -> void:
+	player.steps.stop()
 
 
 func physics_update(delta: float) -> void:

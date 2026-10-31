@@ -41,12 +41,38 @@ func play_sfx(sfx_name: StringName) -> void:
 	player.play()
 
 
+## Toca "<nome>_<quem>" (ex.: dash_mage, death_cogueye) se existir; senão o som genérico "<nome>".
+func play_sfx_for(sfx_name: StringName, who: StringName) -> void:
+	play_sfx(variant_of(sfx_name, who))
+
+
+## Nome do som específico de alguém, ou o genérico se o específico estiver vazio.
+func variant_of(sfx_name: StringName, who: StringName) -> StringName:
+	var specific := StringName("%s_%s" % [sfx_name, who])
+	return specific if library.sfx.get(specific) != null else sfx_name
+
+
+## Som em loop ligado a um player próprio (passos). Vazio = silêncio.
+func play_loop(player: AudioStreamPlayer, sfx_name: StringName) -> void:
+	var stream := library.sfx.get(sfx_name) as AudioStream
+	if stream == null:
+		player.stop()
+		return
+	if player.stream != stream or not player.playing:
+		player.stream = stream
+		player.bus = &"SFX"
+		player.play()
+
+
 func play_music(music_name: StringName) -> void:
 	if music_name == _current_music:
 		return
 	_current_music = music_name
 	var stream := library.music.get(music_name) as AudioStream
 	var old := _music_players[_active_music]
+	# Mesma música em outra tela (ex.: menu -> créditos): continua tocando sem reiniciar.
+	if stream != null and old.playing and old.stream == stream:
+		return
 	if _music_tween:
 		_music_tween.kill()
 	if not old.playing and stream == null:

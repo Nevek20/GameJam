@@ -1,51 +1,80 @@
 [gd_resource type="Resource" script_class="AudioLibrary" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/audio_library.gd" id="1_erpth"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/play_it_again_sam.ogg" id="a2"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemies/cogueye_death.wav" id="a3"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemies/dry_eye_alert.wav" id="a4"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemies/shadow_attack.wav" id="a5"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemies/wings.wav" id="a6"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/arcane_beam.wav" id="a7"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/chain_lightning.wav" id="a8"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/dash.wav" id="a9"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/fireball.wav" id="a10"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/move.wav" id="a11"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/mage/parry.wav" id="a12"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/attack.wav" id="a13"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/dash.wav" id="a14"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/dash_slash.wav" id="a15"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/great_slash.wav" id="a16"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/parry.wav" id="a17"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/parry_success.wav" id="a18"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/princess/spin_slash.wav" id="a19"]
 
 [resource]
 script = ExtResource("1_erpth")
 sfx = Dictionary[StringName, AudioStream]({
 &"attack_mana": null,
-&"attack_slash": null,
+&"attack_slash": ExtResource("a13"),
 &"barrel_break": null,
 &"barrel_hit": null,
 &"block": null,
 &"boss_defeated": null,
 &"boss_radial": null,
+&"boss_roar": null,
 &"boss_shockwave": null,
 &"boss_slam": null,
-&"boss_roar": null,
 &"boss_start": null,
 &"dash": null,
+&"dash_dry_eye": ExtResource("a4"),
+&"dash_mage": ExtResource("a9"),
+&"dash_princess": ExtResource("a14"),
 &"death": null,
+&"death_cogueye": ExtResource("a3"),
 &"downed": null,
 &"enemy_attack": null,
+&"enemy_attack_shadow": ExtResource("a5"),
 &"fight_end": null,
 &"fight_start": null,
 &"hit": null,
 &"hurt": null,
 &"loot": null,
+&"move_mage": ExtResource("a11"),
 &"parry": null,
+&"parry_mage": ExtResource("a12"),
+&"parry_princess": ExtResource("a17"),
 &"parry_success": null,
+&"parry_success_princess": ExtResource("a18"),
 &"potion_pickup": null,
 &"qte_fail": null,
 &"qte_success": null,
 &"rescue": null,
 &"revive": null,
-&"skill_dash_slash": null,
-&"skill_fireball": null,
-&"skill_lightning": null,
-&"skill_spin": null,
+&"skill_dash_slash": ExtResource("a15"),
+&"skill_fireball": ExtResource("a10"),
+&"skill_lightning": ExtResource("a8"),
+&"skill_spin": ExtResource("a19"),
+&"spawn_dry_eye": ExtResource("a6"),
+&"spawn_siamese": ExtResource("a6"),
 &"ui_click": null,
 &"ui_focus": null,
-&"ult_beam": null,
-&"ult_great_slash": null
+&"ult_beam": ExtResource("a7"),
+&"ult_great_slash": ExtResource("a16")
 })
 music = Dictionary[StringName, AudioStream]({
 &"boss": null,
-&"credits": null,
+&"credits": ExtResource("a2"),
 &"ending": null,
 &"gameplay": null,
 &"intro": null,
-&"menu": null
+&"menu": ExtResource("a2")
 })
