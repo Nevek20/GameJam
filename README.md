@@ -14,7 +14,7 @@ data/        TODOS os textos (JSON): diálogos, tutorial, introdução, finais, 
 resources/   TODOS os números (.tres): personagens, habilidades, inimigos, boss, partida, juice, reputação, áudio
   abilities/   princess/, mage/, enemies/   (uma habilidade = um .tres)
   characters/  princess.tres, mage.tres
-  enemies/     soldier.tres, elite.tres, kingdom_knight.tres
+  enemies/     shadow.tres, dry_eye.tres, cogueye.tres, siamese.tres, elite.tres, kingdom_knight.tres
   bosses/      knight_boss.tres (fases + skin do exército e do reino)
   ai/          perfis de IA (ajudante/boss) e ajustes do personagem-boss
   config/      match, juice, reputation, ui, audio_library, intro, ending_images, default_settings
@@ -101,7 +101,9 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 
 - Muralhas (`MapBoundary`) definem o limite do mapa e da câmera; escala global em `resources/config/game_scale.tres`.
 - Menu com título fixo, borda de hover corrigida; telas de imagem avançam com Enter ou clique esquerdo.
-- Inimigo rápido em grupos (`resources/enemies/runner.tres`), barris com poção (`barrel_config.tres`).
+- Monstros da branch `art`: Sombra (comum), Olho seco (gira e dá dash), Coguolho (nuvem de dano ao morrer),
+  Siameses (giram e bloqueiam o corpo). Ondas com grupos (`EnemyGroup`). Barris com poção (`barrel_config.tres`).
+- Sprites da Princesa e do Mago, sons e música da branch `art`; menu "Os Contos de Carcosa".
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
 - Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
 - `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).
@@ -128,6 +130,7 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 | 7 | projectile | projéteis |
 | 8 | player_hurtbox | onde os heróis tomam dano |
 | 9 | enemy_hurtbox | onde os inimigos tomam dano |
+| 10 | wall_enemy | inimigos-parede (Siameses): bloqueiam o corpo dos heróis, projéteis passam |
 
 ## Testes
 

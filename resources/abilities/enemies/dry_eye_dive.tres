@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DashAttackAbility" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/dash_attack_ability.gd" id="1_dash"]
+
+[resource]
+script = ExtResource("1_dash")
+dash_distance = 280.0
+ease_power = 1.6
+telegraph_color = Color(0.45, 0.6, 1, 1)
+shape = 1
+size = Vector2(56, 50)
+forward_offset = 24.0
+id = &"dry_eye_dive"
+color = Color(0.45, 0.6, 1, 0.85)
+damage = 8.0
+knockback = 220.0
+cooldown = 0.0
+windup = 0.55
+active_time = 0.26
+recovery = 0.45
+move_multiplier = 0.0
+cancel_recovery = false
+ai_range = 320.0

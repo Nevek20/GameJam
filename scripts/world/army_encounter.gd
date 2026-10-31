@@ -105,11 +105,14 @@ func _spawn_wave(wave: WaveData) -> void:
 		_queue_enemy(wave.primary_enemy, points.pick_random(), wave.spawn_spread)
 	for i in wave.elite_count:
 		_queue_enemy(wave.elite_enemy, points.pick_random(), wave.spawn_spread)
-	# Inimigos rápidos chegam em grupos, cada grupo num ponto.
-	for g in wave.fast_groups:
-		var point: Vector2 = points.pick_random()
-		for i in wave.fast_group_size:
-			_queue_enemy(wave.fast_enemy, point, wave.fast_group_spread)
+	# Grupos chegam juntos, cada grupo num ponto.
+	for group: EnemyGroup in wave.groups:
+		if group == null:
+			continue
+		for g in group.groups:
+			var point: Vector2 = points.pick_random()
+			for i in group.group_size:
+				_queue_enemy(group.enemy, point, group.spread)
 	_flush_queue()
 
 

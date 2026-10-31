@@ -61,10 +61,11 @@ func _none_allied(game: Game) -> void:
 	await _rescue_first_house(game)
 	await _army_choice(game, 0)
 	await _wait(2.0)
-	var has_runner := false
+	var has_dry_eye := false
 	for node: Node in Pools.get_pool(&"enemies").get_active():
-		has_runner = has_runner or (node as Enemy).stats.id == &"runner"
-	check(has_runner, "inimigo rápido aparece na onda")
+		has_dry_eye = has_dry_eye or (node as Enemy).stats.id == &"dry_eye"
+	check(has_dry_eye, "Olho seco aparece na onda")
+	await _new_enemies(game)
 	await _bot_fight(game, 6.0)
 	await _time_up(game)
 	await _p2_intro(game)
@@ -252,6 +253,37 @@ func _barrel_and_potion(game: Game) -> void:
 	check(potions.active_count() == 0, "poção some depois de pega")
 	game.player.global_position = game.level.marker("PlayerStart")
 	await _wait(0.2)
+
+
+## Olho seco gira em volta; Coguolho deixa nuvem de dano; Siameses bloqueiam o corpo.
+func _new_enemies(game: Game) -> void:
+	await _wait(1.0)
+	var orbiting := false
+	for node: Node in Pools.get_pool(&"enemies").get_active():
+		var e := node as Enemy
+		if e.stats.id == &"dry_eye" and e.state_machine.current != null:
+			orbiting = orbiting or e.state_machine.is_in(&"Orbit") or e.state_machine.is_in(&"Attack")
+	check(orbiting, "Olho seco voa em volta / dá dash")
+	var p := game.player
+	var pool := Pools.get_pool(&"enemies")
+	var cog := pool.acquire() as Enemy
+	cog.activate(load("res://resources/enemies/cogueye.tres") as EnemyStats, p.global_position + Vector2(20, 0))
+	cog.health.take_damage(99999.0)
+	await _wait(0.1)
+	check(Pools.get_pool(&"clouds").active_count() == 1, "Coguolho deixa nuvem ao morrer")
+	p.invulnerable_left = 0.0
+	var hp := p.health.current
+	await _wait(1.0)
+	check(p.health.current < hp or p.dead, "nuvem do Coguolho causa dano")
+	p.health.heal(9999.0)
+	var siam := pool.acquire() as Enemy
+	siam.activate(load("res://resources/enemies/siamese.tres") as EnemyStats, p.global_position + Vector2(90, 0))
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	check(siam.collision_layer & Layers.WALL_ENEMY != 0, "Siameses na camada de parede")
+	check(p.test_move(p.global_transform, siam.global_position - p.global_position), "Siameses bloqueiam o corpo do herói")
+	siam.health.take_damage(99999.0)
+	await _wait(0.6)
 
 
 func _wait_game() -> Game:

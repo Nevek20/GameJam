@@ -14,6 +14,8 @@ var dead: bool = false
 var attack_cooldown_left: float = 0.0
 var dash_cooldown_left: float = 0.0
 var block_cooldown_left: float = 0.0
+## Sentido do giro em volta do alvo (inimigos voadores): 1 ou -1.
+var orbit_sign: float = 1.0
 ## Escala do corpo (GameScale). Alcances e distâncias são multiplicados por ela.
 var size_scale: float = 1.0
 
@@ -60,11 +62,14 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	movement.configure(stats.move_speed * current_speed_multiplier() * s, stats.acceleration * s, stats.friction * s)
 	if skin:
 		visual.apply_look(skin.texture, skin.sprite_frames, skin.body_color, skin.accent_color,
-			skin.placeholder_accent, stats.sprite_scale, skin.sprite_offset)
+			skin.placeholder_accent, stats.sprite_scale, skin.sprite_offset, skin.art_faces_left)
 	size_scale = GameScale.of(scale_kind())
 	BodySetup.apply(stats.body_size, stats.collision_size, stats.attack_origin_offset, size_scale,
 		_body_shape, _hurt_shape, hurtbox, caster, attack_origin, visual)
 	caster.geometry_scale = size_scale
+	_apply_fly_height()
+	_apply_body_layers()
+	orbit_sign = 1.0 if randf() < 0.5 else -1.0
 	visual.base_scale *= visual_scale
 	visual.scale = visual.base_scale
 	health.setup(stats.max_health * health_multiplier)
@@ -78,7 +83,23 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	guard.hide_guard()
 	visual.rotation = 0.0
 	_play_spawn()
+	AudioManager.play_sfx(StringName("spawn_%s" % stats.id))
 	state_machine.start()
+
+
+## Voadores: desenho, hurtbox e origem dos golpes sobem; a sombra e a colisão ficam no chão.
+func _apply_fly_height() -> void:
+	var lift := Vector2(0, -stats.fly_height * size_scale)
+	visual.position = lift
+	hurtbox.position += lift
+	caster.position += lift
+	attack_origin.position += lift
+
+
+## Inimigos-parede (Siameses) também ocupam a camada WALL_ENEMY, que bloqueia os heróis.
+func _apply_body_layers() -> void:
+	collision_layer = Team.body_layer(team) | (Layers.WALL_ENEMY if stats.blocks_heroes else 0)
+	collision_mask = Team.body_mask(team)
 
 
 func on_pool_release() -> void:
@@ -172,8 +193,11 @@ func set_vanished(value: bool) -> void:
 	visual.visible = not value
 	$Shadow.visible = not value
 	hurtbox.enabled = not value and not dead
-	collision_layer = 0 if value else Team.body_layer(team)
-	collision_mask = 0 if value else Team.body_mask(team)
+	if value:
+		collision_layer = 0
+		collision_mask = 0
+	else:
+		_apply_body_layers()
 
 
 func on_parried(by: Node2D, stun: float, push: float) -> void:
@@ -237,4 +261,16 @@ func _on_died() -> void:
 	caster.interrupt()
 	guard.hide_guard()
 	state_machine.transition_to(&"Dead")
+	_spawn_death_cloud()
 	died.emit(self)
+
+
+func _spawn_death_cloud() -> void:
+	if stats.death_cloud == null:
+		return
+	var pool := Pools.get_pool(&"clouds")
+	if pool == null:
+		return
+	var cloud := pool.acquire() as DeathCloud
+	if cloud:
+		cloud.activate(stats.death_cloud, global_position, team, caster.damage_multiplier, size_scale, self)

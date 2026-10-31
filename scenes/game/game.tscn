@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/game/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/combat/death_cloud.tscn" id="40_cloud"]
 [ext_resource type="Resource" path="res://resources/config/match_config.tres" id="2_match"]
 [ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="3_ui"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="4_player"]
@@ -47,7 +48,7 @@ script = ExtResource("5_juice")
 config = ExtResource("6_juice_cfg")
 camera = NodePath("../Camera")
 
-[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies", "barrels", "potions")]
+[node name="Pools" type="Node" parent="." node_paths=PackedStringArray("hitboxes", "projectiles", "particles", "damage_numbers", "afterimages", "lightning", "enemies", "barrels", "potions", "clouds")]
 script = ExtResource("7_pools")
 hitboxes = NodePath("../Effects/Hitboxes")
 projectiles = NodePath("../Effects/Projectiles")
@@ -58,6 +59,7 @@ lightning = NodePath("../Effects/Lightning")
 enemies = NodePath("../Level/World/Actors/Enemies")
 barrels = NodePath("../Level/World/Actors/Barrels")
 potions = NodePath("../Level/World/Actors/Potions")
+clouds = NodePath("../Effects/Clouds")
 
 [node name="Level" parent="." instance=ExtResource("8_level")]
 
@@ -87,6 +89,12 @@ initial_size = 24
 
 [node name="Effects" type="Node2D" parent="."]
 z_index = 5
+
+[node name="Clouds" type="Node2D" parent="Effects"]
+z_index = -6
+script = ExtResource("9_pool")
+scene = ExtResource("40_cloud")
+initial_size = 6
 
 [node name="Hitboxes" type="Node2D" parent="Effects"]
 script = ExtResource("9_pool")

@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_hurt.gd" id="16_hurt"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_roar.gd" id="17_roar"]
 [ext_resource type="Script" path="res://scripts/enemies/states/enemy_dead.gd" id="18_dead"]
+[ext_resource type="Script" path="res://scripts/enemies/states/enemy_orbit.gd" id="19_orbit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 resource_local_to_scene = true
@@ -98,6 +99,9 @@ script = ExtResource("11_idle")
 
 [node name="Chase" type="Node" parent="StateMachine"]
 script = ExtResource("12_chase")
+
+[node name="Orbit" type="Node" parent="StateMachine"]
+script = ExtResource("19_orbit")
 
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("13_attack")

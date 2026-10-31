@@ -10,6 +10,10 @@ func enter(_msg: Dictionary) -> void:
 
 
 func physics_update(delta: float) -> void:
+	# Voadores (Olho seco, Siameses) giram em volta do alvo em vez de perseguir.
+	if enemy.stats.behavior != EnemyStats.Behavior.CHASE:
+		machine.transition_to(&"Orbit")
+		return
 	enemy.attack_cooldown_left -= delta
 	enemy.dash_cooldown_left -= delta
 	enemy.block_cooldown_left -= delta

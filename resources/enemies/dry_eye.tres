@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/abilities/ability.gd" id="1_ability"]
+[ext_resource type="Resource" path="res://resources/abilities/enemies/dry_eye_dive.tres" id="2_dive"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="3_stats"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="4_skin"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/enemies/dry_eye_frames.tres" id="5_frames"]
+
+[sub_resource type="Resource" id="Resource_skin"]
+script = ExtResource("4_skin")
+body_color = Color(0.3, 0.4, 1, 1)
+accent_color = Color(0.9, 0.5, 0.6, 1)
+placeholder_accent = 4
+sprite_frames = ExtResource("5_frames")
+sprite_offset = Vector2(3, -94)
+
+[resource]
+script = ExtResource("3_stats")
+id = &"dry_eye"
+skin = SubResource("Resource_skin")
+body_size = Vector2(40, 40)
+collision_size = Vector2(24, 12)
+sprite_scale = Vector2(0.23, 0.23)
+max_health = 18.0
+move_speed = 260.0
+acceleration = 1500.0
+hurt_stun = 0.2
+aggro_range = 1100.0
+think_interval = 0.2
+attack_interval = 1.0
+attacks = Array[ExtResource("1_ability")]([ExtResource("2_dive")])
+attack_weights = Array[float]([1.0])
+behavior = 1
+orbit_radius = 170.0
+orbit_speed = 80.0
+orbit_time_min = 1.6
+orbit_time_max = 3.0
+fly_height = 40.0

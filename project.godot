@@ -118,6 +118,7 @@ pause={
 2d_physics/layer_7="projectile"
 2d_physics/layer_8="player_hurtbox"
 2d_physics/layer_9="enemy_hurtbox"
+2d_physics/layer_10="wall_enemy"
 
 [physics]
 

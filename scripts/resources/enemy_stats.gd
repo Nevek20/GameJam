@@ -1,8 +1,13 @@
 class_name EnemyStats
 extends Resource
-## Parâmetros de um tipo de inimigo (soldado, elite, cavaleiro do reino, boss).
+## Parâmetros de um tipo de inimigo (Sombra, Olho seco, Coguolho, Siameses, elite, cavaleiro, boss).
 
-@export var id: StringName = &"soldier"
+## CHASE: persegue e ataca de perto (Sombra, Coguolho, elite, cavaleiro, boss).
+## ORBIT_DASH: voa em volta do alvo e, de tempos em tempos, dá um dash em cima dele (Olho seco).
+## ORBIT_WALL: voa em volta do alvo sem atacar e bloqueia o corpo dos heróis (Siameses).
+enum Behavior { CHASE, ORBIT_DASH, ORBIT_WALL }
+
+@export var id: StringName = &"shadow"
 @export var skin: EnemySkin
 ## Tamanho do corpo (largura x altura): desenho placeholder e área que recebe dano.
 @export var body_size: Vector2 = Vector2(36, 64)
@@ -34,6 +39,24 @@ extends Resource
 ## Ataques possíveis (cada um é um Ability) e seus pesos.
 @export var attacks: Array[Ability] = []
 @export var attack_weights: Array[float] = []
+
+@export_group("Voo em volta do alvo (Olho seco, Siameses)")
+@export var behavior: Behavior = Behavior.CHASE
+## Distância do alvo enquanto gira em volta.
+@export var orbit_radius: float = 160.0
+## Velocidade do giro (graus por segundo). O sentido é sorteado ao nascer.
+@export var orbit_speed: float = 70.0
+## ORBIT_DASH: tempo girando antes de cada dash (sorteado entre os dois valores).
+@export var orbit_time_min: float = 1.5
+@export var orbit_time_max: float = 3.0
+## Altura do desenho acima da sombra (inimigos voadores).
+@export var fly_height: float = 0.0
+## Bloqueia o corpo dos heróis como uma parede (projéteis passam). Ver Layers.WALL_ENEMY.
+@export var blocks_heroes: bool = false
+
+@export_group("Ao morrer")
+## Nuvem de dano deixada ao morrer (Coguolho). Vazio = nada.
+@export var death_cloud: DeathCloudConfig
 
 @export_group("Elite")
 ## Chance (por decisão) de dar dash.

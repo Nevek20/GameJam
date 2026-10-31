@@ -1,0 +1,168 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/00.png" id="1_4n38k"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/01.png" id="2_igkdn"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/02.png" id="3_a7pst"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/03.png" id="4_5sxar"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/04.png" id="5_q7rem"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/05.png" id="6_kmpy3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/06.png" id="7_dgsbt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/07.png" id="8_4602s"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/08.png" id="9_a8vuk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/09.png" id="10_jm1wt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/dry_eye/move/10.png" id="11_dh1gk"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4n38k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_igkdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_a7pst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5sxar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_q7rem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kmpy3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dgsbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4602s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_a8vuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jm1wt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dh1gk")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 22.400000000000002
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4n38k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_igkdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_a7pst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5sxar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_q7rem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kmpy3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dgsbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4602s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_a8vuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jm1wt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dh1gk")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 22.400000000000002
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4n38k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_igkdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_a7pst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5sxar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_q7rem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kmpy3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dgsbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4602s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_a8vuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jm1wt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dh1gk")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4n38k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_igkdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_a7pst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5sxar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_q7rem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kmpy3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dgsbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4602s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_a8vuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jm1wt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dh1gk")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 14.0
+}]

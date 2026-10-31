@@ -6,13 +6,42 @@
 [ext_resource type="Script" path="res://scripts/resources/character_stats.gd" id="4_uuib0"]
 [ext_resource type="Resource" path="res://resources/characters/princess.tres" id="5_m8gfc"]
 [ext_resource type="Resource" path="res://resources/characters/mage.tres" id="6_1iarw"]
-[ext_resource type="Resource" path="res://resources/enemies/soldier.tres" id="7_fdsxe"]
+[ext_resource type="Resource" path="res://resources/enemies/shadow.tres" id="7_fdsxe"]
 [ext_resource type="Resource" path="res://resources/enemies/elite.tres" id="8_6sms3"]
 [ext_resource type="Resource" path="res://resources/bosses/knight_boss.tres" id="9_pv5gv"]
 [ext_resource type="Script" path="res://scripts/resources/qte_config.gd" id="10_qhdo4"]
 [ext_resource type="Script" path="res://scripts/resources/match_config.gd" id="11_ifoeb"]
-[ext_resource type="Resource" path="res://resources/enemies/runner.tres" id="12_runner"]
+[ext_resource type="Resource" path="res://resources/enemies/dry_eye.tres" id="12_dry_eye"]
+[ext_resource type="Resource" path="res://resources/enemies/cogueye.tres" id="14_cogueye"]
+[ext_resource type="Resource" path="res://resources/enemies/siamese.tres" id="15_siamese"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_group.gd" id="16_group"]
 [ext_resource type="Resource" path="res://resources/config/revive_config.tres" id="13_revive"]
+
+[sub_resource type="Resource" id="Group_eye3"]
+script = ExtResource("16_group")
+enemy = ExtResource("12_dry_eye")
+group_size = 3
+
+[sub_resource type="Resource" id="Group_eye2"]
+script = ExtResource("16_group")
+enemy = ExtResource("12_dry_eye")
+group_size = 2
+
+[sub_resource type="Resource" id="Group_cog1"]
+script = ExtResource("16_group")
+enemy = ExtResource("14_cogueye")
+group_size = 1
+
+[sub_resource type="Resource" id="Group_cog2"]
+script = ExtResource("16_group")
+enemy = ExtResource("14_cogueye")
+group_size = 2
+
+[sub_resource type="Resource" id="Group_siam3"]
+script = ExtResource("16_group")
+enemy = ExtResource("15_siamese")
+group_size = 3
+spread = 30.0
 
 [sub_resource type="Resource" id="Resource_qxo0s"]
 script = ExtResource("1_ddvub")
@@ -36,9 +65,7 @@ script = ExtResource("1_ddvub")
 delay_before = 0.8
 primary_enemy = ExtResource("7_fdsxe")
 primary_count = 4
-fast_enemy = ExtResource("12_runner")
-fast_groups = 1
-fast_group_size = 3
+groups = Array[ExtResource("16_group")]([SubResource("Group_eye3")])
 
 [sub_resource type="Resource" id="Resource_d2eq7"]
 script = ExtResource("1_ddvub")
@@ -47,9 +74,7 @@ primary_enemy = ExtResource("7_fdsxe")
 primary_count = 5
 elite_enemy = ExtResource("8_6sms3")
 elite_count = 1
-fast_enemy = ExtResource("12_runner")
-fast_groups = 1
-fast_group_size = 3
+groups = Array[ExtResource("16_group")]([SubResource("Group_eye3"), SubResource("Group_cog1")])
 
 [sub_resource type="Resource" id="Resource_4xlcw"]
 script = ExtResource("1_ddvub")
@@ -58,9 +83,7 @@ primary_enemy = ExtResource("7_fdsxe")
 primary_count = 4
 elite_enemy = ExtResource("8_6sms3")
 elite_count = 2
-fast_enemy = ExtResource("12_runner")
-fast_groups = 2
-fast_group_size = 3
+groups = Array[ExtResource("16_group")]([SubResource("Group_eye2"), SubResource("Group_cog2"), SubResource("Group_siam3")])
 
 [sub_resource type="Resource" id="Resource_xjlkt"]
 script = ExtResource("10_qhdo4")

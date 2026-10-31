@@ -1,0 +1,246 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/00.png" id="1_47emp"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/01.png" id="2_vt8ys"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/02.png" id="3_6iilx"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/03.png" id="4_731el"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/04.png" id="5_14dir"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/05.png" id="6_m44wr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/06.png" id="7_g2vf6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/07.png" id="8_fa1hh"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/08.png" id="9_iybfa"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/09.png" id="10_unu7j"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/10.png" id="11_x825l"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/11.png" id="12_imvxq"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/12.png" id="13_6f53f"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/13.png" id="14_sd3aj"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/14.png" id="15_j87k2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/15.png" id="16_g6jnc"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cogueye/move/16.png" id="17_r3yhu"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_47emp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vt8ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6iilx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_731el")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_14dir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m44wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_g2vf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fa1hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iybfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_unu7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_x825l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_imvxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6f53f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_sd3aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j87k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_g6jnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_r3yhu")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 19.200000000000003
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_47emp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vt8ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6iilx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_731el")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_14dir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m44wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_g2vf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fa1hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iybfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_unu7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_x825l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_imvxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6f53f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_sd3aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j87k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_g6jnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_r3yhu")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 19.200000000000003
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_47emp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vt8ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6iilx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_731el")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_14dir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m44wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_g2vf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fa1hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iybfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_unu7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_x825l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_imvxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6f53f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_sd3aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j87k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_g6jnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_r3yhu")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_47emp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vt8ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6iilx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_731el")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_14dir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m44wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_g2vf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fa1hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iybfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_unu7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_x825l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_imvxq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6f53f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_sd3aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j87k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_g6jnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_r3yhu")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 12.0
+}]

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="1_stats"]
+[ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="2_skin"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/enemies/siamese_frames.tres" id="3_frames"]
+
+[sub_resource type="Resource" id="Resource_skin"]
+script = ExtResource("2_skin")
+body_color = Color(0.95, 0.95, 0.95, 1)
+accent_color = Color(0.2, 0.2, 0.2, 1)
+placeholder_accent = 4
+sprite_frames = ExtResource("3_frames")
+sprite_offset = Vector2(2, -108)
+
+[resource]
+script = ExtResource("1_stats")
+id = &"siamese"
+skin = SubResource("Resource_skin")
+body_size = Vector2(100, 44)
+collision_size = Vector2(96, 20)
+sprite_scale = Vector2(0.26, 0.26)
+max_health = 60.0
+move_speed = 200.0
+acceleration = 1400.0
+knockback_resistance = 1.0
+hurt_stun = 0.1
+aggro_range = 1100.0
+think_interval = 0.2
+behavior = 2
+orbit_radius = 130.0
+orbit_speed = 35.0
+fly_height = 30.0
+blocks_heroes = true

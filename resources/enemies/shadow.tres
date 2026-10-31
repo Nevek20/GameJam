@@ -4,15 +4,23 @@
 [ext_resource type="Resource" path="res://resources/abilities/enemies/soldier_slash.tres" id="2_7l7oc"]
 [ext_resource type="Script" path="res://scripts/resources/enemy_stats.gd" id="3_a2qag"]
 [ext_resource type="Script" path="res://scripts/resources/enemy_skin.gd" id="4_wv2y2"]
+[ext_resource type="SpriteFrames" path="res://resources/sprites/enemies/shadow_frames.tres" id="5_frames"]
 
 [sub_resource type="Resource" id="Resource_cglai"]
 script = ExtResource("4_wv2y2")
-body_color = Color(0.82, 0.22, 0.3, 1)
-accent_color = Color(0.25, 0.05, 0.1, 1)
+body_color = Color(0.12, 0.1, 0.14, 1)
+accent_color = Color(0.9, 0.9, 0.95, 1)
+sprite_frames = ExtResource("5_frames")
+sprite_offset = Vector2(0, -80)
+art_faces_left = true
 
 [resource]
 script = ExtResource("3_a2qag")
+id = &"shadow"
 skin = SubResource("Resource_cglai")
+body_size = Vector2(70, 44)
+collision_size = Vector2(50, 16)
+sprite_scale = Vector2(0.32, 0.32)
 aggro_range = 900.0
 attack_interval = 1.2
 attacks = Array[ExtResource("1_nb7me")]([ExtResource("2_7l7oc")])

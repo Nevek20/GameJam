@@ -21,7 +21,7 @@ Termos usados aqui:
 | `resources/` | **Todos os números** (`.tres`): personagens, habilidades, inimigos, boss, partida, escala, juice, áudio |
 | `resources/characters/` | `princess.tres` e `mage.tres` (vida, velocidade, dash, defesa, sprites, habilidades) |
 | `resources/abilities/` | Uma habilidade por arquivo: `princess/`, `mage/`, `enemies/` (inclui os ataques do boss) |
-| `resources/enemies/` | `soldier.tres`, `runner.tres` (rápido), `elite.tres`, `kingdom_knight.tres` |
+| `resources/enemies/` | `shadow.tres` (Sombra), `dry_eye.tres` (Olho seco), `cogueye.tres` (Coguolho) + `cogueye_cloud.tres`, `siamese.tres` (Siameses), `elite.tres`, `kingdom_knight.tres` |
 | `resources/bosses/` | `knight_boss.tres` (o cavaleiro: fases, ataques e as duas skins) |
 | `resources/ai/` | IA da Princesa e do Mago (ajudante/boss) e `character_boss_profile.tres` |
 | `resources/config/` | Partida, escala/câmera, juice, áudio, barris, revive, cutscenes, finais, interface |
@@ -49,10 +49,13 @@ Termos usados aqui:
 5. **Offset sem mexer na hitbox:** `sprite_offset` move só o desenho, em pixels da imagem. Valores maiores em Y descem o desenho. Ao virar para a esquerda o offset espelha sozinho.
 6. Se a hitbox precisar mudar: `body_size` (largura × altura do corpo e área que recebe dano) e `collision_size` (retângulo dos pés que colide com o cenário).
 
-> **Exemplo real:** o Mago usa os frames da branch `art`, já recortados para `assets/sprites/mage/<animação>/00.png...` e ligados em `resources/sprites/mage_frames.tres`. A Princesa ainda não tem PNGs: só apareceram em vídeo. Quando chegarem, siga os passos acima.
+> **Exemplo real:** os dois personagens usam os frames da branch `art`, recortados para `assets/sprites/mage/<animação>/` e `assets/sprites/princess/<animação>/` e ligados em `resources/sprites/mage_frames.tres` e `princess_frames.tres`.
+> Princesa: `idle` = parado, `move` = correndo, `attack` = ataque automático, `dash_slash` (Q) = Corte, `spin_slash` (E) = Giratório, `great_slash` (R) = Ultimate, `dash`, `parry` = Defesa.
 
 ### Inimigos e boss
-- **Soldado, rápido, elite, cavaleiro:** `resources/enemies/<nome>.tres` → campo `skin` → `texture` / `sprite_frames` / `sprite_offset`. O tamanho fica em `sprite_scale`, `body_size` e `collision_size` do próprio `.tres`.
+- **Sombra, Olho seco, Coguolho, Siameses, elite, cavaleiro:** `resources/enemies/<nome>.tres` → campo `skin` → `texture` / `sprite_frames` / `sprite_offset`. O tamanho fica em `sprite_scale`, `body_size` e `collision_size` do próprio `.tres`.
+  - Os 4 monstros da branch `art` estão em `assets/sprites/enemies/<id>/move/` e `resources/sprites/enemies/<id>_frames.tres` (o mesmo loop serve para `idle`, `move`, `attack` e `dash`).
+  - Se o desenho original olha para a **esquerda** (a Sombra), marque `art_faces_left` na skin.
 - **Boss (cavaleiro):** `resources/bosses/knight_boss.tres`. A arte vai em **duas skins**:
   - `army_skin`: skin do exército inimigo (boss normal).
   - `kingdom_skin`: skin do reino (variação do bem).
@@ -88,7 +91,7 @@ Em `resources/config/barrel_config.tres`:
 
 ## 3. Sons
 
-O jogo **não tem arquivos de áudio**. Todos os pontos de encaixe já estão prontos.
+Os sons da branch `art` já estão ligados (Princesa, Mago, monstros e a música do menu/créditos). Chaves vazias continuam em silêncio.
 
 1. Coloque o arquivo (`.ogg` ou `.wav`) em `assets/audio/sfx/` ou `assets/audio/music/`.
 2. Abra `resources/config/audio_library.tres`.
@@ -116,6 +119,10 @@ Chave vazia = silêncio, sem erro. Os volumes (Geral, Música, Efeitos) usam os 
 | `boss_start`, `boss_roar`, `boss_defeated` | começo da luta final, rugido (entrada e troca de fase), vitória |
 | `boss_radial`, `boss_shockwave`, `boss_slam` | disparo em círculo, onda de choque, queda do boss |
 | `ui_click` / `ui_focus` | clique e foco nos botões |
+| `move_<id>` | passos em loop enquanto anda (ex.: `move_mage`). Marque *Loop* no import do arquivo |
+| `spawn_<id>` | inimigo nasce (ex.: `spawn_dry_eye` = asas) |
+
+**Som por personagem ou por inimigo:** `dash`, `parry`, `parry_success`, `enemy_attack` e `death` procuram primeiro a versão com o `id` no fim (`dash_princess`, `dash_mage`, `enemy_attack_shadow`, `dash_dry_eye`, `death_cogueye`...). Se ela estiver vazia, toca a genérica. Para dar um som próprio a alguém, crie a chave nova no dicionário `sfx` com esse nome.
 
 | Música | Quando toca |
 |---|---|
@@ -234,8 +241,11 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 | `characters/princess.tres`, `mage.tres` | Vida, velocidade, aceleração, dash (`dash_distance`, `dash_duration`, `dash_cooldown`), defesa e parry (`parry_window`, `parry_cooldown`, `block_damage_multiplier`), `body_size`, `collision_size`, `attack_origin_offset`, sprites, habilidades (`attack`, `skill_q`, `skill_e`, `ultimate`), IA, `input_buffer` |
 | `abilities/**` | Ver seção 7 |
 | **Dashes de ataque** (`princess/dash_slash.tres`, `enemies/elite_lunge.tres`, `enemies/boss_lunge.tres`) | `windup` = **telegraph**, `active_time` = **duração do dash**, `dash_distance`, `ease_power` (curva: 2 = rápido e desacelera), `recovery` (parado e vulnerável), `cooldown`, `skip_telegraph_for_player` (Princesa do jogador sai na hora) |
-| `enemies/soldier.tres` | Vida, velocidade, ataques, `attack_interval`, `aggro_range`, `body_size` |
-| `enemies/runner.tres` (rápido) | Pouca vida, muita velocidade e pouco dano. Quantos aparecem e em grupos de quantos: `match_config.tres` → cada onda → `fast_groups`, `fast_group_size`, `fast_group_spread` |
+| `enemies/shadow.tres` (Sombra, inimigo comum) | Vida, velocidade, ataques, `attack_interval`, `aggro_range`, `body_size` |
+| `enemies/dry_eye.tres` (Olho seco) | `behavior = ORBIT_DASH`: voa em volta (`orbit_radius`, `orbit_speed`), depois de `orbit_time_min`–`orbit_time_max` segundos dá o dash `abilities/enemies/dry_eye_dive.tres` (telegraph = `windup`, `dash_distance`, dano). `fly_height` = altura do voo |
+| `enemies/cogueye.tres` (Coguolho) | Inimigo comum lento; ao morrer deixa a nuvem `cogueye_cloud.tres`: `radius`, `duration`, `arm_delay` (tempo para sair antes do 1º dano), `tick_interval`, `damage_per_tick`, `hurts_enemies`, `color` |
+| `enemies/siamese.tres` (Siameses) | `behavior = ORBIT_WALL`: giram em volta do jogador sem atacar e, com `blocks_heroes`, **bloqueiam o corpo** (projéteis passam). `orbit_radius`, `orbit_speed`, vida alta, `knockback_resistance = 1`. A "parede" é o `collision_size` (largo) |
+| Ondas (`match_config.tres` → `confront_waves`) | `primary_enemy`/`primary_count` (Sombra), `elite_enemy`/`elite_count`, e `groups`: lista de **EnemyGroup** (`enemy`, `groups` = quantos grupos, `group_size`, `spread`) para Olho seco, Coguolho e Siameses |
 | `enemies/elite.tres` | `dash_chance`, `block_chance`, `block_duration`, `block_damage_multiplier`, ataques e pesos |
 | `bosses/knight_boss.tres` | Vida, `preferred_distance`, `max_same_attack_in_row` (não repetir ataque), `phases` (cada fase: `health_threshold`, `speed_multiplier`, `attack_speed`, `attack_interval`, `attacks`, `attack_weights`), skins |
 | Ataques do boss (`enemies/boss_*.tres`) | `boss_radial`: `per_wave`, `waves`, `wave_interval`, `angle_step_per_wave`, `speed`, `damage`. `boss_leap`: `follow_time`, `follow_speed`, `warn_time`, `impact_radius`, `recovery`. `boss_shockwave`: `radius`, `ring_thickness`, `expand_time`, `waves`, `wave_interval`. `boss_combo`: `hits`, `hit_interval`, `step_distance`, `slash` (forma e dano de cada golpe). `boss_lunge`: dash. `boss_slash`: corte simples |
@@ -269,9 +279,9 @@ Dica: se aumentar muito `world_scale`, aumente também `map_size` (seção 5) pa
 ## 11. Criar um inimigo ou uma habilidade nova
 
 **Inimigo novo:**
-1. Duplique `resources/enemies/soldier.tres` (botão direito → *Duplicate*), por exemplo `goblin.tres`.
+1. Duplique `resources/enemies/shadow.tres` (botão direito → *Duplicate*), por exemplo `goblin.tres`.
 2. Mude `id`, `skin` (cores ou arte), vida, velocidade e `attacks`. Duplique também `abilities/enemies/soldier_slash.tres` para ter um golpe próprio.
-3. Coloque nas ondas: `match_config.tres` → `confront_waves` → uma onda → `primary_enemy` ou `elite_enemy` (ou `fast_enemy`).
+3. Coloque nas ondas: `match_config.tres` → `confront_waves` → uma onda → `primary_enemy` ou `elite_enemy` (ou um item novo em `groups`).
 
 **Habilidade nova:**
 1. Duplique uma parecida:

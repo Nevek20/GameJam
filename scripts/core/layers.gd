@@ -10,6 +10,8 @@ extends RefCounted
 ##  7 projectile     projéteis (somam-se à camada de hitbox do time)
 ##  8 player_hurtbox áreas que recebem dano dos heróis
 ##  9 enemy_hurtbox  áreas que recebem dano dos inimigos
+## 10 wall_enemy     inimigos-parede (Siameses): bloqueiam o corpo dos heróis;
+##                   projéteis passam (projéteis só batem no cenário)
 
 const WORLD := 1 << 0
 const PLAYER := 1 << 1
@@ -20,3 +22,4 @@ const NPC := 1 << 5
 const PROJECTILE := 1 << 6
 const PLAYER_HURTBOX := 1 << 7
 const ENEMY_HURTBOX := 1 << 8
+const WALL_ENEMY := 1 << 9

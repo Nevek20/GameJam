@@ -14,6 +14,7 @@ static var instance: Pools
 @export var enemies: ObjectPool
 @export var barrels: ObjectPool
 @export var potions: ObjectPool
+@export var clouds: ObjectPool
 
 
 func _enter_tree() -> void:
@@ -33,6 +34,6 @@ static func get_pool(pool_name: StringName) -> ObjectPool:
 
 ## Libera tudo o que é temporário (troca de personagem, início do boss).
 func clear_combat() -> void:
-	for pool: ObjectPool in [hitboxes, projectiles, lightning, enemies]:
+	for pool: ObjectPool in [hitboxes, projectiles, lightning, enemies, clouds]:
 		if pool:
 			pool.release_all()

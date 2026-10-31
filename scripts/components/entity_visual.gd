@@ -10,6 +10,8 @@ extends Node2D
 var base_scale: Vector2 = Vector2.ONE
 ## Deslocamento do sprite (pixels da textura). Mexe só no desenho, nunca na hitbox.
 var sprite_offset: Vector2 = Vector2.ZERO
+## O desenho original olha para a esquerda (EnemySkin.art_faces_left).
+var art_faces_left: bool = false
 var _flipped: bool = false
 var _flash_tween: Tween
 var _squash_tween: Tween
@@ -17,8 +19,13 @@ var _squash_tween: Tween
 
 ## O tamanho do placeholder e a escala vêm do BodySetup (corpo retangular).
 func apply_look(texture: Texture2D, frames: SpriteFrames, body_color: Color, accent_color: Color,
-		accent: PlaceholderShape.Accent, sprite_scale: Vector2, offset: Vector2 = Vector2.ZERO) -> void:
+		accent: PlaceholderShape.Accent, sprite_scale: Vector2, offset: Vector2 = Vector2.ZERO,
+		faces_left: bool = false) -> void:
 	sprite_offset = offset
+	art_faces_left = faces_left
+	_flipped = false
+	sprite.flip_h = false
+	animated.flip_h = false
 	placeholder.color = body_color
 	placeholder.accent_color = accent_color
 	placeholder.accent = accent
@@ -56,7 +63,7 @@ func face(direction: Vector2) -> void:
 	if direction == Vector2.ZERO:
 		return
 	placeholder.look_dir = direction
-	var flip := direction.x < 0.0
+	var flip := (direction.x < 0.0) != art_faces_left
 	if flip == _flipped:
 		return
 	_flipped = flip

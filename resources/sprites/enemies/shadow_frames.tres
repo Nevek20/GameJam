@@ -1,0 +1,246 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/00.png" id="1_32tl2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/01.png" id="2_xcdfi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/02.png" id="3_p1qxy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/03.png" id="4_rwrvr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/04.png" id="5_1ift8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/05.png" id="6_6wnqi"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/06.png" id="7_b0etw"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/07.png" id="8_3f5ib"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/08.png" id="9_b3nl4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/09.png" id="10_g1c0u"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/10.png" id="11_ua643"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/11.png" id="12_s1fvl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/12.png" id="13_i0ubj"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/13.png" id="14_y5h8e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/14.png" id="15_swjh1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/15.png" id="16_4luok"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/shadow/move/16.png" id="17_f0tnq"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_32tl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xcdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p1qxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rwrvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1ift8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6wnqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b0etw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3f5ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b3nl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g1c0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ua643")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s1fvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_i0ubj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_y5h8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_swjh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4luok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f0tnq")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 22.400000000000002
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_32tl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xcdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p1qxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rwrvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1ift8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6wnqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b0etw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3f5ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b3nl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g1c0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ua643")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s1fvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_i0ubj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_y5h8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_swjh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4luok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f0tnq")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 22.400000000000002
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_32tl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xcdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p1qxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rwrvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1ift8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6wnqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b0etw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3f5ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b3nl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g1c0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ua643")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s1fvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_i0ubj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_y5h8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_swjh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4luok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f0tnq")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_32tl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xcdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p1qxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rwrvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1ift8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6wnqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b0etw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3f5ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b3nl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_g1c0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ua643")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s1fvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_i0ubj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_y5h8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_swjh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_4luok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f0tnq")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 14.0
+}]

@@ -24,9 +24,9 @@ static func body_layer(side: Faction) -> int:
 
 
 static func body_mask(side: Faction) -> int:
-	# Heróis só colidem com o cenário (atravessam inimigos no dash);
+	# Heróis só colidem com o cenário e com inimigos-parede (atravessam os outros no dash);
 	# inimigos também se empurram entre si para não se empilharem.
-	return Layers.WORLD if side == Faction.HEROES else Layers.WORLD | Layers.ENEMY
+	return Layers.WORLD | Layers.WALL_ENEMY if side == Faction.HEROES else Layers.WORLD | Layers.ENEMY
 
 
 static func hurtbox_layer(side: Faction) -> int:
