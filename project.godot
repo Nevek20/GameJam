@@ -9,7 +9,6 @@ config/name="Os Contos de Carcosa"
 config/description="Jogo de game jam: 2D top-down de ação em uma vila de fantasia psicodélica."
 run/main_scene="res://ui/menu/main_menu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [audio]
 

@@ -13,7 +13,6 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 @export var ground_texture_scale: float = 0.5
 
 @onready var _ground: TextureRect = $Ground
-@onready var _decor: DreamDecor = $Decor
 @onready var actors: Node2D = $World/Actors
 @onready var camp: ArmyCamp = $World/ArmyCamp
 @onready var _houses: Node2D = $World/Houses
@@ -22,11 +21,10 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 
 func _ready() -> void:
 	bounds = boundary.inner_rect()
-	# O chão e a decoração acompanham o tamanho do mapa.
+	# O chão acompanha o tamanho do mapa.
 	_ground.position = bounds.position - Vector2(400, 400)
 	_ground.scale = Vector2.ONE * ground_texture_scale
 	_ground.size = (bounds.size + Vector2(800, 800)) / ground_texture_scale
-	_decor.area = bounds
 	var k := GameScale.of(GameScale.Kind.SCENERY)
 	if not is_equal_approx(k, 1.0):
 		for node: Node in get_tree().get_nodes_in_group(&"scenery"):

@@ -16,7 +16,7 @@ Termos usados aqui:
 
 | Pasta | O que tem |
 |---|---|
-| `assets/` | Arte e áudio finais. `assets/sprites/mage/` tem os sprites do Mago; `assets/shaders/` tem o fundo provisório |
+| `assets/` | Arte e áudio do pessoal: `sprites/` (Mago, Princesa, inimigos, cenário), `images/` (menu, cenários da história), `audio/` |
 | `data/` | **Todos os textos** em JSON: diálogos, tutorial, introdução e cutscenes, finais, lápides, nomes, créditos e interface |
 | `resources/` | **Todos os números** (`.tres`): personagens, habilidades, inimigos, boss, partida, escala, juice, áudio |
 | `resources/characters/` | `princess.tres` e `mage.tres` (vida, velocidade, dash, defesa, sprites, habilidades) |
@@ -35,7 +35,7 @@ Termos usados aqui:
 
 ## 2. Trocar sprites
 
-**Regra geral:** cada personagem ou objeto tem um nó `Visual`, separado da colisão e das hitboxes. Trocar a arte **não muda** o tamanho da hitbox nem o tempo dos ataques. Enquanto não houver sprite, aparece um placeholder geométrico (nó `Visual/Placeholder`), que some sozinho quando você coloca a arte.
+**Regra geral:** cada personagem ou objeto tem um nó `Visual`, separado da colisão e das hitboxes. Trocar a arte **não muda** o tamanho da hitbox nem o tempo dos ataques. Enquanto não houver sprite, aparece uma **caixa cinza escrita "SEM ARTE"** com o tipo do objeto (nó `Visual/Placeholder`). Ela some sozinha quando você coloca a arte.
 
 **Pivô (origem):** personagens, inimigos, boss, moradores e barris têm a origem **nos pés**. O desenho deve ficar acima da origem, com os pés em cima do ponto (0, 0).
 

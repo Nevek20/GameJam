@@ -9,7 +9,7 @@ Duração: ~5 minutos. Todo texto, imagem e sprite é provisório e foi feito pa
 ## Estrutura de pastas
 
 ```
-assets/      arte e áudio finais (vazio por enquanto) + shaders/psychedelic.gdshader
+assets/      arte e áudio do pessoal (sprites, cenário, imagens, sons)
 data/        TODOS os textos (JSON): diálogos, tutorial, introdução, finais, lápides, nomes, créditos, UI
 resources/   TODOS os números (.tres): personagens, habilidades, inimigos, boss, partida, juice, reputação, áudio
   abilities/   princess/, mage/, enemies/   (uma habilidade = um .tres)

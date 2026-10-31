@@ -3,16 +3,6 @@
 [ext_resource type="Script" path="res://ui/intro/intro_sequence.gd" id="1_intro"]
 [ext_resource type="Resource" path="res://resources/config/intro_config.tres" id="2_config"]
 [ext_resource type="Resource" path="res://resources/config/ui_config.tres" id="3_ui"]
-[ext_resource type="Shader" path="res://assets/shaders/psychedelic.gdshader" id="4_shader"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_intro"]
-shader = ExtResource("4_shader")
-shader_parameter/color_a = Color(0.06, 0.03, 0.14, 1)
-shader_parameter/color_b = Color(0.2, 0.08, 0.35, 1)
-shader_parameter/color_c = Color(0.55, 0.2, 0.55, 1)
-shader_parameter/world_size = Vector2(1280, 720)
-shader_parameter/pattern_scale = 0.006
-shader_parameter/speed = 0.35
 
 [node name="Intro" type="Control"]
 layout_mode = 3
@@ -46,7 +36,6 @@ mouse_filter = 2
 
 [node name="Placeholder" type="ColorRect" parent="Content"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_intro")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,6 +43,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0.06, 0.04, 0.1, 1)
 
 [node name="Image" type="TextureRect" parent="Content"]
 unique_name_in_owner = true
