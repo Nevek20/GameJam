@@ -6,6 +6,7 @@ extends StaticBody2D
 signal destroyed(barrel: Barrel)
 
 var config: BarrelConfig
+var _broken_tween: Tween
 
 @onready var visual: EntityVisual = $Visual
 @onready var health: HealthComponent = $Health
@@ -28,7 +29,8 @@ func activate(cfg: BarrelConfig, pos: Vector2) -> void:
 	hurtbox.set_team(Team.Faction.FOES)
 	hurtbox.enabled = true
 	health.setup(cfg.max_health)
-	visual.apply_look(cfg.texture, null, cfg.body_color, cfg.band_color, PlaceholderShape.Accent.NONE, Vector2.ONE)
+	visual.apply_look(cfg.texture, null, cfg.body_color, cfg.band_color, PlaceholderShape.Accent.NONE,
+		Vector2.ONE * cfg.texture_scale, Barrel.base_offset(cfg.texture))
 	visual.placeholder.secondary_color = cfg.band_color
 	var k := GameScale.of(GameScale.Kind.SCENERY)
 	(_collision.shape as RectangleShape2D).size = cfg.collision_size * k
@@ -63,11 +65,35 @@ func _on_died() -> void:
 		_drop_potion.call_deferred(global_position)
 	destroyed.emit(self)
 	# Adiado: estamos dentro do callback de dano.
-	_release.call_deferred()
+	if config.broken_texture:
+		_show_broken.call_deferred()
+	else:
+		_release.call_deferred()
+
+
+## Mostra o barril quebrado (sem colisão) e some aos poucos.
+func _show_broken() -> void:
+	collision_layer = 0
+	visual.apply_look(config.broken_texture, null, config.body_color, config.band_color, PlaceholderShape.Accent.NONE,
+		Vector2.ONE * config.texture_scale, Barrel.base_offset(config.broken_texture))
+	_broken_tween = create_tween()
+	_broken_tween.tween_interval(maxf(config.broken_time - 0.4, 0.0))
+	_broken_tween.tween_property(visual, "modulate:a", 0.0, 0.4)
+	_broken_tween.tween_callback(_release)
+
+
+func on_pool_release() -> void:
+	if _broken_tween:
+		_broken_tween.kill()
 
 
 func _release() -> void:
 	ObjectPool.release_node(self)
+
+
+## Offset para a base do desenho ficar nos pés do nó (pixels da textura).
+static func base_offset(tex: Texture2D) -> Vector2:
+	return Vector2(0, -tex.get_height() * 0.5) if tex else Vector2.ZERO
 
 
 func _drop_potion(pos: Vector2) -> void:

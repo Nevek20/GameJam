@@ -1,6 +1,14 @@
 [gd_resource type="Resource" script_class="BarrelConfig" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/barrel_config.gd" id="1_barrel"]
+[ext_resource type="Texture2D" path="res://assets/sprites/scenery/barrel.png" id="2_barrel"]
+[ext_resource type="Texture2D" path="res://assets/sprites/scenery/barrel_broken.png" id="3_broken"]
+[ext_resource type="Texture2D" path="res://assets/sprites/scenery/potion.png" id="4_potion"]
 
 [resource]
 script = ExtResource("1_barrel")
+texture = ExtResource("2_barrel")
+texture_scale = 0.32
+broken_texture = ExtResource("3_broken")
+potion_texture = ExtResource("4_potion")
+potion_texture_scale = 0.3

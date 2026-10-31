@@ -9,7 +9,10 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 @onready var world: Node2D = $World
 @onready var boundary: MapBoundary = $World/MapBoundary
 @onready var barrels: BarrelSpawner = $World/BarrelSpawner
-@onready var _ground: ColorRect = $Ground
+## Escala da textura do chão (grama). 1 = tamanho original da imagem.
+@export var ground_texture_scale: float = 0.5
+
+@onready var _ground: TextureRect = $Ground
 @onready var _decor: DreamDecor = $Decor
 @onready var actors: Node2D = $World/Actors
 @onready var camp: ArmyCamp = $World/ArmyCamp
@@ -21,10 +24,8 @@ func _ready() -> void:
 	bounds = boundary.inner_rect()
 	# O chão e a decoração acompanham o tamanho do mapa.
 	_ground.position = bounds.position - Vector2(400, 400)
-	_ground.size = bounds.size + Vector2(800, 800)
-	var mat := _ground.material as ShaderMaterial
-	if mat:
-		mat.set_shader_parameter(&"world_size", _ground.size)
+	_ground.scale = Vector2.ONE * ground_texture_scale
+	_ground.size = (bounds.size + Vector2(800, 800)) / ground_texture_scale
 	_decor.area = bounds
 	var k := GameScale.of(GameScale.Kind.SCENERY)
 	if not is_equal_approx(k, 1.0):

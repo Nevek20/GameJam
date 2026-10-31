@@ -64,22 +64,26 @@ Termos usados aqui:
 
 ### Moradores e casas
 Abra `scenes/world/level.tscn` → `World/Houses/House1` (até `House5`) → Inspector:
-- `house_texture`: arte da casa.
+- `house_texture`: arte da casa (já ligada: fazenda, casa vermelha, casa de pedra, casa de palha, casa rosa).
+- `house_texture_scale`: tamanho do desenho (padrão `0.4`). `house_base`: onde fica a base do desenho; mude o Y se a casa "flutuar".
 - `villager_texture`: arte do morador.
 - `villager_size`: tamanho do morador.
 
 ### Barris e poções
 Em `resources/config/barrel_config.tres`:
-- `texture`: arte do barril.
-- `potion_texture`: arte da poção.
-- `body_size` e `potion_size`: tamanhos.
+- `texture` + `texture_scale`: arte do barril (já ligada).
+- `broken_texture` + `broken_time`: barril quebrado, que fica no chão por alguns segundos e some.
+- `potion_texture` + `potion_texture_scale`: arte da poção.
+- `body_size` e `potion_size`: tamanhos da hitbox.
 
 ### Cenário (muralhas, fogo, bandeiras, árvores)
-- **Muralha:** `scenes/world/prop_wall.tscn` → nó `Visual` → campo `texture`. Vale para todas as muralhas, inclusive as do limite do mapa.
+- **Muralha do limite do mapa:** `level.tscn` → `World/MapBoundary` → `frame_texture` (desenho "Muro de pedra" da `main`, usado como moldura 9-slice). `frame_margins` = tamanho dos cantos na imagem, `frame_outset` = quanto as pedras ficam para fora da área jogável, `frame_scale` = tamanho. Deixe `frame_texture` vazio para voltar aos segmentos (`prop_wall.tscn`).
+- **Muralhas soltas no meio do mapa:** `scenes/world/prop_wall.tscn` → nó `Visual` → campo `texture`.
 - **Fogo:** `scenes/world/prop_fire.tscn` → nó `Visual` → `texture`.
 - **Bandeira:** `scenes/world/prop_banner.tscn` → nó `Visual` → `texture`.
-- **Árvore:** `scenes/world/prop_tree.tscn` → nó `Sprite2D` (ligue `visible` e esconda o nó `Shape`).
-- **Chão:** `scenes/world/level.tscn` → nó `Ground`. É um shader provisório; troque por uma textura se quiser.
+- **Árvores, pedras, igreja, fonte e casas de enfeite:** são `scenes/world/prop_sprite.tscn` dentro de `level.tscn` → `World/Props`. No Inspector: `texture`, `texture_scale`, `texture_offset` (ajuste fino), `collision_size` (retângulo na base; `0,0` = sem colisão) e `flip`. Para colocar outro objeto: arraste `prop_sprite.tscn` para `World/Props` e escolha a imagem.
+- As imagens recortadas da `main` ficam em `assets/sprites/scenery/` (fundo branco já removido).
+- **Chão:** `level.tscn` → nó `Ground` (TextureRect em mosaico com `grass.png`). Tamanho da grama: `ground_texture_scale` no nó `Level`.
 
 ### Interface
 - **Ícones das habilidades no HUD:** campo `icon` de cada habilidade (`resources/abilities/...`).

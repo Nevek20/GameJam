@@ -104,6 +104,7 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - Monstros da branch `art`: Sombra (comum), Olho seco (gira e dá dash), Coguolho (nuvem de dano ao morrer),
   Siameses (giram e bloqueiam o corpo). Ondas com grupos (`EnemyGroup`). Barris com poção (`barrel_config.tres`).
 - Sprites da Princesa e do Mago, sons e música da branch `art`; menu "Os Contos de Carcosa".
+- Cenário da `main`: grama, muralha de pedra (moldura), casas, igreja, fonte, árvores, pedras, barril e poção (`assets/sprites/scenery/`, `PropSprite`).
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
 - Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
 - `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).

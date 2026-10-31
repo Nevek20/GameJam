@@ -10,6 +10,10 @@ signal player_entered(house: VillagerHouse)
 ## Textos em data/dialogues.json -> houses.<dialogue_key> (cai em "default" se não existir).
 @export var dialogue_key: StringName = &"default"
 @export var house_texture: Texture2D
+## Tamanho do desenho da casa (1 = tamanho original do PNG).
+@export var house_texture_scale: float = 0.4
+## Onde fica a BASE do desenho (pixels, relativo ao nó). Ajuste se a casa "flutuar".
+@export var house_base: Vector2 = Vector2(0, 60)
 @export var villager_texture: Texture2D
 @export var poi_color: Color = Color(1, 0.85, 0.3)
 ## Tamanho do morador (largura x altura).
@@ -33,6 +37,8 @@ func _ready() -> void:
 	_zone.body_entered.connect(_on_body_entered)
 	if house_texture:
 		_house_sprite.texture = house_texture
+		_house_sprite.scale = Vector2.ONE * house_texture_scale
+		_house_sprite.position = house_base - Vector2(0, house_texture.get_height() * house_texture_scale * 0.5)
 		_house_sprite.visible = true
 		_house_shape.visible = false
 	_villager.apply_look(villager_texture, null, Color(0.55, 0.95, 0.8), Color(0.95, 0.5, 0.9),

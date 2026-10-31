@@ -15,6 +15,11 @@ extends Resource
 @export var band_color: Color = Color(0.3, 0.2, 0.15)
 ## Arte do barril (vazio = placeholder).
 @export var texture: Texture2D
+## Tamanho do desenho (1 = tamanho original do PNG).
+@export var texture_scale: float = 0.3
+## Barril quebrado: aparece por broken_time segundos depois de quebrar (vazio = some na hora).
+@export var broken_texture: Texture2D
+@export var broken_time: float = 1.2
 
 @export_group("Poção")
 ## Chance (0 a 1) de soltar uma poção ao quebrar.
@@ -27,6 +32,7 @@ extends Resource
 @export var potion_color: Color = Color(1, 0.3, 0.5)
 ## Arte da poção (vazio = placeholder).
 @export var potion_texture: Texture2D
+@export var potion_texture_scale: float = 0.3
 ## Some depois deste tempo (0 = fica até ser pega).
 @export var potion_lifetime: float = 0.0
 

@@ -21,7 +21,8 @@ func activate(cfg: BarrelConfig, pos: Vector2) -> void:
 	global_position = pos
 	collision_layer = 0
 	collision_mask = Layers.PLAYER
-	visual.apply_look(cfg.potion_texture, null, cfg.potion_color, cfg.potion_color, PlaceholderShape.Accent.NONE, Vector2.ONE)
+	visual.apply_look(cfg.potion_texture, null, cfg.potion_color, cfg.potion_color, PlaceholderShape.Accent.NONE,
+		Vector2.ONE * cfg.potion_texture_scale, Barrel.base_offset(cfg.potion_texture))
 	visual.placeholder.size = cfg.potion_size
 	visual.placeholder.position = Vector2(0, -cfg.potion_size.y * 0.5 - 6.0)
 	scale = Vector2.ONE * GameScale.of(GameScale.Kind.SCENERY)

@@ -12,7 +12,16 @@ extends Node2D
 		queue_redraw()
 ## Espessura da colisão de cada lado (parede invisível atrás das muralhas visíveis).
 @export var wall_thickness: float = 200.0
-## Cena de um segmento de muralha (visual + colisão).
+## Desenho da muralha como MOLDURA (9-slice): os cantos ficam iguais e as laterais repetem.
+## Se estiver vazio, usa os segmentos (segment_scene).
+@export var frame_texture: Texture2D
+## Margens da moldura na imagem (pixels da textura): esquerda, cima, direita, baixo.
+@export var frame_margins: Vector4i = Vector4i(150, 150, 150, 150)
+## Quanto a moldura passa para FORA da área jogável (as pedras ficam fora, a terra fica dentro).
+@export var frame_outset: float = 55.0
+## Tamanho da moldura no jogo (1 = pixels da textura).
+@export var frame_scale: float = 1.0
+## Cena de um segmento de muralha (visual + colisão), usada quando não há frame_texture.
 @export var segment_scene: PackedScene
 ## Comprimento de cada segmento (o mesmo tamanho da cena prop_wall).
 @export var segment_length: float = 160.0
@@ -26,7 +35,10 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_build_collision()
-	_build_segments()
+	if frame_texture:
+		_build_frame()
+	else:
+		_build_segments()
 
 
 ## Área jogável em coordenadas globais.
@@ -55,6 +67,26 @@ func _build_collision() -> void:
 		shape.shape = rect
 		shape.position = r.get_center()
 		body.add_child(shape)
+
+
+func _build_frame() -> void:
+	var frame := NinePatchRect.new()
+	frame.name = "Frame"
+	frame.texture = frame_texture
+	frame.patch_margin_left = frame_margins.x
+	frame.patch_margin_top = frame_margins.y
+	frame.patch_margin_right = frame_margins.z
+	frame.patch_margin_bottom = frame_margins.w
+	frame.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE_FIT
+	frame.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE_FIT
+	frame.draw_center = false
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Atrás dos personagens e na frente do chão.
+	frame.z_index = -7
+	frame.scale = Vector2.ONE * frame_scale
+	frame.position = Vector2.ONE * -frame_outset
+	frame.size = (map_size + Vector2.ONE * frame_outset * 2.0) / frame_scale
+	add_child(frame)
 
 
 func _build_segments() -> void:

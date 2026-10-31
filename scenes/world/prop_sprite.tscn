@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/prop_sprite.gd" id="1_prop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
+resource_local_to_scene = true
+size = Vector2(40, 20)
+
+[node name="PropSprite" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_prop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_base")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
