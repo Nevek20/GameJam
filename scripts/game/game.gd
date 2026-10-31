@@ -18,6 +18,8 @@ var phase: Phase = Phase.INTRO
 var player: Player
 var _players: Dictionary = {}
 var _time_left: float = 0.0
+## Tempo desde o começo da fase, para a chegada do exército.
+var _army_wait: float = 0.0
 var _timer_running: bool = false
 ## Objetivos do personagem atual (7.1).
 var _army_defeated: bool = false
@@ -54,9 +56,9 @@ func _ready() -> void:
 	for ui: Control in [hud, dialog, qte, tutorial, intro, tombstone, pause_menu, character_choice]:
 		GameScale.apply_ui(ui)
 	camera.set_smoothing(juice.config.camera_smoothing)
-	interactions.setup(match_config, dialog, qte, level.get_houses(), level.camp)
+	interactions.setup(match_config, dialog, qte, level.get_houses())
 	interactions.army_choice_made.connect(_on_army_choice)
-	encounter.setup(match_config, level.camp.get_spawn_points(), level.marker_group("KnightSpawns"))
+	encounter.setup(match_config, level.marker_group("ArmySpawns"), level.marker_group("KnightSpawns"))
 	encounter.enemy_killed.connect(_on_enemy_killed)
 	encounter.encounter_cleared.connect(_on_encounter_cleared)
 	interactions.house_resolved.connect(func(_h: VillagerHouse) -> void: _check_objectives())
@@ -111,6 +113,7 @@ func _place_player(index: int) -> void:
 func _start_character_phase() -> void:
 	var index := GameState.current_index
 	_army_defeated = false
+	_army_wait = 0.0
 	_objectives_asked = false
 	_can_advance = false
 	hud.set_prompt("")
@@ -136,6 +139,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_time_left -= delta
 	hud.set_time(_time_left)
+	_update_army_arrival(delta)
 	if _time_left <= 0.0:
 		_timer_running = false
 		_on_time_up()
@@ -166,17 +170,35 @@ func _on_time_up() -> void:
 
 # --- Exército ---
 
+## O exército chega sozinho: depois de army_arrival_time segundos, ou antes, quando todas
+## as casas já foram resolvidas (respeitando army_min_delay). Aí aparece a pergunta.
+func _update_army_arrival(delta: float) -> void:
+	if interactions.is_army_decided() or interactions.is_busy():
+		return
+	_army_wait += delta
+	var houses_done := match_config.army_arrives_when_houses_done and interactions.all_houses_resolved()
+	if _army_wait >= match_config.army_arrival_time or (houses_done and _army_wait >= match_config.army_min_delay):
+		army_arrives_now()
+
+
+## Faz o exército chegar agora (pergunta enfrentar/aliar). Público para testes.
+func army_arrives_now() -> void:
+	if phase != Phase.PLAYING or interactions.is_army_decided() or interactions.is_busy():
+		return
+	hud.show_banner(Texts.ui("banner.army_arrives"), "")
+	@warning_ignore("missing_await") # dispara a corrotina sem esperar (intencional)
+	interactions.ask_army()
+
+
 func _on_army_choice(choice: StringName) -> void:
 	var id := GameState.current_id()
 	var loop := GameState.current_index == 0 and match_config.p1_alliance_loops
 	AudioManager.play_sfx(&"fight_start")
 	if choice == InteractionDirector.CHOICE_ALLY:
-		level.camp.set_decor_visible(true)
 		encounter.start(ArmyEncounter.Mode.ALLIANCE, loop)
 		hud.show_banner(Texts.ui("banner.allied_title"), Texts.ui("banner.allied_subtitle", {"name": Texts.character_name(id)}))
 		hud.set_objective(Texts.ui("objective.allied"))
 	else:
-		level.camp.set_decor_visible(false)
 		encounter.start(ArmyEncounter.Mode.CONFRONT, false)
 		hud.show_banner(Texts.ui("banner.confront_title"), Texts.ui("banner.confront_subtitle"))
 		hud.set_objective(Texts.ui("objective.confront"))
@@ -423,7 +445,6 @@ func _update_pois() -> void:
 	var targets: Array[Node2D] = []
 	for house: VillagerHouse in level.get_houses():
 		targets.append(house)
-	targets.append(level.camp)
 	if boss_director.boss_node:
 		targets.append(boss_director.boss_node)
 	hud.poi_arrows.set_targets(targets)

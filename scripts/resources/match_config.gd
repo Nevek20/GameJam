@@ -14,6 +14,14 @@ extends Resource
 @export var qte: QTEConfig
 
 @export_group("Exército")
+## O exército chega (e aparece a pergunta enfrentar/aliar) depois deste tempo de fase, em segundos.
+@export var army_arrival_time: float = 45.0
+## Chega antes se todas as casas já foram resolvidas.
+@export var army_arrives_when_houses_done: bool = true
+## Mesmo com as casas resolvidas, espera pelo menos isto (segundos) depois do começo da fase.
+@export var army_min_delay: float = 3.0
+## Os inimigos surgem nos cantos (Markers/ArmySpawns), mas nunca a menos desta distância do herói.
+@export var spawn_min_distance: float = 600.0
 ## Ondas ao enfrentar o exército.
 @export var confront_waves: Array[WaveData] = []
 ## Ondas de cavaleiros do reino ao se aliar.

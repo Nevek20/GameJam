@@ -16,6 +16,9 @@ var dash_cooldown_left: float = 0.0
 var block_cooldown_left: float = 0.0
 ## Sentido do giro em volta do alvo (inimigos voadores): 1 ou -1.
 var orbit_sign: float = 1.0
+## Caçando: procura o herói no mapa inteiro, não só no aggro_range (inimigos das ondas,
+## que surgem longe, nos cantos). Volta a false a cada activate().
+var hunting: bool = false
 ## Escala do corpo (GameScale). Alcances e distâncias são multiplicados por ela.
 var size_scale: float = 1.0
 
@@ -76,6 +79,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	global_position = pos
 	velocity = Vector2.ZERO
 	dead = false
+	hunting = false
 	target = null
 	attack_cooldown_left = randf_range(0.4, maxf(stats.attack_interval, 0.5))
 	dash_cooldown_left = stats.dash_cooldown * 0.5
@@ -117,7 +121,8 @@ func is_attacking() -> bool:
 
 
 func find_target() -> Node2D:
-	return Team.find_nearest(get_tree(), Team.opposite(team), global_position, stats.aggro_range * size_scale)
+	var reach := INF if hunting else stats.aggro_range * size_scale
+	return Team.find_nearest(get_tree(), Team.opposite(team), global_position, reach)
 
 
 func has_valid_target() -> bool:

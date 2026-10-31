@@ -1,6 +1,7 @@
 class_name Level
 extends Node2D
-## A vila: limites do mapa (MapBoundary), marcadores de posição, casas e acampamento.
+## A vila: limites do mapa (MapBoundary), marcadores de posição e casas.
+## O exército surge nos cantos (Markers/ArmySpawns).
 ## Objetos no grupo "scenery" recebem a escala de cenário do GameScale.
 
 ## Área jogável (calculada a partir da MapBoundary).
@@ -14,7 +15,6 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 
 @onready var _ground: TextureRect = $Ground
 @onready var actors: Node2D = $World/Actors
-@onready var camp: ArmyCamp = $World/ArmyCamp
 @onready var _houses: Node2D = $World/Houses
 @onready var _markers: Node2D = $Markers
 

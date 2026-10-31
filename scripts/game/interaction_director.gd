@@ -23,21 +23,18 @@ var character_index: int = 0
 var _dialog: DialogBox
 var _qte: QTEPanel
 var _houses: Array[VillagerHouse] = []
-var _camp: ArmyCamp
 var _busy: bool = false
 var _token: int = 0
 var _army_decided: bool = false
 
 
-func setup(match_config: MatchConfig, dialog: DialogBox, qte: QTEPanel, houses: Array[VillagerHouse], camp: ArmyCamp) -> void:
+func setup(match_config: MatchConfig, dialog: DialogBox, qte: QTEPanel, houses: Array[VillagerHouse]) -> void:
 	config = match_config
 	_dialog = dialog
 	_qte = qte
 	_houses = houses
-	_camp = camp
 	for house: VillagerHouse in houses:
 		house.player_entered.connect(_on_house_entered)
-	camp.player_entered.connect(_on_camp_entered)
 
 
 func begin_phase(index: int, current_player: Player) -> void:
@@ -53,10 +50,6 @@ func prepare_world_for(index: int) -> void:
 	character_index = index
 	for house: VillagerHouse in _houses:
 		house.load_state()
-	var p1 := GameState.p1_id()
-	var show_ally := index == 1 and ReputationState.is_allied(p1) and GameState.is_alive(p1)
-	_camp.show_ally_figure(_stats_for(p1) if show_ally else null)
-	_camp.set_decor_visible(true)
 	refresh_pois()
 
 
@@ -105,7 +98,6 @@ func cancel() -> void:
 func disable_all_pois() -> void:
 	for house: VillagerHouse in _houses:
 		house.set_poi_active(false)
-	_camp.set_poi_active(false)
 
 
 func refresh_pois() -> void:
@@ -117,7 +109,6 @@ func refresh_pois() -> void:
 		elif character_index == 0:
 			active = house.state == GameState.HouseState.OCCUPIED
 		house.set_poi_active(active)
-	_camp.set_poi_active(not _army_decided)
 
 
 func _on_house_entered(house: VillagerHouse) -> void:
@@ -209,14 +200,14 @@ func _loot(house: VillagerHouse) -> void:
 	refresh_pois()
 
 
-func _on_camp_entered(_camp_node: ArmyCamp) -> void:
+## O exército chegou (o Game decide quando): pergunta enfrentar ou se aliar.
+func ask_army() -> void:
 	if not enabled or _busy or _army_decided:
 		return
 	var token := _begin()
 	var choice: StringName = await _dialog.ask(Texts.text("dialogues", "army.speaker"), _army_text(), [
 		_choice(CHOICE_CONFRONT, "dialogues", "choices.confront"),
-		_choice(CHOICE_ALLY, "dialogues", "choices.ally"),
-		_choice(CHOICE_LEAVE, "dialogues", "choices.not_now")])
+		_choice(CHOICE_ALLY, "dialogues", "choices.ally")])
 	if token != _token:
 		return
 	if choice == CHOICE_CONFRONT or choice == CHOICE_ALLY:
@@ -281,10 +272,3 @@ func _house_key(house: VillagerHouse) -> String:
 
 func _choice(id: StringName, file: String, path: String) -> Dictionary:
 	return {"id": id, "label": Texts.text(file, path)}
-
-
-func _stats_for(id: StringName) -> CharacterStats:
-	for stats: CharacterStats in config.characters:
-		if stats.id == id:
-			return stats
-	return null

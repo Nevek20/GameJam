@@ -76,14 +76,12 @@ Em `resources/config/barrel_config.tres`:
 - `potion_texture` + `potion_texture_scale`: arte da poção.
 - `body_size` e `potion_size`: tamanhos da hitbox.
 
-### Cenário (muralhas, fogo, bandeiras, árvores)
+### Cenário (muralhas, fogo, árvores, pedras)
 - **Muralha do limite do mapa:** `level.tscn` → `World/MapBoundary` → `frame_texture` (desenho "Muro de pedra" da `main`, usado como moldura 9-slice). `frame_margins` = tamanho dos cantos na imagem, `frame_outset` = quanto as pedras ficam para fora da área jogável, `frame_scale` = tamanho. Deixe `frame_texture` vazio para voltar aos segmentos (`prop_wall.tscn`).
-- **Muralhas soltas no meio do mapa:** `scenes/world/prop_wall.tscn` → nó `Visual` → campo `texture`.
 - **Fogo:** `scenes/world/prop_fire.tscn` → nó `Visual` → `texture`.
-- **Bandeira:** `scenes/world/prop_banner.tscn` → nó `Visual` → `texture`.
 - **Árvores, pedras, igreja, fonte e casas de enfeite:** são `scenes/world/prop_sprite.tscn` dentro de `level.tscn` → `World/Props`. No Inspector: `texture`, `texture_scale`, `texture_offset` (ajuste fino), `collision_size` (retângulo na base; `0,0` = sem colisão) e `flip`. Para colocar outro objeto: arraste `prop_sprite.tscn` para `World/Props` e escolha a imagem.
 - As imagens recortadas da `main` ficam em `assets/sprites/scenery/` (fundo branco já removido).
-- **Chão:** `level.tscn` → nó `Ground` (TextureRect em mosaico com `grass.png`). Tamanho da grama: `ground_texture_scale` no nó `Level`.
+- **Chão:** `level.tscn` → nó `Ground` (TextureRect em mosaico com `grass.png`). Tamanho da grama: `ground_texture_scale` no nó `Level`. Cor e ondas: `Ground` → *Material* → `saturation`, `brightness`, `wave_strength` (0 = sem ondas) e `wave_scale` (menor = ondas maiores), shader `assets/shaders/ground.gdshader`.
 
 ### Interface
 - **Ícones das habilidades no HUD:** campo `icon` de cada habilidade (`resources/abilities/...`).
@@ -169,13 +167,12 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 |---|---|
 | **Tamanho do mapa** | `World/MapBoundary` → `map_size`. O retângulo laranja no editor mostra a área jogável. As muralhas e os limites da câmera se ajustam sozinhos |
 | Casas (com morador) | `World/Houses/House1` … `House5` |
-| Acampamento do exército | `World/ArmyCamp` (os soldados de enfeite ficam em `ArmyCamp/Soldiers`) |
-| Muralhas internas, fogo e bandeiras | `World/Invasion/...` |
-| Árvores | `World/Props/Tree1` … |
+| Fogo e pedras da invasão | `World/Invasion/...` |
+| Árvores, pedras, igreja, fonte, casas de enfeite | `World/Props/...` |
 | **Barris** | `World/BarrelSpawner/Barrel1` … `Barrel12`. Cada Marker2D é um barril: mova, duplique (Ctrl+D) ou apague |
 | Início dos jogadores | `Markers/PlayerStart` (os dois personagens começam aqui) |
 | Luta final | `Markers/ArenaPlayer`, `Markers/ArenaBoss`, `Markers/ArenaHelper` |
-| Spawns do exército | `World/ArmyCamp/Spawns/Spawn1` … `Spawn5` |
+| Spawns do exército | `Markers/ArmySpawns/TopLeft`, `TopRight`, `BottomRight`, `BottomLeft` (cantos). Pontos perto do herói são ignorados (`match_config.tres` → `spawn_min_distance`) |
 | Spawns dos cavaleiros do reino | `Markers/KnightSpawns/Spawn1` … |
 
 > Para colocar uma casa nova: duplique `House1` (Ctrl+D), mova e mude `house_id` (único, ex.: `house_6`) e `dialogue_key` (as falas em `data/dialogues.json`, ver seção 8).
@@ -187,7 +184,7 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 | Gatilho | Onde | Como mexer |
 |---|---|---|
 | Conversa com o morador | `scenes/world/villager_house.tscn` → `InteractionZone/CollisionShape2D` (círculo amarelo no editor) | Mude o `radius` do círculo ou mova o nó `InteractionZone` |
-| Escolha do exército | `scenes/world/army_camp.tscn` → `InteractionZone/CollisionShape2D` (círculo vermelho) | Igual ao de cima |
+| **Chegada do exército** (pergunta enfrentar/aliar) | Não é área: tempo. `match_config.tres` → `army_arrival_time` (segundos de fase), `army_arrives_when_houses_done` (chega antes se as casas acabaram) e `army_min_delay` | Os inimigos surgem nos cantos do mapa |
 | Pegar poção | `scenes/world/potion.tscn` → `CollisionShape2D` | Mude o raio |
 | Reviver (luta final) | Não é área: distância em `resources/config/revive_config.tres` → `revive_distance` | |
 | **Boss** | Não é área. Começa quando o tempo do Personagem 2 acaba, ou quando ele completa os objetivos e escolhe avançar | Tempo em `match_config.tres` → `character_durations` |

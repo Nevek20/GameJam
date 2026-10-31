@@ -97,7 +97,7 @@ func _on_timer() -> void:
 
 
 func _spawn_wave(wave: WaveData) -> void:
-	var points := _army_points if mode == Mode.CONFRONT else _knight_points
+	var points := _far_from_heroes(_army_points if mode == Mode.CONFRONT else _knight_points)
 	if points.is_empty():
 		push_warning("ArmyEncounter: sem pontos de surgimento")
 		return
@@ -114,6 +114,23 @@ func _spawn_wave(wave: WaveData) -> void:
 			for i in group.group_size:
 				_queue_enemy(group.enemy, point, group.spread)
 	_flush_queue()
+
+
+## Só os pontos longe dos heróis (os inimigos não nascem em cima do jogador).
+## Se nenhum estiver longe, usa todos.
+func _far_from_heroes(points: Array[Vector2]) -> Array[Vector2]:
+	var far: Array[Vector2] = []
+	var heroes := get_tree().get_nodes_in_group(Team.GROUP_HEROES)
+	for point in points:
+		var ok := true
+		for hero: Node in heroes:
+			var h := hero as Node2D
+			if h and h.is_visible_in_tree() and h.global_position.distance_to(point) < config.spawn_min_distance:
+				ok = false
+				break
+		if ok:
+			far.append(point)
+	return far if not far.is_empty() else points
 
 
 func _queue_enemy(stats: EnemyStats, point: Vector2, spread: float) -> void:
@@ -137,6 +154,8 @@ func _flush_queue() -> void:
 		if not enemy.died.is_connected(_on_enemy_died):
 			enemy.died.connect(_on_enemy_died)
 		enemy.activate(stats, point, null, health_multiplier, damage_multiplier, visual_scale)
+		# Surgem longe (cantos do mapa): vão atrás do herói onde ele estiver.
+		enemy.hunting = true
 		_alive += 1
 
 

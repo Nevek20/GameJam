@@ -104,7 +104,8 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - Monstros da branch `art`: Sombra (comum), Olho seco (gira e dá dash), Coguolho (nuvem de dano ao morrer),
   Siameses (giram e bloqueiam o corpo). Ondas com grupos (`EnemyGroup`). Barris com poção (`barrel_config.tres`).
 - Sprites da Princesa e do Mago, sons e música da branch `art`; menu "Os Contos de Carcosa".
-- Cenário da `main`: grama, muralha de pedra (moldura), casas, igreja, fonte, árvores, pedras, barril e poção (`assets/sprites/scenery/`, `PropSprite`).
+- Cenário em PNG: grama com ondas, muralha de pedra (moldura), casas, igreja, fonte, árvores, pedras, barril e poção (`assets/sprites/scenery/`, `PropSprite`).
+- Sem acampamento: o exército chega sozinho (tempo ou casas resolvidas), pergunta enfrentar/aliar e surge nos cantos do mapa.
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
 - Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
 - `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).
@@ -127,7 +128,7 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 | 3 | enemy | corpos inimigos |
 | 4 | player_hitbox | ataques dos heróis |
 | 5 | enemy_hitbox | ataques inimigos |
-| 6 | npc | zonas de interação (casas, acampamento) |
+| 6 | npc | zonas de interação (casas) |
 | 7 | projectile | projéteis |
 | 8 | player_hurtbox | onde os heróis tomam dano |
 | 9 | enemy_hurtbox | onde os inimigos tomam dano |

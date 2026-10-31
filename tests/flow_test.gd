@@ -319,8 +319,9 @@ func _p2_intro(game: Game) -> void:
 	check(game.phase == Game.Phase.PLAYING and GameState.current_index == 1, "P2 jogando")
 
 
+## O exército chega (sem acampamento): pergunta enfrentar (0) ou se aliar (1).
 func _army_choice(game: Game, index: int) -> void:
-	game.player.global_position = game.level.camp.global_position + Vector2(0, 160)
+	game.army_arrives_now()
 	await _choose(game, index)
 	await _wait(0.3)
 

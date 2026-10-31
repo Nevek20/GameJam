@@ -20,18 +20,21 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/scenery/house_long.png" id="33_hlong"]
 [ext_resource type="Texture2D" path="res://assets/sprites/scenery/house_thatch_fence.png" id="34_hfence"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_sprite.tscn" id="35_prop"]
+[ext_resource type="Shader" path="res://assets/shaders/ground.gdshader" id="36_ground"]
 [ext_resource type="PackedScene" path="res://scenes/world/villager_house.tscn" id="4_house"]
-[ext_resource type="PackedScene" path="res://scenes/world/army_camp.tscn" id="5_camp"]
 [ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="7_shape"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_wall.tscn" id="8_wall"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_fire.tscn" id="9_fire"]
-[ext_resource type="PackedScene" path="res://scenes/world/prop_banner.tscn" id="10_banner"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ground"]
+shader = ExtResource("36_ground")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_level")
 
 [node name="Ground" type="TextureRect" parent="."]
 z_index = -10
+material = SubResource("ShaderMaterial_ground")
 texture_repeat = 2
 offset_right = 3200.0
 offset_bottom = 2000.0
@@ -65,7 +68,7 @@ y_sort_enabled = true
 script = ExtResource("11_boundary")
 frame_texture = ExtResource("21_wall")
 frame_margins = Vector4i(200, 200, 200, 200)
-frame_outset = 85.0
+frame_outset = 95.0
 segment_scene = ExtResource("8_wall")
 
 [node name="Houses" type="Node2D" parent="World"]
@@ -115,9 +118,6 @@ dialogue_key = &"default"
 
 [node name="Placeholder" parent="World/Houses/House5/Visual" index="0"]
 color = Color(0.75, 0.6, 0.35, 1)
-
-[node name="ArmyCamp" parent="World" instance=ExtResource("5_camp")]
-position = Vector2(2650, 480)
 
 [node name="Props" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -359,22 +359,6 @@ collision_size = Vector2(200, 40)
 [node name="Invasion" type="Node2D" parent="World"]
 y_sort_enabled = true
 
-[node name="Wall9" parent="World/Invasion" groups=["scenery"] instance=ExtResource("8_wall")]
-position = Vector2(2150, 1100)
-rotation = 1.5707964
-
-[node name="Wall10" parent="World/Invasion" groups=["scenery"] instance=ExtResource("8_wall")]
-position = Vector2(2150, 1500)
-rotation = 1.5707964
-
-[node name="Wall11" parent="World/Invasion" groups=["scenery"] instance=ExtResource("8_wall")]
-position = Vector2(2150, 1660)
-rotation = 1.5707964
-
-[node name="Wall12" parent="World/Invasion" groups=["scenery"] instance=ExtResource("8_wall")]
-position = Vector2(2150, 1820)
-rotation = 1.5707964
-
 [node name="Fire1" parent="World/Invasion" instance=ExtResource("9_fire")]
 position = Vector2(1290, 1606)
 
@@ -414,38 +398,54 @@ position = Vector2(1150, 880)
 [node name="Fire7" parent="World/Invasion" instance=ExtResource("9_fire")]
 position = Vector2(520, 1000)
 
-[node name="ArmyBanner1" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockA1" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(2440, 640)
+texture = ExtResource("29_rbig")
+texture_scale = 0.45
+collision_size = Vector2(60, 22)
+flip = false
 
-[node name="ArmyBanner2" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockA2" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(2860, 640)
+texture = ExtResource("30_rsmall")
+texture_scale = 0.45
+collision_size = Vector2(44, 16)
+flip = true
 
-[node name="ArmyBanner3" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockA3" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(1900, 1250)
+texture = ExtResource("29_rbig")
+texture_scale = 0.45
+collision_size = Vector2(60, 22)
+flip = false
 
-[node name="ArmyBanner4" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockA4" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(1350, 1360)
+texture = ExtResource("30_rsmall")
+texture_scale = 0.45
+collision_size = Vector2(44, 16)
+flip = true
 
-[node name="KingdomBanner1" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockK1" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(1000, 1100)
+texture = ExtResource("29_rbig")
+texture_scale = 0.45
+collision_size = Vector2(60, 22)
+flip = false
 
-[node name="Placeholder" parent="World/Invasion/KingdomBanner1/Visual" index="0"]
-color = Color(0.35, 0.55, 1, 1)
-accent_color = Color(1, 0.85, 0.35, 1)
-
-[node name="KingdomBanner2" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockK2" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(600, 1200)
+texture = ExtResource("30_rsmall")
+texture_scale = 0.45
+collision_size = Vector2(44, 16)
+flip = true
 
-[node name="Placeholder" parent="World/Invasion/KingdomBanner2/Visual" index="0"]
-color = Color(0.35, 0.55, 1, 1)
-accent_color = Color(1, 0.85, 0.35, 1)
-
-[node name="KingdomBanner3" parent="World/Invasion" instance=ExtResource("10_banner")]
+[node name="RockK3" parent="World/Invasion" instance=ExtResource("35_prop")]
 position = Vector2(1700, 700)
-
-[node name="Placeholder" parent="World/Invasion/KingdomBanner3/Visual" index="0"]
-color = Color(0.35, 0.55, 1, 1)
-accent_color = Color(1, 0.85, 0.35, 1)
+texture = ExtResource("29_rbig")
+texture_scale = 0.45
+collision_size = Vector2(60, 22)
+flip = false
 
 [node name="BarrelSpawner" type="Node2D" parent="World"]
 script = ExtResource("12_barrels")
@@ -516,6 +516,20 @@ position = Vector2(2600, 1030)
 [node name="ArenaHelper" type="Marker2D" parent="Markers"]
 position = Vector2(2220, 1340)
 
+[node name="ArmySpawns" type="Node2D" parent="Markers"]
+
+[node name="TopLeft" type="Marker2D" parent="Markers/ArmySpawns"]
+position = Vector2(170, 170)
+
+[node name="TopRight" type="Marker2D" parent="Markers/ArmySpawns"]
+position = Vector2(3030, 170)
+
+[node name="BottomRight" type="Marker2D" parent="Markers/ArmySpawns"]
+position = Vector2(3030, 1830)
+
+[node name="BottomLeft" type="Marker2D" parent="Markers/ArmySpawns"]
+position = Vector2(170, 1830)
+
 [node name="KnightSpawns" type="Node2D" parent="Markers"]
 
 [node name="Spawn1" type="Marker2D" parent="Markers/KnightSpawns"]
@@ -552,8 +566,3 @@ position = Vector2(3040, 1100)
 
 [editable path="World/Invasion/Fire3"]
 
-[editable path="World/Invasion/KingdomBanner1"]
-
-[editable path="World/Invasion/KingdomBanner2"]
-
-[editable path="World/Invasion/KingdomBanner3"]

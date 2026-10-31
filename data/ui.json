@@ -78,8 +78,8 @@
 		"advance_prompt": "Objetivos completos! Pressione {key} para avançar"
 	},
 	"objective": {
-		"p1": "Salve os moradores e encontre o exército",
-		"p2": "Encontre o exército inimigo",
+		"p1": "Salve os moradores antes que o exército chegue",
+		"p2": "Prepare-se: o exército está chegando",
 		"confront": "Derrote o exército",
 		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
 		"after_fight": "Continue ajudando a vila",
@@ -88,6 +88,7 @@
 	"banner": {
 		"allied_title": "Aliança selada",
 		"allied_subtitle": "{name} agora marcha com o exército",
+		"army_arrives": "O exército chegou!",
 		"confront_title": "À luta!",
 		"confront_subtitle": "O exército avança",
 		"knights": "Cavaleiros do reino chegaram!",

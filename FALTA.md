@@ -10,15 +10,11 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 - [ ] **Elite** do exército.
 - [ ] **Cavaleiro do reino**: aparece como aliado quando o jogador se alia ao reino.
 - [ ] **Moradores**: as 5 casas têm um morador cada (pode ser o mesmo desenho).
-- [ ] **Soldados do acampamento**: 6 bonecos parados no acampamento do exército.
 - [ ] **Animações que faltam na Princesa e no Mago**: `hurt` (tomando dano) e `dead` (morrendo).
 - [ ] **Animações dos monstros** (opcional): hoje cada um tem um loop só. Faltam ataque e morte.
 
 ### Cenário
-- [ ] **Tendas do acampamento** (3).
 - [ ] **Fogueiras / fogo** da invasão.
-- [ ] **Bandeiras**: do exército (vermelha) e do reino (azul).
-- [ ] **Barricadas / muralhas soltas** no meio do mapa.
 - [ ] **Lápide**: aparece quando um personagem morre.
 
 ### Telas e interface
@@ -33,8 +29,8 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 - [ ] **Cutscene antes do boss**: sem imagem nenhuma.
 - [ ] **Efeitos** (opcional): projéteis do Mago, raio e nuvem do Coguolho. Hoje são desenhados por código.
 
-### Arte que veio em JPEG
-- [ ] Mandar em **PNG com fundo transparente**: casas, igreja, fonte, árvores, pedras, barril e muro. Eu recortei o fundo branco, mas ficou uma bordinha clara.
+### Já recebido
+- [x] Casas, igreja, fonte, árvores, pedras, barril, poção e muro em PNG com fundo transparente.
 
 ## Sons
 
