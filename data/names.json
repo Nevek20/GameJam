@@ -1,8 +1,8 @@
 {
 	"_comment": "Nomes exibidos. Chave = id do personagem/inimigo usado nos Resources.",
-	"princess": "Princesa Guerreira",
-	"mage": "Mago Mercenário",
+	"princess": "Elara",
+	"mage": "Kael Draven",
 	"kingdom_knight": "Cavaleiro do Reino",
-	"army_champion": "Campeão do Exército",
+	"army_champion": "Campeão da Horda",
 	"villager": "Morador"
 }

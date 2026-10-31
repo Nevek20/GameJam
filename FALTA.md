@@ -6,9 +6,9 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 ## Arte
 
 ### Personagens e inimigos
-- [ ] **Boss (cavaleiro)**: duas versões, a do exército e a do reino. O moveset é o mesmo, muda só a skin.
-- [ ] **Elite** do exército.
-- [ ] **Cavaleiro do reino**: aparece como aliado quando o jogador se alia ao reino.
+- [ ] **Boss**: hoje é uma **Sombra gigante** provisória (contorno avermelhado na versão da horda, dourado na do reino). Se vier arte própria, entra no lugar.
+- [ ] **Cavaleiro do reino** (ataca quem se aliou à horda): hoje é um **Coguolho azulado** provisório.
+- [x] ~~Elite~~: cortada do jogo.
 - [ ] **Moradores**: as 5 casas têm um morador cada (pode ser o mesmo desenho).
 - [ ] **Animações que faltam na Princesa e no Mago**: `hurt` (tomando dano) e `dead` (morrendo).
 - [ ] **Animações dos monstros** (opcional): hoje cada um tem um loop só. Faltam ataque e morte.
@@ -68,19 +68,14 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 
 ## Textos (escrita)
 
-Todos os textos do jogo são **provisórios, escritos por mim**. O pessoal da escrita precisa reescrever:
+Já entraram os textos da lore do Cleson (branch `jogo-completo`): Valedouro, Elara, Kael Draven, a Horda,
+introdução, troca de personagem, cutscene do boss, falas do capitão e pergunta de objetivos.
 
-- [ ] `data/intro.json`
-  - [ ] Legendas da introdução.
-  - [ ] Legendas da troca de personagem (estão com `[TODO]`).
-  - [ ] Legendas da cutscene do boss (estão com `[TODO]`).
-- [ ] `data/dialogues.json`
-  - [ ] Falas dos 5 moradores.
-  - [ ] Conversa do exército.
-  - [ ] Pergunta de objetivos completos (está com `[TODO]`).
+Ainda são **provisórios, escritos por mim**:
+
 - [ ] `data/endings.json`
   - [ ] Textos dos 11 finais.
   - [ ] Texto da lápide.
-- [ ] `data/tutorial.json`: tutorial.
+- [ ] `data/dialogues.json`: falas dos moradores que o Cleson não mexeu (só `default`, `baker` e `elder` foram revisadas).
+- [ ] `data/tutorial.json`: tutorial (só uma linha foi revisada).
 - [ ] `data/ui.json`: subtítulo do menu ("Uma noite. Dois heróis. Uma escolha.") e textos da interface.
-- [ ] `data/names.json`: nomes dos personagens. O Mago se chama Kael?

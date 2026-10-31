@@ -16,15 +16,15 @@
 	"houses": {
 		"default": {
 			"speaker": "Morador",
-			"ask": "Socorro! A porta emperrou e os soldados estão chegando. Você me ajuda a sair?",
-			"rescued": "Você me salvou! Pode pegar o que quiser... mas isso é tudo o que eu tenho.",
+			"ask": "Socorro! A porta emperrou e as criaturas estão chegando. Você me ajuda a sair?",
+			"rescued": "Você me salvou! Pegue o que quiser... é tudo o que eu tenho.",
 			"failed": "A porta cedeu para o lado errado... o morador não conseguiu sair.",
 			"loot_ask": "A casa está vazia agora. Ainda há moedas na mesa.",
 			"loot_allied": "Ninguém vai impedir você agora. Os cofres da casa estão à vista."
 		},
 		"baker": {
 			"speaker": "Padeira",
-			"ask": "Meu forno está cantando e as paredes estão derretendo! Me ajuda a sair daqui?",
+			"ask": "O forno está cantando e as paredes estão derretendo! As criaturas vêm aí. Me ajuda?",
 			"rescued": "Obrigada! Os pães voltaram a ter cheiro de pão. Leve o que precisar...",
 			"failed": "O forno engoliu a porta. Não deu tempo.",
 			"loot_ask": "A padaria está vazia. O cofre de farinha brilha num canto.",
@@ -40,8 +40,8 @@
 		},
 		"elder": {
 			"speaker": "Anciã",
-			"ask": "Meus pés viraram raízes no chão da sala. Você me puxa daqui?",
-			"rescued": "Ah, de volta ao chão firme! O baú da família é seu, se precisar.",
+			"ask": "Meus pés viraram raízes no chão da sala, como as árvores lá fora. Você me puxa daqui?",
+			"rescued": "De volta ao chão firme! O baú da família é seu, se precisar.",
 			"failed": "As raízes foram mais rápidas.",
 			"loot_ask": "O baú da família está aberto sobre a mesa.",
 			"loot_allied": "O baú antigo da anciã está ali, desprotegido."
@@ -56,15 +56,15 @@
 		}
 	},
 	"army": {
-		"speaker": "Capitão do Exército",
-		"p1_ask": "Essa vila já é nossa. Você pode lutar e cair junto com ela... ou marchar ao nosso lado e ficar com o que quiser. O que vai ser?",
+		"speaker": "Capitão da Horda",
+		"p1_ask": "Valedouro já é nossa. Você pode lutar e cair com ela... ou marchar ao nosso lado e levar o que quiser. O que vai ser?",
 		"p2_ask_p1_hero": "{p1} tentou nos deter. Você vai terminar o que {p1} começou, ou vai ser mais esperto?",
-		"p2_ask_p1_allied": "{p1} já marcha conosco. Junte-se a nós, ou enfrente o exército inteiro.",
-		"p2_ask_p1_dead": "{p1} caiu aqui. Quer ter o mesmo destino, ou prefere se aliar?"
+		"p2_ask_p1_allied": "{p1} já marcha conosco. Junte-se a nós, ou enfrente a horda inteira.",
+		"p2_ask_p1_dead": "{p1} caiu aqui. Quer o mesmo destino, ou prefere se aliar?"
 	},
 	"objectives": {
 		"speaker": "Objetivos completos",
-		"p1": "[TODO] Você ajudou os moradores e derrotou o exército. Seguir para a próxima etapa ou continuar explorando a vila?",
-		"p2": "[TODO] O exército foi derrotado. Enfrentar o desafio final agora ou continuar explorando?"
+		"p1": "Valedouro ainda respira. Seguir para a próxima etapa ou continuar explorando a vila?",
+		"p2": "A horda recuou, e o beco está livre. Enfrentar o desafio final agora ou continuar explorando?"
 	}
 }

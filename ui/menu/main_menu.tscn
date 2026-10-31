@@ -31,9 +31,9 @@ stretch_mode = 6
 unique_name_in_owner = true
 layout_mode = 1
 offset_left = 40.0
-offset_top = 296.0
+offset_top = 290.0
 offset_right = 480.0
-offset_bottom = 420.0
+offset_bottom = 414.0
 theme_override_colors/font_color = Color(1, 0.96, 0.9, 1)
 theme_override_colors/font_outline_color = Color(0.25, 0.03, 0.05, 1)
 theme_override_constants/outline_size = 12
@@ -48,9 +48,9 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 1
 offset_left = 40.0
-offset_top = 422.0
+offset_top = 414.0
 offset_right = 480.0
-offset_bottom = 450.0
+offset_bottom = 440.0
 theme_override_colors/font_color = Color(0.95, 0.82, 0.78, 1)
 theme_override_font_sizes/font_size = 18
 text = "Subtítulo"
@@ -60,34 +60,58 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 1
 offset_left = 110.0
-offset_top = 462.0
+offset_top = 448.0
 offset_right = 410.0
-offset_bottom = 640.0
-theme_override_constants/separation = 10
+offset_bottom = 656.0
+theme_override_constants/separation = 8
 
 [node name="PlayButton" type="Button" parent="MenuBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 52)
+custom_minimum_size = Vector2(300, 46)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "Jogar"
 script = ExtResource("3_button")
 
 [node name="OptionsButton" type="Button" parent="MenuBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 52)
+custom_minimum_size = Vector2(300, 46)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "Opções"
 script = ExtResource("3_button")
 
 [node name="CreditsButton" type="Button" parent="MenuBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 52)
+custom_minimum_size = Vector2(300, 46)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "Créditos"
 script = ExtResource("3_button")
+
+[node name="QuitButton" type="Button" parent="MenuBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Sair"
+script = ExtResource("3_button")
+
+[node name="Footer" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -30.0
+offset_right = 480.0
+offset_bottom = -8.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.85, 0.75, 0.75)
+theme_override_font_sizes/font_size = 13
+text = "Rodapé"
+horizontal_alignment = 1
 
 [node name="Options" parent="." instance=ExtResource("4_options")]
 unique_name_in_owner = true
@@ -111,7 +135,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.02, 0.01, 0.05, 0.7)
+color = Color(0.06, 0.01, 0.02, 0.75)
 
 [node name="Panel" type="PanelContainer" parent="CreditsPanel"]
 layout_mode = 1

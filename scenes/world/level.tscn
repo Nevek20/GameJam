@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/scenery/house_thatch_fence.png" id="34_hfence"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_sprite.tscn" id="35_prop"]
 [ext_resource type="Shader" path="res://assets/shaders/ground.gdshader" id="36_ground"]
+[ext_resource type="Texture2D" path="res://assets/sprites/scenery/road.png" id="37_road"]
 [ext_resource type="PackedScene" path="res://scenes/world/villager_house.tscn" id="4_house"]
 [ext_resource type="Script" path="res://scripts/components/placeholder_shape.gd" id="7_shape"]
 [ext_resource type="PackedScene" path="res://scenes/world/prop_wall.tscn" id="8_wall"]
@@ -42,23 +43,14 @@ mouse_filter = 2
 texture = ExtResource("20_grass")
 stretch_mode = 1
 
-[node name="Paths" type="Line2D" parent="."]
+[node name="Road" type="TextureRect" parent="."]
 z_index = -9
-points = PackedVector2Array(380, 1700, 700, 1450, 1250, 1650, 1500, 1150, 2000, 1500, 2300, 1050, 2650, 650)
-width = 80.0
-default_color = Color(0.64, 0.47, 0.38, 0.85)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Paths2" type="Line2D" parent="."]
-z_index = -9
-points = PackedVector2Array(700, 1450, 900, 700, 1500, 1150)
-width = 60.0
-default_color = Color(0.64, 0.47, 0.38, 0.8)
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
+offset_right = 3200.0
+offset_bottom = 2000.0
+mouse_filter = 2
+texture = ExtResource("37_road")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -76,7 +68,7 @@ y_sort_enabled = true
 
 [node name="House1" parent="World/Houses" instance=ExtResource("4_house")]
 house_texture = ExtResource("22_hfarm")
-position = Vector2(700, 1350)
+position = Vector2(898, 1152)
 house_id = &"house_1"
 dialogue_key = &"baker"
 
@@ -85,7 +77,7 @@ color = Color(0.55, 0.42, 0.78, 1)
 
 [node name="House2" parent="World/Houses" instance=ExtResource("4_house")]
 house_texture = ExtResource("23_hred")
-position = Vector2(1250, 1600)
+position = Vector2(1462, 1812)
 house_id = &"house_2"
 dialogue_key = &"weaver"
 
@@ -103,7 +95,7 @@ color = Color(0.7, 0.45, 0.55, 1)
 
 [node name="House4" parent="World/Houses" instance=ExtResource("4_house")]
 house_texture = ExtResource("25_hthatch")
-position = Vector2(900, 560)
+position = Vector2(957, 773)
 house_id = &"house_4"
 dialogue_key = &"twins"
 
@@ -112,7 +104,7 @@ color = Color(0.45, 0.65, 0.5, 1)
 
 [node name="House5" parent="World/Houses" instance=ExtResource("4_house")]
 house_texture = ExtResource("26_hpink")
-position = Vector2(2000, 1420)
+position = Vector2(2020, 1455)
 house_id = &"house_5"
 dialogue_key = &"default"
 
@@ -123,7 +115,7 @@ color = Color(0.75, 0.6, 0.35, 1)
 y_sort_enabled = true
 
 [node name="Rock1" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(2027, 1045)
+position = Vector2(1956, 974)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
@@ -139,7 +131,7 @@ flip = true
 
 
 [node name="Tree3" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(876, 1766)
+position = Vector2(1031, 1807)
 texture = ExtResource("27_tbig")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -203,7 +195,7 @@ flip = true
 
 
 [node name="Tree11" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(363, 193)
+position = Vector2(391, 221)
 texture = ExtResource("28_tsmall")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -211,7 +203,7 @@ flip = false
 
 
 [node name="Tree12" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(2576, 181)
+position = Vector2(2576, 221)
 texture = ExtResource("27_tbig")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -219,7 +211,7 @@ flip = true
 
 
 [node name="Rock13" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(920, 1183)
+position = Vector2(920, 1283)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
@@ -227,7 +219,7 @@ flip = false
 
 
 [node name="Tree14" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(138, 1476)
+position = Vector2(158, 1476)
 texture = ExtResource("28_tsmall")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -243,7 +235,7 @@ flip = false
 
 
 [node name="Rock16" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1786, 1248)
+position = Vector2(1827, 1403)
 texture = ExtResource("30_rsmall")
 texture_scale = 0.45
 collision_size = Vector2(44, 16)
@@ -251,7 +243,7 @@ flip = true
 
 
 [node name="Tree17" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1160, 765)
+position = Vector2(1340, 765)
 texture = ExtResource("28_tsmall")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -259,7 +251,7 @@ flip = false
 
 
 [node name="Tree18" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1303, 180)
+position = Vector2(1407, 240)
 texture = ExtResource("27_tbig")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -267,7 +259,7 @@ flip = true
 
 
 [node name="Rock19" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(2925, 121)
+position = Vector2(2732, 173)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
@@ -275,7 +267,7 @@ flip = false
 
 
 [node name="Tree20" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1657, 1571)
+position = Vector2(1676, 1576)
 texture = ExtResource("28_tsmall")
 texture_scale = 0.5
 collision_size = Vector2(30, 16)
@@ -315,7 +307,7 @@ flip = true
 
 
 [node name="Rock25" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(656, 978)
+position = Vector2(777, 908)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
@@ -332,20 +324,20 @@ flip = true
 
 
 [node name="Church" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1150, 430)
+position = Vector2(1254, 370)
 texture = ExtResource("31_church")
 texture_scale = 0.45
 collision_size = Vector2(170, 50)
 
 [node name="Fountain" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(1120, 1260)
+position = Vector2(830, 1762)
 texture = ExtResource("32_fountain")
 texture_scale = 0.4
 texture_offset = Vector2(0, 95)
 collision_size = Vector2(120, 50)
 
 [node name="HouseLong" parent="World/Props" instance=ExtResource("35_prop")]
-position = Vector2(2550, 1300)
+position = Vector2(2635, 1215)
 texture = ExtResource("33_hlong")
 texture_scale = 0.4
 collision_size = Vector2(170, 50)
@@ -360,7 +352,7 @@ collision_size = Vector2(200, 40)
 y_sort_enabled = true
 
 [node name="Fire1" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(1290, 1606)
+position = Vector2(1290, 1746)
 
 [node name="Visual" parent="World/Invasion/Fire1" index="0"]
 position = Vector2(0, -50)
@@ -369,7 +361,7 @@ position = Vector2(0, -50)
 position = Vector2(0, -80)
 
 [node name="Fire2" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(2040, 1426)
+position = Vector2(2180, 1426)
 
 [node name="Visual" parent="World/Invasion/Fire2" index="0"]
 position = Vector2(0, -50)
@@ -378,7 +370,7 @@ position = Vector2(0, -50)
 position = Vector2(0, -80)
 
 [node name="Fire3" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(1450, 1026)
+position = Vector2(1350, 1026)
 
 [node name="Visual" parent="World/Invasion/Fire3" index="0"]
 position = Vector2(0, -50)
@@ -387,54 +379,54 @@ position = Vector2(0, -50)
 position = Vector2(0, -80)
 
 [node name="Fire4" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(1700, 1300)
+position = Vector2(1659, 1145)
 
 [node name="Fire5" parent="World/Invasion" instance=ExtResource("9_fire")]
 position = Vector2(2400, 1520)
 
 [node name="Fire6" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(1150, 880)
+position = Vector2(1092, 896)
 
 [node name="Fire7" parent="World/Invasion" instance=ExtResource("9_fire")]
-position = Vector2(520, 1000)
+position = Vector2(530, 1017)
 
 [node name="RockA1" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(2440, 640)
+position = Vector2(2423, 650)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
 flip = false
 
 [node name="RockA2" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(2860, 640)
+position = Vector2(2803, 697)
 texture = ExtResource("30_rsmall")
 texture_scale = 0.45
 collision_size = Vector2(44, 16)
 flip = true
 
 [node name="RockA3" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(1900, 1250)
+position = Vector2(1838, 1482)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
 flip = false
 
 [node name="RockA4" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(1350, 1360)
+position = Vector2(1340, 1321)
 texture = ExtResource("30_rsmall")
 texture_scale = 0.45
 collision_size = Vector2(44, 16)
 flip = true
 
 [node name="RockK1" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(1000, 1100)
+position = Vector2(964, 965)
 texture = ExtResource("29_rbig")
 texture_scale = 0.45
 collision_size = Vector2(60, 22)
 flip = false
 
 [node name="RockK2" parent="World/Invasion" instance=ExtResource("35_prop")]
-position = Vector2(600, 1200)
+position = Vector2(465, 1164)
 texture = ExtResource("30_rsmall")
 texture_scale = 0.45
 collision_size = Vector2(44, 16)
@@ -452,23 +444,23 @@ script = ExtResource("12_barrels")
 config = ExtResource("13_barrel_cfg")
 
 [node name="Barrel1" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(520, 1500)
+position = Vector2(570, 1587)
 gizmo_extents = 18.0
 
 [node name="Barrel2" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(860, 1250)
+position = Vector2(1051, 1140)
 gizmo_extents = 18.0
 
 [node name="Barrel3" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(1100, 1720)
+position = Vector2(1110, 1759)
 gizmo_extents = 18.0
 
 [node name="Barrel4" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(1380, 1460)
+position = Vector2(1427, 1286)
 gizmo_extents = 18.0
 
 [node name="Barrel5" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(1660, 1150)
+position = Vector2(1600, 1150)
 gizmo_extents = 18.0
 
 [node name="Barrel6" type="Marker2D" parent="World/BarrelSpawner"]
@@ -476,11 +468,11 @@ position = Vector2(1850, 1620)
 gizmo_extents = 18.0
 
 [node name="Barrel7" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(1000, 770)
+position = Vector2(1036, 905)
 gizmo_extents = 18.0
 
 [node name="Barrel8" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(740, 660)
+position = Vector2(605, 624)
 gizmo_extents = 18.0
 
 [node name="Barrel9" type="Marker2D" parent="World/BarrelSpawner"]
@@ -488,15 +480,15 @@ position = Vector2(2280, 1660)
 gizmo_extents = 18.0
 
 [node name="Barrel10" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(2520, 1180)
+position = Vector2(2580, 1076)
 gizmo_extents = 18.0
 
 [node name="Barrel11" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(420, 1180)
+position = Vector2(392, 1208)
 gizmo_extents = 18.0
 
 [node name="Barrel12" type="Marker2D" parent="World/BarrelSpawner"]
-position = Vector2(1320, 850)
+position = Vector2(1340, 850)
 gizmo_extents = 18.0
 
 [node name="Actors" type="Node2D" parent="World"]

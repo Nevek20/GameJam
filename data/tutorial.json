@@ -15,13 +15,13 @@
 			"[b]{ultimate}[/b]  ultimate",
 			"[b]{pause}[/b]  pausa",
 			"",
-			"As setas na borda da tela apontam para os moradores."
+			"As setas na borda da tela apontam para os moradores e para o exército."
 		]
 	},
 	"p2": {
 		"title": "Agora é a sua vez",
 		"body": [
-			"[b]Objetivo:[/b] quando o exército chegar, escolha: enfrentar ou se aliar.",
+			"[b]Objetivo:[/b] quando a horda chegar, escolha: enfrentar ou se aliar.",
 			"",
 			"O que aconteceu antes mudou a vila. Siga as setas na borda da tela.",
 			"",

@@ -11,4 +11,6 @@ extends Resource
 @export var sprite_offset: Vector2 = Vector2.ZERO
 ## Marque se o desenho original olha para a ESQUERDA (o jogo espelha ao virar).
 @export var art_faces_left: bool = false
+## Cor multiplicada no desenho (variações do mesmo sprite, ex.: boss do reino dourado). Branco = original.
+@export var tint: Color = Color.WHITE
 @export var name_key: StringName = &""

@@ -65,7 +65,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	movement.configure(stats.move_speed * current_speed_multiplier() * s, stats.acceleration * s, stats.friction * s)
 	if skin:
 		visual.apply_look(skin.texture, skin.sprite_frames, skin.body_color, skin.accent_color,
-			skin.placeholder_accent, stats.sprite_scale, skin.sprite_offset, skin.art_faces_left)
+			skin.placeholder_accent, stats.sprite_scale, skin.sprite_offset, skin.art_faces_left, skin.tint)
 	size_scale = GameScale.of(scale_kind())
 	BodySetup.apply(stats.body_size, stats.collision_size, stats.attack_origin_offset, size_scale,
 		_body_shape, _hurt_shape, hurtbox, caster, attack_origin, visual)

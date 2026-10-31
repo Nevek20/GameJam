@@ -14,6 +14,8 @@ var bounds: Rect2 = Rect2(0, 0, 3200, 2000)
 @export var ground_texture_scale: float = 0.5
 
 @onready var _ground: TextureRect = $Ground
+## Estrada desenhada para o mapa inteiro (assets/sprites/scenery/road.png): estica para a área jogável.
+@onready var _road: TextureRect = $Road
 @onready var actors: Node2D = $World/Actors
 @onready var _houses: Node2D = $World/Houses
 @onready var _markers: Node2D = $Markers
@@ -25,6 +27,8 @@ func _ready() -> void:
 	_ground.position = bounds.position - Vector2(400, 400)
 	_ground.scale = Vector2.ONE * ground_texture_scale
 	_ground.size = (bounds.size + Vector2(800, 800)) / ground_texture_scale
+	_road.position = bounds.position
+	_road.size = bounds.size
 	var k := GameScale.of(GameScale.Kind.SCENERY)
 	if not is_equal_approx(k, 1.0):
 		for node: Node in get_tree().get_nodes_in_group(&"scenery"):

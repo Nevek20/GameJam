@@ -5,7 +5,9 @@
 		"subtitle": "Uma noite. Dois heróis. Uma escolha.",
 		"play": "Jogar",
 		"options": "Opções",
-		"credits": "Créditos"
+		"credits": "Créditos",
+		"quit": "Sair",
+		"footer": "Feito para uma game jam · Godot Engine"
 	},
 	"options": {
 		"title": "Opções",
@@ -78,8 +80,8 @@
 		"advance_prompt": "Objetivos completos! Pressione {key} para avançar"
 	},
 	"objective": {
-		"p1": "Salve os moradores antes que o exército chegue",
-		"p2": "Prepare-se: o exército está chegando",
+		"p1": "Salve os moradores antes que a horda chegue",
+		"p2": "Prepare-se: a horda está chegando",
 		"confront": "Derrote o exército",
 		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
 		"after_fight": "Continue ajudando a vila",
@@ -88,7 +90,7 @@
 	"banner": {
 		"allied_title": "Aliança selada",
 		"allied_subtitle": "{name} agora marcha com o exército",
-		"army_arrives": "O exército chegou!",
+		"army_arrives": "A horda chegou!",
 		"confront_title": "À luta!",
 		"confront_subtitle": "O exército avança",
 		"knights": "Cavaleiros do reino chegaram!",
@@ -114,7 +116,7 @@
 	},
 	"choice": {
 		"title": "Quem vai enfrentar o cavaleiro?",
-		"subtitle": "O outro personagem luta ao seu lado, controlado pela IA.",
+		"subtitle": "O outro personagem se juntará a você nesta batalha.",
 		"hint": "Clique ou use as setas e Enter"
 	}
 }

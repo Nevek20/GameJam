@@ -13,6 +13,8 @@ extends Resource
 @export var texture: Texture2D
 ## Animações (idle, move, attack, dash, hurt, dead). Tem prioridade sobre texture.
 @export var sprite_frames: SpriteFrames
+## Retrato do HUD. Vazio = rosto recortado automaticamente do primeiro frame de "idle".
+@export var portrait: Texture2D
 @export var sprite_scale: Vector2 = Vector2.ONE
 ## Posição do desenho em relação ao corpo (pixels da textura). Ajuste se o sprite
 ## ficar deslocado; a hitbox não muda.

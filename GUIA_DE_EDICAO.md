@@ -61,6 +61,9 @@ Termos usados aqui:
   - `kingdom_skin`: skin do reino (variação do bem).
   
   O moveset é o mesmo nas duas. Só a skin muda.
+  Hoje as duas usam a **Sombra gigante** (provisório): `sprite_frames` = `shadow_frames.tres`, `sprite_scale` = `0.7` e `tint` diferente em cada skin.
+- **Cavaleiros do reino** (`kingdom_knight.tres`): hoje usam o Coguolho com `tint` azulado (provisório).
+- **`tint` da skin:** cor multiplicada no desenho, para variar o mesmo sprite. Branco = cor original.
 
 ### Moradores e casas
 Abra `scenes/world/level.tscn` → `World/Houses/House1` (até `House5`) → Inspector:
@@ -81,9 +84,11 @@ Em `resources/config/barrel_config.tres`:
 - **Fogo:** `scenes/world/prop_fire.tscn` → nó `Visual` → `texture`.
 - **Árvores, pedras, igreja, fonte e casas de enfeite:** são `scenes/world/prop_sprite.tscn` dentro de `level.tscn` → `World/Props`. No Inspector: `texture`, `texture_scale`, `texture_offset` (ajuste fino), `collision_size` (retângulo na base; `0,0` = sem colisão) e `flip`. Para colocar outro objeto: arraste `prop_sprite.tscn` para `World/Props` e escolha a imagem.
 - As imagens recortadas da `main` ficam em `assets/sprites/scenery/` (fundo branco já removido).
+- **Estrada:** `level.tscn` → nó `Road` (`assets/sprites/scenery/road.png`, a "Trilha" da branch `art`). É uma imagem do mapa inteiro, esticada para a área jogável. Se mudar o desenho da estrada, mova as casas e objetos para fora dela (`World/Houses`, `World/Props`).
 - **Chão:** `level.tscn` → nó `Ground` (TextureRect em mosaico com `grass.png`). Tamanho da grama: `ground_texture_scale` no nó `Level`. Cor e ondas: `Ground` → *Material* → `saturation`, `brightness`, `wave_strength` (0 = sem ondas) e `wave_scale` (menor = ondas maiores), shader `assets/shaders/ground.gdshader`.
 
 ### Interface
+- **Retrato do HUD:** `resources/characters/princess.tres` / `mage.tres` → `portrait`. Vazio = o jogo recorta o rosto do primeiro frame de `idle` sozinho.
 - **Ícones das habilidades no HUD:** campo `icon` de cada habilidade (`resources/abilities/...`).
 - **Imagens da introdução e das cutscenes:** campo `images` em `resources/config/intro_config.tres`, `cutscene_switch.tres` e `cutscene_boss.tres`.
 - **Imagens dos finais:** `resources/config/ending_images.tres`.
@@ -144,13 +149,14 @@ O som de cada habilidade também pode ser trocado direto nela, no campo `sfx_cas
 - **Textos:** `data/ui.json`. Exemplos: `menu.play`, `options.title`, `pause.resume`, `choice.title`.
 - **Estilo de todos os botões** (cores, borda, hover): `ui/theme/main_theme.tres` → *Button* → *Styles*.
   - `normal`: botão parado.
-  - `hover`: mouse em cima, com borda amarela de 3 px nos quatro lados.
+  - `hover`: mouse em cima, com borda dourada de 3 px nos quatro lados.
+  - Cores do jogo (tema Carcosa): vinho escuro no fundo, creme/dourado nas bordas e textos.
   - `pressed`: clicando.
   - `focus`: vazio de propósito; o foco do teclado é mostrado pelo aumento de escala e pela cor do texto.
   - Para mudar a borda do hover: abra `btn_hover` e altere `border_color` / `border_width_*`. Mantenha os quatro lados iguais.
 - **Aumento de escala do botão:** cada botão usa `ui/theme/juicy_button.gd`. No Inspector do botão há `hover_scale` e `press_scale`.
 - **Posição e tamanho:** abra a cena e mova o nó.
-  - Menu: `ui/menu/main_menu.tscn` → `MenuBox` (os 3 botões).
+  - Menu: `ui/menu/main_menu.tscn` → `MenuBox` (Jogar, Opções, Créditos e Sair; o Sair some na versão web). Rodapé: nó `Footer`, texto em `data/ui.json` → `menu.footer`. A animação de entrada e o zoom lento do fundo estão em `ui/menu/main_menu.gd` → `_animate_entrance()`.
   - Opções: `ui/options/options_panel.tscn`.
   - Pausa: `ui/pause/pause_menu.tscn`.
   - Escolha de personagem: `ui/choice/character_choice.tscn`.

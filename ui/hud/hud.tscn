@@ -32,6 +32,45 @@ corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxEmpty" id="Style_empty"]
 
+[sub_resource type="StyleBoxFlat" id="Style_pill"]
+content_margin_left = 16.0
+content_margin_top = 2.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.03, 0.04, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.62, 0.45, 0.85)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="Style_objective"]
+content_margin_left = 14.0
+content_margin_top = 4.0
+content_margin_right = 14.0
+content_margin_bottom = 5.0
+bg_color = Color(0.1, 0.03, 0.04, 0.65)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_portrait"]
+bg_color = Color(0.22, 0.06, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.7, 0.5, 1)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
 [sub_resource type="StyleBoxFlat" id="Style_heroism"]
 bg_color = Color(1, 0.82, 0.3, 1)
 corner_radius_top_left = 6
@@ -85,28 +124,58 @@ ui_config = ExtResource("5_ui")
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 380.0
+offset_right = 460.0
 offset_bottom = 132.0
 mouse_filter = 2
 
-[node name="VBox" type="VBoxContainer" parent="TopLeft"]
+[node name="Row" type="HBoxContainer" parent="TopLeft"]
 layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="PortraitFrame" type="Panel" parent="TopLeft/Row"]
+clip_children = 2
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_portrait")
+
+[node name="Portrait" type="TextureRect" parent="TopLeft/Row/PortraitFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBox" type="VBoxContainer" parent="TopLeft/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="CharName" type="Label" parent="TopLeft/VBox"]
+[node name="CharName" type="Label" parent="TopLeft/Row/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.5, 1)
 theme_override_font_sizes/font_size = 20
 text = "Personagem"
 
-[node name="HealthStack" type="Control" parent="TopLeft/VBox"]
+[node name="HealthStack" type="Control" parent="TopLeft/Row/VBox"]
 custom_minimum_size = Vector2(320, 20)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HealthChip" type="ProgressBar" parent="TopLeft/VBox/HealthStack"]
+[node name="HealthChip" type="ProgressBar" parent="TopLeft/Row/VBox/HealthStack"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -119,7 +188,7 @@ theme_override_styles/fill = SubResource("Style_chip")
 value = 100.0
 show_percentage = false
 
-[node name="HealthBar" type="ProgressBar" parent="TopLeft/VBox/HealthStack"]
+[node name="HealthBar" type="ProgressBar" parent="TopLeft/Row/VBox/HealthStack"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -133,18 +202,32 @@ theme_override_styles/fill = SubResource("Style_health")
 value = 100.0
 show_percentage = false
 
-[node name="HeroRow" type="HBoxContainer" parent="TopLeft/VBox"]
+[node name="HealthText" type="Label" parent="TopLeft/Row/VBox/HealthStack"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 13
+text = "120 / 120"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeroRow" type="HBoxContainer" parent="TopLeft/Row/VBox"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="HeroismLabel" type="Label" parent="TopLeft/VBox/HeroRow"]
+[node name="HeroismLabel" type="Label" parent="TopLeft/Row/VBox/HeroRow"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "Heroísmo"
 
-[node name="HeroismBar" type="ProgressBar" parent="TopLeft/VBox/HeroRow"]
+[node name="HeroismBar" type="ProgressBar" parent="TopLeft/Row/VBox/HeroRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
@@ -155,7 +238,7 @@ theme_override_styles/fill = SubResource("Style_heroism")
 value = 50.0
 show_percentage = false
 
-[node name="AllianceTag" type="Label" parent="TopLeft/VBox"]
+[node name="AllianceTag" type="Label" parent="TopLeft/Row/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.35, 0.4, 1)
@@ -168,30 +251,32 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -100.0
+offset_left = -60.0
 offset_top = 10.0
-offset_right = 100.0
+offset_right = 60.0
 offset_bottom = 58.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("Style_pill")
 text = "2:00"
 horizontal_alignment = 1
 
 [node name="Objective" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -380.0
-offset_top = 58.0
-offset_right = 380.0
-offset_bottom = 84.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.75, 0.95, 1, 1)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -56.0
+offset_top = 20.0
+offset_right = -16.0
+offset_bottom = 48.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.95, 0.88, 0.75, 1)
 theme_override_font_sizes/font_size = 16
-horizontal_alignment = 1
+theme_override_styles/normal = SubResource("Style_objective")
+horizontal_alignment = 2
 
 [node name="BossPanel" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
@@ -258,7 +343,7 @@ offset_right = 400.0
 offset_bottom = -96.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.6, 1, 0.7, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.6, 1)
 theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
@@ -354,7 +439,7 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.88, 0.5, 1)
-theme_override_colors/font_outline_color = Color(0.3, 0.05, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.3, 0.03, 0.05, 1)
 theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 42
 text = "Banner"

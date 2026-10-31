@@ -47,18 +47,18 @@ func _pulse() -> void:
 func _draw() -> void:
 	var r := Rect2(Vector2.ZERO, size)
 	var is_ready := ratio <= 0.0
-	draw_rect(r, Color(0.08, 0.04, 0.16, 0.85))
+	draw_rect(r, Color(0.1, 0.03, 0.04, 0.85))
 	if icon:
 		draw_texture_rect(icon, r.grow(-6.0), false)
 	var font := get_theme_default_font()
 	var font_size := 15
 	if not icon:
 		draw_string(font, Vector2(0, size.y * 0.58), label_text, HORIZONTAL_ALIGNMENT_CENTER, size.x, font_size,
-			accent if is_ready else Color(0.6, 0.6, 0.7))
+			accent if is_ready else Color(0.6, 0.55, 0.52))
 	if not is_ready:
 		draw_rect(Rect2(Vector2.ZERO, Vector2(size.x, size.y * ratio)), Color(0, 0, 0, 0.6))
-	draw_rect(r, accent if is_ready else Color(0.4, 0.4, 0.5), false, 2.0 if is_ready else 1.0)
+	draw_rect(r, accent if is_ready else Color(0.45, 0.38, 0.35), false, 2.0 if is_ready else 1.0)
 	var key_size := font.get_string_size(_key_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12)
 	var key_rect := Rect2(Vector2(size.x - key_size.x - 8, -8), Vector2(key_size.x + 8, 18))
-	draw_rect(key_rect, Color(0.15, 0.08, 0.25))
+	draw_rect(key_rect, Color(0.3, 0.07, 0.09))
 	draw_string(font, key_rect.position + Vector2(4, 13), _key_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)

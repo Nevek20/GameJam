@@ -106,6 +106,8 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - Sprites da Princesa e do Mago, sons e música da branch `art`; menu "Os Contos de Carcosa".
 - Cenário em PNG: grama com ondas, muralha de pedra (moldura), casas, igreja, fonte, árvores, pedras, barril e poção (`assets/sprites/scenery/`, `PropSprite`).
 - Sem acampamento: o exército chega sozinho (tempo ou casas resolvidas), pergunta enfrentar/aliar e surge nos cantos do mapa.
+- Estrada da `art` (`Trilha.png`), textos da lore (Valedouro, Elara, Kael Draven, Horda), elite cortada, boss = Sombra gigante e
+  cavaleiros = Coguolho azulado (provisórios), tema da interface nas cores de Carcosa, HUD com retrato e menu animado.
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
 - Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
 - `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).

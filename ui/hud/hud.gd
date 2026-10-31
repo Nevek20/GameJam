@@ -12,7 +12,12 @@ var _parry_tween: Tween
 var _vignette_tween: Tween
 var _time_warning: bool = false
 
+## Retratos já recortados (um por personagem).
+static var _portrait_cache: Dictionary = {}
+
 @onready var _name: Label = %CharName
+@onready var _portrait: TextureRect = %Portrait
+@onready var _health_text: Label = %HealthText
 @onready var _health: ProgressBar = %HealthBar
 @onready var _health_chip: ProgressBar = %HealthChip
 @onready var _heroism: ProgressBar = %HeroismBar
@@ -63,6 +68,7 @@ func bind_player(player: Player) -> void:
 	_player.hurt.connect(_on_hurt)
 	var id := player.stats.id
 	_name.text = Texts.character_name(id)
+	_portrait.texture = HUD.portrait_for(player.stats)
 	_slot_q.icon = player.stats.skill_q.icon if player.stats.skill_q else null
 	_slot_e.icon = player.stats.skill_e.icon if player.stats.skill_e else null
 	_slot_r.icon = player.stats.ultimate.icon if player.stats.ultimate else null
@@ -70,6 +76,7 @@ func bind_player(player: Player) -> void:
 	_health.value = player.health.current
 	_health_chip.max_value = player.health.max_health
 	_health_chip.value = player.health.current
+	_health_text.text = "%d / %d" % [ceili(player.health.current), ceili(player.health.max_health)]
 	_on_heroism_changed(id, ReputationState.get_heroism(id), ReputationState.get_max_heroism())
 	_alliance.visible = ReputationState.is_allied(id)
 	set_process(true)
@@ -90,6 +97,7 @@ func show_timer(value: bool) -> void:
 
 func set_objective(text: String) -> void:
 	_objective.text = text
+	_objective.visible = text != ""
 
 
 ## Aviso no centro de baixo (revive, avançar etapa). Texto vazio esconde.
@@ -132,6 +140,7 @@ func _on_health_changed(current: float, maximum: float) -> void:
 	_health.max_value = maximum
 	_health_chip.max_value = maximum
 	_health.value = current
+	_health_text.text = "%d / %d" % [ceili(current), ceili(maximum)]
 	# Barra "fantasma" desce devagar para mostrar o dano recebido.
 	if _chip_tween:
 		_chip_tween.kill()
@@ -182,3 +191,36 @@ func _on_hurt(_p: Player) -> void:
 	_vignette.modulate.a = 0.85
 	_vignette_tween = create_tween()
 	_vignette_tween.tween_property(_vignette, "modulate:a", 0.0, 0.45)
+
+
+## Retrato do HUD: CharacterStats.portrait, ou (sem arte própria) o rosto recortado
+## do primeiro frame de "idle": um quadrado no topo do desenho, centrado na cabeça.
+static func portrait_for(stats: CharacterStats) -> Texture2D:
+	if stats.portrait:
+		return stats.portrait
+	if _portrait_cache.has(stats.id):
+		return _portrait_cache[stats.id]
+	var frames := stats.sprite_frames
+	if frames == null or not frames.has_animation(&"idle") or frames.get_frame_count(&"idle") == 0:
+		return stats.texture
+	var tex := frames.get_frame_texture(&"idle", 0)
+	var image := tex.get_image()
+	var used := image.get_used_rect()
+	if used.size.y <= 0:
+		return tex
+	# Centro da cabeça: média dos pixels opacos nas linhas de cima.
+	var top_rows := maxi(int(used.size.y * 0.15), 1)
+	var sum_x := 0.0
+	var count := 0
+	for y in range(used.position.y, used.position.y + top_rows):
+		for x in range(used.position.x, used.end.x):
+			if image.get_pixel(x, y).a > 0.5:
+				sum_x += x
+				count += 1
+	var center_x: float = sum_x / count if count > 0 else float(used.get_center().x)
+	var side := used.size.y * 0.38
+	var atlas := AtlasTexture.new()
+	atlas.atlas = tex
+	atlas.region = Rect2(center_x - side * 0.5, used.position.y - side * 0.05, side, side)
+	_portrait_cache[stats.id] = atlas
+	return atlas

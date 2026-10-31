@@ -22,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.02, 0.01, 0.05, 1)
+color = Color(0.06, 0.01, 0.02, 1)
 
 [node name="Content" type="Control" parent="."]
 unique_name_in_owner = true
@@ -43,7 +43,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.06, 0.04, 0.1, 1)
+color = Color(0.08, 0.02, 0.03, 1)
 
 [node name="Image" type="TextureRect" parent="Content"]
 unique_name_in_owner = true
@@ -108,6 +108,6 @@ offset_right = -24.0
 offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.6, 1, 0.85, 1)
+theme_override_colors/font_color = Color(0.95, 0.82, 0.6, 1)
 text = "Enter"
 horizontal_alignment = 2
