@@ -1,4 +1,4 @@
-# Vila Psicodélica (Game Jam)
+# Os Contos de Carcosa (Game Jam)
 
 2D top-down de ação em Godot **4.7** (GDScript tipado). Uma vila de fantasia psicodélica é invadida;
 o jogador controla dois personagens, um de cada vez, e as escolhas do primeiro mudam a gameplay do segundo.

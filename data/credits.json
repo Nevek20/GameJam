@@ -1,7 +1,7 @@
 {
 	"_comment": "Créditos (BBCode, uma linha por item). Edite à vontade.",
 	"lines": [
-		"[center][font_size=34][color=#ffd36b]Vila Psicodélica[/color][/font_size]",
+		"[center][font_size=34][color=#ffd36b]Os Contos de Carcosa[/color][/font_size]",
 		"",
 		"[b]Cleson Aguillera[/b] (ClesonSouza)",
 		"Supervisão e organização do projeto, programação, GDD e auxílio na escrita",
@@ -20,6 +20,19 @@
 		"",
 		"[b]Mateus Bertela[/b]",
 		"Áudio e escrita",
+		"",
+		"[font_size=26][color=#ffd36b]Créditos a terceiros[/color][/font_size]",
+		"",
+		"[b]Autores dos áudios[/b]",
+		"CAT-FOX_ALEX · SystemShock79 · stintx · thomasjaunism",
+		"Kastenfrosch · ArTiX.0 · guillermochicasonido · loofa",
+		"Darsycho · Akkaittou · Bisqo · zazz.sound.design",
+		"TommasoMotteran · LittleRainySeasons · RuidosoSoundFX · newlocknew",
+		"",
+		"[b]Autores das imagens[/b]",
+		"Lineartestpilot (Depositphotos)",
+		"Macrovector (Magnific)",
+		"Rawpixel.com (Adobe Stock)",
 		"",
 		"Feito com Godot Engine[/center]"
 	]

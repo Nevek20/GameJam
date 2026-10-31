@@ -5,7 +5,7 @@ config_version=5
 
 [application]
 
-config/name="Vila Psicodélica"
+config/name="Os Contos de Carcosa"
 config/description="Jogo de game jam: 2D top-down de ação em uma vila de fantasia psicodélica."
 run/main_scene="res://ui/menu/main_menu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
