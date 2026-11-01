@@ -26,6 +26,8 @@ var _houses: Array[VillagerHouse] = []
 var _busy: bool = false
 var _token: int = 0
 var _army_decided: bool = false
+## Casa em que o jogador está agora (para interagir de novo com a tecla de interagir).
+var _near: VillagerHouse
 
 
 func setup(match_config: MatchConfig, dialog: DialogBox, qte: QTEPanel, houses: Array[VillagerHouse]) -> void:
@@ -35,6 +37,7 @@ func setup(match_config: MatchConfig, dialog: DialogBox, qte: QTEPanel, houses: 
 	_houses = houses
 	for house: VillagerHouse in houses:
 		house.player_entered.connect(_on_house_entered)
+		house.player_exited.connect(_on_house_exited)
 
 
 func begin_phase(index: int, current_player: Player) -> void:
@@ -86,6 +89,7 @@ func is_army_decided() -> bool:
 
 func cancel() -> void:
 	_token += 1
+	_near = null
 	enabled = false
 	if player:
 		player.set_invulnerable(&"dialog", false)
@@ -112,6 +116,46 @@ func refresh_pois() -> void:
 
 
 func _on_house_entered(house: VillagerHouse) -> void:
+	_near = house
+	_interact_with(house)
+
+
+func _on_house_exited(house: VillagerHouse) -> void:
+	if _near == house:
+		_near = null
+
+
+## Casa perto do jogador onde dá para fazer algo agora (resgatar ou saquear), ou null.
+func available_house() -> VillagerHouse:
+	if not enabled or _busy or _near == null or not _has_action(_near):
+		return null
+	return _near
+
+
+## Que ação a casa perto oferece: &"rescue", &"loot" ou &"" (nada).
+func available_action() -> StringName:
+	var house := available_house()
+	if house == null:
+		return &""
+	return &"rescue" if house.state == GameState.HouseState.OCCUPIED and not ReputationState.is_allied(current_id()) else &"loot"
+
+
+## Tecla de interagir perto de uma casa (para quem fechou o diálogo e quer voltar).
+func interact() -> void:
+	var house := available_house()
+	if house:
+		_interact_with(house)
+
+
+func _has_action(house: VillagerHouse) -> bool:
+	if ReputationState.is_allied(current_id()):
+		return not house.looted
+	if character_index != 0:
+		return false
+	return house.state == GameState.HouseState.OCCUPIED or (house.state == GameState.HouseState.RESCUED and not house.looted)
+
+
+func _interact_with(house: VillagerHouse) -> void:
 	if not enabled or _busy:
 		return
 	if ReputationState.is_allied(current_id()):

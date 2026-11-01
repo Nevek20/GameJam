@@ -59,6 +59,7 @@ func _scenario(title: String, body: Callable) -> void:
 func _none_allied(game: Game) -> void:
 	await _barrel_and_potion(game)
 	await _rescue_first_house(game)
+	await _house_interact_again(game)
 	await _army_choice(game, 0)
 	await _wait(2.0)
 	var has_dry_eye := false
@@ -264,6 +265,14 @@ func _new_enemies(game: Game) -> void:
 		if e.stats.id == &"dry_eye" and e.state_machine.current != null:
 			orbiting = orbiting or e.state_machine.is_in(&"Orbit") or e.state_machine.is_in(&"Attack")
 	check(orbiting, "Olho seco voa em volta / dá dash")
+	var hunter: Enemy = null
+	for node: Node in Pools.get_pool(&"enemies").get_active():
+		if (node as Enemy).hunting:
+			hunter = node as Enemy
+			break
+	check(hunter != null, "inimigos da onda caçam o herói")
+	if hunter:
+		check(hunter.speed_factor(5000.0) > 1.0 and is_equal_approx(hunter.speed_factor(10.0), 1.0), "horda corre quando longe, anda normal perto")
 	var p := game.player
 	var pool := Pools.get_pool(&"enemies")
 	var cog := pool.acquire() as Enemy
@@ -373,6 +382,24 @@ func _rescue_first_house(game: Game) -> void:
 	check(after == before + ReputationState.config.rescue_gain - ReputationState.config.loot_loss, "heroísmo: resgate e saque")
 	game.player.global_position = game.level.marker("PlayerStart")
 	await _wait(0.2)
+
+
+## Fechou o diálogo sem ajudar: continua perto da casa, aparece o aviso e a tecla de interagir reabre.
+func _house_interact_again(game: Game) -> void:
+	var house: VillagerHouse = game.level.get_houses()[1]
+	check(not house.get_node("Villager").visible, "morador fica dentro de casa (sem arte)")
+	game.player.global_position = house.global_position + Vector2(0, 90)
+	await _choose(game, 1) # seguir em frente
+	await _wait(0.2)
+	check(game.interactions.available_action() == &"rescue", "perto da casa: dá para chamar o morador de novo")
+	check(game.hud._prompt.visible, "aviso de interagir aparece")
+	_press(Actions.INTERACT)
+	await _wait(0.2)
+	check(game.dialog.is_open, "tecla de interagir reabre a conversa")
+	await _choose(game, 1)
+	game.player.global_position = game.level.marker("PlayerStart")
+	await _wait(0.3)
+	check(game.interactions.available_action() == &"", "longe da casa: sem aviso")
 
 
 func _loot_any_house(game: Game) -> void:

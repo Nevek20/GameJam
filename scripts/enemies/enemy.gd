@@ -19,6 +19,9 @@ var orbit_sign: float = 1.0
 ## Caçando: procura o herói no mapa inteiro, não só no aggro_range (inimigos das ondas,
 ## que surgem longe, nos cantos). Volta a false a cada activate().
 var hunting: bool = false
+## Desvio de obstáculo em andamento (sem navegação: anda de lado por um instante).
+var _detour_left: float = 0.0
+var _detour_dir: Vector2 = Vector2.ZERO
 ## Escala do corpo (GameScale). Alcances e distâncias são multiplicados por ela.
 var size_scale: float = 1.0
 
@@ -80,6 +83,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	velocity = Vector2.ZERO
 	dead = false
 	hunting = false
+	_detour_left = 0.0
 	target = null
 	attack_cooldown_left = randf_range(0.4, maxf(stats.attack_interval, 0.5))
 	dash_cooldown_left = stats.dash_cooldown * 0.5
@@ -129,6 +133,38 @@ func has_valid_target() -> bool:
 	if target == null or not is_instance_valid(target) or not target.is_visible_in_tree():
 		return false
 	return not target.has_method(&"is_targetable") or target.call(&"is_targetable")
+
+
+## Velocidade extra de quem está caçando e ainda longe do alvo (sem tempo morto até a luta).
+func speed_factor(distance_to_target: float) -> float:
+	if hunting and distance_to_target > stats.catch_up_distance * size_scale:
+		return stats.catch_up_speed
+	return 1.0
+
+
+## Contorna o cenário sem navegação: se bateu de frente num prédio no último movimento,
+## anda de lado por um instante (para o lado que mais se aproxima do destino).
+func steer(desired: Vector2, delta: float) -> Vector2:
+	if desired == Vector2.ZERO:
+		return desired
+	_detour_left -= delta
+	if _detour_left > 0.0:
+		return (_detour_dir + desired * 0.3).normalized()
+	for i in get_slide_collision_count():
+		var hit := get_slide_collision(i)
+		if hit.get_collider() is Enemy or hit.get_collider() is Player:
+			continue
+		var normal := hit.get_normal()
+		if desired.dot(normal) > -0.6:
+			continue
+		var side := normal.orthogonal()
+		var lean := side.dot(desired)
+		if absf(lean) < 0.05:
+			lean = 1.0 if randf() < 0.5 else -1.0
+		_detour_dir = side * signf(lean)
+		_detour_left = 0.6
+		return _detour_dir
+	return desired
 
 
 # --- Pontos que o Boss sobrescreve (fases) ---

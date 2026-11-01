@@ -6,7 +6,7 @@ var _time_left: float
 
 func enter(msg: Dictionary) -> void:
 	_time_left = float(msg.get("duration", player.stats.hurt_stun))
-	player.visual.play(&"hurt")
+	player.visual.play(&"hurt", &"idle", true)
 	var cfg := Juice.cfg()
 	if cfg:
 		player.visual.squash(cfg.squash_hurt)

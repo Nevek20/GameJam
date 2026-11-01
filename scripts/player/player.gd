@@ -123,12 +123,14 @@ func spawn_at(pos: Vector2) -> void:
 	visual.rotation = 0.0
 	visible = true
 	process_mode = Node.PROCESS_MODE_INHERIT
+	steps.stop()
 	controller.clear_buffer()
 	state_machine.start()
 
 
 ## Desliga totalmente (personagem fora de cena).
 func deactivate() -> void:
+	steps.stop()
 	caster.interrupt()
 	hurtbox.enabled = false
 	visible = false

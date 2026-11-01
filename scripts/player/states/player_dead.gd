@@ -5,7 +5,7 @@ var _tween: Tween
 
 
 func enter(_msg: Dictionary) -> void:
-	player.visual.play(&"dead")
+	player.visual.play_or_freeze(&"dead")
 	AudioManager.play_sfx(&"death")
 	var cfg := Juice.cfg()
 	if cfg:

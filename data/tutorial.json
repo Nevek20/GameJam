@@ -4,7 +4,7 @@
 	"p1": {
 		"title": "A vila foi invadida!",
 		"body": [
-			"[b]Objetivo:[/b] ajude os moradores presos nas casas e decida o que fazer com o exército inimigo. Você tem pouco tempo.",
+			"[b]Objetivo:[/b] ajude os moradores presos nas casas e decida o que fazer quando a horda chegar. Você tem pouco tempo.",
 			"",
 			"[b]{move}[/b]  mover",
 			"[b]{dash}[/b]  dash (invencível)",
@@ -15,7 +15,7 @@
 			"[b]{ultimate}[/b]  ultimate",
 			"[b]{pause}[/b]  pausa",
 			"",
-			"As setas na borda da tela apontam para os moradores e para o exército."
+			"As setas na borda da tela apontam para os moradores. Perto de uma casa, use a tecla de interagir."
 		]
 	},
 	"p2": {

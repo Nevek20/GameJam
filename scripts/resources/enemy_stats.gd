@@ -34,6 +34,10 @@ enum Behavior { CHASE, ORBIT_DASH, ORBIT_WALL }
 @export var think_interval: float = 0.3
 ## Distância em que para de andar até o alvo (0 = automático, 70% do maior alcance).
 @export var preferred_distance: float = 0.0
+## Ritmo da horda: quem surge longe (caçando) corre mais enquanto estiver a mais desta distância do alvo.
+@export var catch_up_distance: float = 650.0
+## Multiplicador de velocidade enquanto está longe (1 = sem corrida).
+@export var catch_up_speed: float = 1.8
 ## Pausa mínima entre ataques.
 @export var attack_interval: float = 1.1
 ## Ataques possíveis (cada um é um Ability) e seus pesos.

@@ -108,6 +108,9 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - Sem acampamento: o exército chega sozinho (tempo ou casas resolvidas), pergunta enfrentar/aliar e surge nos cantos do mapa.
 - Estrada da `art` (`Trilha.png`), textos da lore (Valedouro, Elara, Kael Draven, Horda), elite cortada, boss = Sombra gigante e
   cavaleiros = Coguolho azulado (provisórios), tema da interface nas cores de Carcosa, HUD com retrato e menu animado.
+- História do pessoal (Elara Veyne e Kael Draven): cutscenes, perguntas "Ajudar?"/"Tudo ou nada?", narração Y/N e finais.
+- Casas: "Pressione F" para chamar o morador ou saquear de novo; horda vem dos cantos mais próximos e corre quando longe;
+  inimigos contornam prédios; slots do HUD com o nome da habilidade.
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).
 - Boss: disparo radial, salto com sombra, dash, onda de choque em 2 anéis, combo; seletor sem repetição.
 - `BossSelector.select()` com tela de escolha quando os dois estão vivos e aliados (ou nenhum).

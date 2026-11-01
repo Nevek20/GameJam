@@ -69,6 +69,12 @@ func bind_player(player: Player) -> void:
 	var id := player.stats.id
 	_name.text = Texts.character_name(id)
 	_portrait.texture = HUD.portrait_for(player.stats)
+	# Sem ícone, o slot mostra o nome curto da habilidade (data/ui.json -> abilities.<id>).
+	for pair: Array in [[_slot_q, player.stats.skill_q, "hud.slot_q"], [_slot_e, player.stats.skill_e, "hud.slot_e"],
+			[_slot_r, player.stats.ultimate, "hud.slot_r"]]:
+		var slot: CooldownSlot = pair[0]
+		slot.label_text = HUD.slot_label(pair[1], pair[2])
+		slot.queue_redraw()
 	_slot_q.icon = player.stats.skill_q.icon if player.stats.skill_q else null
 	_slot_e.icon = player.stats.skill_e.icon if player.stats.skill_e else null
 	_slot_r.icon = player.stats.ultimate.icon if player.stats.ultimate else null
@@ -224,3 +230,9 @@ static func portrait_for(stats: CharacterStats) -> Texture2D:
 	atlas.region = Rect2(center_x - side * 0.5, used.position.y - side * 0.05, side, side)
 	_portrait_cache[stats.id] = atlas
 	return atlas
+
+
+static func slot_label(ability: Ability, fallback_key: String) -> String:
+	if ability and Texts.get_value("ui", "abilities." + String(ability.id)) != null:
+		return Texts.ui("abilities." + String(ability.id))
+	return Texts.ui(fallback_key)

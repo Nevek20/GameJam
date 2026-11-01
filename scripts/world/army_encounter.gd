@@ -130,7 +130,20 @@ func _far_from_heroes(points: Array[Vector2]) -> Array[Vector2]:
 				break
 		if ok:
 			far.append(point)
-	return far if not far.is_empty() else points
+	if far.is_empty():
+		return points
+	# Os mais próximos primeiro: a horda chega logo, sem ninguém nascer em cima do herói.
+	var hero := _nearest_hero_position(heroes)
+	far.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_squared_to(hero) < b.distance_squared_to(hero))
+	return far.slice(0, maxi(config.spawn_corner_count, 1))
+
+
+func _nearest_hero_position(heroes: Array[Node]) -> Vector2:
+	for hero: Node in heroes:
+		var h := hero as Node2D
+		if h and h.is_visible_in_tree():
+			return h.global_position
+	return Vector2.ZERO
 
 
 func _queue_enemy(stats: EnemyStats, point: Vector2, spread: float) -> void:

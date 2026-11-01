@@ -26,7 +26,8 @@ func _draw() -> void:
 	var margin := ui_config.poi_arrow_margin if ui_config else 34.0
 	var arrow := ui_config.poi_arrow_size if ui_config else 16.0
 	var xform := get_viewport().get_canvas_transform()
-	var inner := Rect2(Vector2.ZERO, size).grow(-margin)
+	# Mais espaço em cima (cronômetro) e embaixo (slots de habilidade) para as setas não cobrirem o HUD.
+	var inner := Rect2(Vector2.ZERO, size).grow_individual(-margin, -(margin + 50.0), -margin, -(margin + 80.0))
 	var center := size * 0.5
 	var bob := sin(Time.get_ticks_msec() * 0.006) * 4.0
 	for target: Node2D in targets:

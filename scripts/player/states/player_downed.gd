@@ -6,7 +6,7 @@ var _tween: Tween
 
 func enter(_msg: Dictionary) -> void:
 	player.velocity = Vector2.ZERO
-	player.visual.play(&"dead")
+	player.visual.play_or_freeze(&"dead")
 	AudioManager.play_sfx(&"downed")
 	if _tween:
 		_tween.kill()

@@ -8,7 +8,7 @@ func enter(msg: Dictionary) -> void:
 	_time_left = float(msg.get("duration", 1.0))
 	enemy.caster.interrupt()
 	enemy.hurtbox.enabled = false
-	enemy.visual.play(&"roar")
+	enemy.visual.play(&"roar", &"attack", true)
 	AudioManager.play_sfx(&"boss_roar")
 	var cfg := Juice.cfg()
 	if cfg:

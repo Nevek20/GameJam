@@ -88,6 +88,7 @@ Em `resources/config/barrel_config.tres`:
 - **Chão:** `level.tscn` → nó `Ground` (TextureRect em mosaico com `grass.png`). Tamanho da grama: `ground_texture_scale` no nó `Level`. Cor e ondas: `Ground` → *Material* → `saturation`, `brightness`, `wave_strength` (0 = sem ondas) e `wave_scale` (menor = ondas maiores), shader `assets/shaders/ground.gdshader`.
 
 ### Interface
+- **Nome nos slots de habilidade do HUD** (enquanto não há ícone): `data/ui.json` → `abilities.<id da habilidade>` (ex.: `fireball: "Fogo"`). Até ~6 letras cabem no slot.
 - **Retrato do HUD:** `resources/characters/princess.tres` / `mage.tres` → `portrait`. Vazio = o jogo recorta o rosto do primeiro frame de `idle` sozinho.
 - **Ícones das habilidades no HUD:** campo `icon` de cada habilidade (`resources/abilities/...`).
 - **Imagens da introdução e das cutscenes:** campo `images` em `resources/config/intro_config.tres`, `cutscene_switch.tres` e `cutscene_boss.tres`.
@@ -190,8 +191,8 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 
 | Gatilho | Onde | Como mexer |
 |---|---|---|
-| Conversa com o morador | `scenes/world/villager_house.tscn` → `InteractionZone/CollisionShape2D` (círculo amarelo no editor) | Mude o `radius` do círculo ou mova o nó `InteractionZone` |
-| **Chegada do exército** (pergunta enfrentar/aliar) | Não é área: tempo. `match_config.tres` → `army_arrival_time` (segundos de fase), `army_arrives_when_houses_done` (chega antes se as casas acabaram) e `army_min_delay` | Os inimigos surgem nos cantos do mapa |
+| Conversa com o morador | `scenes/world/villager_house.tscn` → `InteractionZone/CollisionShape2D` (círculo amarelo no editor) | Mude o `radius` do círculo ou mova o nó `InteractionZone`. A conversa abre ao entrar; quem fechou e continua perto vê "Pressione F…" e reabre com a ação `interact` (F) |
+| **Chegada do exército** (pergunta enfrentar/aliar) | Não é área: tempo. `match_config.tres` → `army_arrival_time` (segundos de fase), `army_arrives_when_houses_done` (chega antes se as casas acabaram) e `army_min_delay` | Os inimigos surgem nos cantos do mapa mais perto do herói (`spawn_corner_count`, nunca a menos de `spawn_min_distance`). Longe do alvo eles correm: `catch_up_distance` e `catch_up_speed` em cada `resources/enemies/*.tres` |
 | Pegar poção | `scenes/world/potion.tscn` → `CollisionShape2D` | Mude o raio |
 | Reviver (luta final) | Não é área: distância em `resources/config/revive_config.tres` → `revive_distance` | |
 | **Boss** | Não é área. Começa quando o tempo do Personagem 2 acaba, ou quando ele completa os objetivos e escolhe avançar | Tempo em `match_config.tres` → `character_durations` |
@@ -325,3 +326,9 @@ godot --headless --path . res://tests/flow_test.tscn     # joga partidas inteira
 | Som não toca | A chave está vazia em `audio_library.tres`, ou o volume está zerado nas Opções |
 | Tecla não responde | Opções → Controles → *Restaurar padrão* |
 | Mudou algo e quer voltar | Use o Git, ou duplique o `.tres` antes de mexer |
+
+### Exportar o jogo (para entregar na jam)
+1. No Godot: *Editor → Manage Export Templates → Download and Install* (uma vez só).
+2. *Project → Export… → Add…* e escolha **Web** (para o itch.io) e/ou **Windows Desktop**.
+3. *Export Project…* e escolha a pasta. No Web, suba o `.zip` com o `index.html` no itch.io e marque "This file will be played in the browser".
+4. O projeto usa o renderer **Compatibility**, que funciona no navegador. O botão "Sair" do menu some sozinho na versão Web.

@@ -8,7 +8,7 @@ func enter(_msg: Dictionary) -> void:
 	_time_left = enemy.stats.block_duration
 	enemy.guard.show_guard(enemy.stats.body_size)
 	enemy.guard.set_parry_window(false)
-	enemy.visual.play(&"block")
+	enemy.visual.play(&"block", &"idle")
 
 
 func exit() -> void:

@@ -4,6 +4,7 @@ extends Node2D
 ## as decisões (diálogo, QTE, saque) ficam no InteractionDirector.
 
 signal player_entered(house: VillagerHouse)
+signal player_exited(house: VillagerHouse)
 
 ## Identificador salvo no GameState (estado passa do Personagem 1 para o 2).
 @export var house_id: StringName = &"house_1"
@@ -35,6 +36,7 @@ var _status_tween: Tween
 func _ready() -> void:
 	add_to_group(&"poi")
 	_zone.body_entered.connect(_on_body_entered)
+	_zone.body_exited.connect(_on_body_exited)
 	if house_texture:
 		_house_sprite.texture = house_texture
 		_house_sprite.scale = Vector2.ONE * house_texture_scale
@@ -43,8 +45,6 @@ func _ready() -> void:
 		_house_shape.visible = false
 	_villager.apply_look(villager_texture, null, Color(0.55, 0.95, 0.8), Color(0.95, 0.5, 0.9),
 		PlaceholderShape.Accent.HOOD, Vector2.ONE)
-	# O morador fica dentro de casa: o boneco só aparece se houver arte (villager_texture).
-	_villager.visible = villager_texture != null
 	_villager.placeholder.size = villager_size
 	_villager.placeholder.position = Vector2(0, -villager_size.y * 0.5)
 	# A casa já recebe a escala de cenário; o morador usa a escala de NPC.
@@ -82,7 +82,8 @@ func get_poi_color() -> Color:
 
 
 func _apply_visual() -> void:
-	_villager.visible = state != GameState.HouseState.LOST
+	# O morador fica dentro de casa: o boneco só aparece se houver arte (villager_texture).
+	_villager.visible = villager_texture != null and state != GameState.HouseState.LOST
 	if state == GameState.HouseState.RESCUED:
 		_villager.position = Vector2(-70, 70)
 	var tint := Color.WHITE
@@ -97,3 +98,9 @@ func _on_body_entered(body: Node2D) -> void:
 	var player := body as Player
 	if player and player.is_human():
 		player_entered.emit(self)
+
+
+func _on_body_exited(body: Node2D) -> void:
+	var player := body as Player
+	if player and player.is_human():
+		player_exited.emit(self)

@@ -43,7 +43,7 @@ func physics_update(delta: float) -> void:
 	var stop_distance := enemy.stats.preferred_distance * enemy.size_scale if enemy.stats.preferred_distance > 0.0 \
 		else enemy.max_attack_range() * 0.7
 	var move_dir := dir if dist > stop_distance else Vector2.ZERO
-	enemy.movement.move(move_dir, 1.0, delta)
+	enemy.movement.move(enemy.steer(move_dir, delta), enemy.speed_factor(dist), delta)
 
 
 func _try_block(dist: float) -> bool:

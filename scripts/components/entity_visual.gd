@@ -61,6 +61,19 @@ func play(anim: StringName, fallback: StringName = &"", restart: bool = false) -
 			animated.frame = 0
 
 
+## Toca a animação; se ela não existir, mostra o primeiro frame de "idle" parado
+## (morte e caído sem arte própria não ficam "respirando" no chão).
+func play_or_freeze(anim: StringName) -> void:
+	if not animated.visible or animated.sprite_frames == null:
+		return
+	if animated.sprite_frames.has_animation(anim):
+		play(anim, &"", true)
+	elif animated.sprite_frames.has_animation(&"idle"):
+		animated.play(&"idle")
+		animated.frame = 0
+		animated.pause()
+
+
 func face(direction: Vector2) -> void:
 	if direction == Vector2.ZERO:
 		return

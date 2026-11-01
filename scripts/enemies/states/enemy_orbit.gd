@@ -31,7 +31,8 @@ func physics_update(delta: float) -> void:
 	var to_goal := goal - enemy.global_position
 	var dist := to_goal.length()
 	# Desacelera perto do ponto da órbita para não tremer.
-	enemy.movement.move(to_goal / maxf(dist, 0.001), clampf(dist / 40.0, 0.0, 1.0), delta)
+	var speed := clampf(dist / 40.0, 0.0, 1.0) * enemy.speed_factor(center.distance_to(enemy.global_position))
+	enemy.movement.move(enemy.steer(to_goal / maxf(dist, 0.001), delta), speed, delta)
 	enemy.visual.face(center - enemy.global_position)
 
 	if s.behavior != EnemyStats.Behavior.ORBIT_DASH:

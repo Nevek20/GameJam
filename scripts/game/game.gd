@@ -135,6 +135,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if phase != Phase.PLAYING or not _timer_running:
 		return
+	_update_play_prompt()
 	if match_config.pause_timer_during_dialogue and interactions.is_busy():
 		return
 	_time_left -= delta
@@ -157,6 +158,18 @@ func _update_revive_prompt() -> void:
 				"time": ceili(other.downed_left)}
 			text = Texts.ui("hud.revive_prompt" if player.revive_target() else "hud.downed_ally", params)
 	hud.set_prompt(text)
+
+
+## Aviso embaixo durante a fase: interagir com a casa perto, ou avançar de etapa.
+func _update_play_prompt() -> void:
+	var key := Settings.get_binding_text(Actions.INTERACT)
+	match interactions.available_action():
+		&"rescue":
+			hud.set_prompt(Texts.ui("hud.interact_rescue", {"key": key}))
+		&"loot":
+			hud.set_prompt(Texts.ui("hud.interact_loot", {"key": key}))
+		_:
+			hud.set_prompt(Texts.ui("hud.advance_prompt", {"key": Settings.get_binding_text(Actions.ADVANCE)}) if _can_advance else "")
 
 
 func _on_time_up() -> void:
@@ -273,7 +286,12 @@ func _advance_stage() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _can_advance and phase == Phase.PLAYING and not interactions.is_busy() and event.is_action_pressed(Actions.ADVANCE):
+	if phase != Phase.PLAYING or interactions.is_busy():
+		return
+	if event.is_action_pressed(Actions.INTERACT) and interactions.available_house():
+		get_viewport().set_input_as_handled()
+		interactions.interact()
+	elif _can_advance and event.is_action_pressed(Actions.ADVANCE):
 		get_viewport().set_input_as_handled()
 		_advance_stage()
 
@@ -281,8 +299,12 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- Troca de personagem e morte ---
 
 func _switch_to_second(first_died: bool) -> void:
+	if phase == Phase.SWITCHING:
+		return
 	phase = Phase.SWITCHING
 	_timer_running = false
+	_can_advance = false
+	hud.set_prompt("")
 	pause_menu.can_pause = false
 	interactions.cancel()
 	encounter.stop()
@@ -355,6 +377,7 @@ func _on_player_died(who: Player) -> void:
 func _finish_after_death(id: StringName) -> void:
 	phase = Phase.ENDED
 	_timer_running = false
+	hud.set_prompt("")
 	pause_menu.can_pause = false
 	interactions.cancel()
 	encounter.stop()

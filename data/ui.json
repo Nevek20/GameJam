@@ -67,7 +67,7 @@
 	},
 	"hud": {
 		"heroism": "Heroísmo",
-		"allied": "ALIADO DO EXÉRCITO",
+		"allied": "ALIADO DA HORDA",
 		"parry": "PARRY!",
 		"slot_dash": "Dash",
 		"slot_parry": "Def",
@@ -77,25 +77,27 @@
 		"revive_prompt": "Segure {key} para reviver {name}",
 		"downed_self": "Caído! {name} pode te reviver ({time}s)",
 		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)",
-		"advance_prompt": "Objetivos completos! Pressione {key} para avançar"
+		"advance_prompt": "Objetivos completos! Pressione {key} para avançar",
+		"interact_rescue": "Pressione {key} para chamar o morador",
+		"interact_loot": "Pressione {key} para entrar e saquear"
 	},
 	"objective": {
 		"p1": "Salve os moradores antes que a horda chegue",
 		"p2": "Prepare-se: a horda está chegando",
-		"confront": "Derrote o exército",
+		"confront": "Derrote a horda",
 		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
 		"after_fight": "Continue ajudando a vila",
 		"boss": "Vença a luta final"
 	},
 	"banner": {
 		"allied_title": "Aliança selada",
-		"allied_subtitle": "{name} agora marcha com o exército",
+		"allied_subtitle": "{name} agora marcha com a horda",
 		"army_arrives": "A horda chegou!",
 		"confront_title": "À luta!",
-		"confront_subtitle": "O exército avança",
+		"confront_subtitle": "A horda avança",
 		"knights": "Cavaleiros do reino chegaram!",
 		"wave": "Onda {n} de {total}",
-		"cleared": "O exército recuou",
+		"cleared": "A horda recuou",
 		"time_up": "O tempo acabou",
 		"p2_subtitle": "entra em cena",
 		"boss_subtitle": "Luta final",
@@ -118,5 +120,13 @@
 		"title": "Quem vai enfrentar o cavaleiro?",
 		"subtitle": "O outro personagem se juntará a você nesta batalha.",
 		"hint": "Clique ou use as setas e Enter"
+	},
+	"abilities": {
+		"dash_slash": "Corte",
+		"spin_slash": "Giro",
+		"great_slash": "Final",
+		"fireball": "Fogo",
+		"chain_lightning": "Raio",
+		"arcane_beam": "Feixe"
 	}
 }

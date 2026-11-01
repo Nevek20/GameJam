@@ -22,6 +22,8 @@ extends Resource
 @export var army_min_delay: float = 3.0
 ## Os inimigos surgem nos cantos (Markers/ArmySpawns), mas nunca a menos desta distância do herói.
 @export var spawn_min_distance: float = 600.0
+## Quantos cantos (os mais perto do herói) recebem inimigos em cada onda.
+@export var spawn_corner_count: int = 2
 ## Ondas ao enfrentar o exército.
 @export var confront_waves: Array[WaveData] = []
 ## Ondas de cavaleiros do reino ao se aliar.

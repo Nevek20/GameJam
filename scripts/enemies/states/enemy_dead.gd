@@ -6,7 +6,7 @@ var _tween: Tween
 
 func enter(_msg: Dictionary) -> void:
 	enemy.velocity = Vector2.ZERO
-	enemy.visual.play(&"dead")
+	enemy.visual.play(&"dead", &"idle")
 	AudioManager.play_sfx_for(&"death", enemy.stats.id)
 	var cfg := Juice.cfg()
 	if cfg and enemy.skin:

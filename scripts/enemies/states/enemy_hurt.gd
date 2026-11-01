@@ -8,7 +8,7 @@ var _stunned: bool
 func enter(msg: Dictionary) -> void:
 	_time_left = float(msg.get("duration", enemy.stats.hurt_stun))
 	_stunned = bool(msg.get("stunned", false))
-	enemy.visual.play(&"hurt")
+	enemy.visual.play(&"hurt", &"idle")
 	var cfg := Juice.cfg()
 	if cfg:
 		enemy.visual.squash(cfg.squash_hurt)

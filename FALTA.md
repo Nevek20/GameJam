@@ -24,9 +24,9 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
   - Princesa: positivo, questionável, vitoriosa (aliada), presa (aliada e derrotada).
   - Mago: as mesmas 4.
   - Reino: positivo, negativo, aliança dupla.
-- [ ] **Imagens da introdução**: hoje as 3 legendas usam o mesmo "Cenário guerreira".
-- [ ] **Cutscene da troca Princesa → Mago**: hoje usa o "cenário kael" duas vezes.
-- [ ] **Cutscene antes do boss**: sem imagem nenhuma.
+- [ ] **Imagens da introdução da Elara** (6 telas): hoje todas usam o "Cenário guerreira".
+- [ ] **Imagens da introdução do Kael** (6 telas, troca de personagem): hoje todas usam o "cenário kael".
+- [ ] **Cutscene antes do boss** (2 telas): hoje usa o "cenário kael".
 - [ ] **Efeitos** (opcional): projéteis do Mago, raio e nuvem do Coguolho. Hoje são desenhados por código.
 
 ### Já recebido
