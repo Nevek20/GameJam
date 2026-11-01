@@ -42,7 +42,8 @@ func setup(match_config: MatchConfig, army_points: Array[Vector2], knight_points
 
 
 func start(new_mode: Mode, loop: bool) -> void:
-	stop()
+	# A horda chega sem apagar as criaturas que já estão na vila.
+	_reset()
 	mode = new_mode
 	last_mode = new_mode
 	_loop = loop
@@ -55,14 +56,53 @@ func start(new_mode: Mode, loop: bool) -> void:
 
 
 func stop() -> void:
+	_reset()
+	var pool := Pools.get_pool(&"enemies")
+	if pool:
+		pool.release_all()
+
+
+func _reset() -> void:
 	mode = Mode.NONE
 	_timer.stop()
 	_queue.clear()
 	_queue_points.clear()
 	_alive = 0
+
+
+## Criaturas espalhadas pela vila no começo da fase: cada grupo perto de uma casa (sorteada),
+## longe do herói. Não fazem parte das ondas (não contam para "horda derrotada").
+func spawn_creatures(groups: Array[EnemyGroup], anchors: Array[Vector2], distance: float, aggro: float,
+		bounds: Rect2) -> void:
 	var pool := Pools.get_pool(&"enemies")
-	if pool:
-		pool.release_all()
+	if pool == null or anchors.is_empty():
+		return
+	var heroes := get_tree().get_nodes_in_group(Team.GROUP_HEROES)
+	var hero := _nearest_hero_position(heroes)
+	var order := anchors.duplicate()
+	order.shuffle()
+	# Casas longe do herói primeiro (ninguém começa apanhando).
+	order.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_squared_to(hero) > b.distance_squared_to(hero))
+	var area := bounds.grow(-140.0)
+	var index := 0
+	for group: EnemyGroup in groups:
+		if group == null or group.enemy == null:
+			continue
+		for g in group.groups:
+			var anchor: Vector2 = order[index % order.size()]
+			index += 1
+			var center := anchor + Vector2.from_angle(randf() * TAU) * distance
+			for i in group.group_size:
+				var enemy := pool.acquire() as Enemy
+				if enemy == null:
+					return
+				# O nó pode ter sido de uma onda antes: criatura não mexe na contagem da onda.
+				if enemy.died.is_connected(_on_enemy_died):
+					enemy.died.disconnect(_on_enemy_died)
+				var spot := center + Vector2(randf_range(-group.spread, group.spread), randf_range(-group.spread, group.spread))
+				spot = spot.clamp(area.position, area.end)
+				enemy.activate(group.enemy, spot, null, health_multiplier, damage_multiplier, visual_scale)
+				enemy.aggro_scale = aggro
 
 
 func is_running() -> bool:

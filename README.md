@@ -111,6 +111,7 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - História do pessoal (Elara Veyne e Kael Draven): cutscenes, perguntas "Ajudar?"/"Tudo ou nada?", narração Y/N e finais.
 - Pronto para o itch.io: presets Web/Windows em `export_presets.cfg` e passo a passo em [ITCH.md](ITCH.md).
 - Golpes de espada desenhados como arco (estilo `SWING`); casas não abrem conversa com inimigo perto.
+- Criaturas na vila desde o começo de cada fase (perto das casas); contagem até a horda no objetivo; rastro do dash no lugar certo.
 - Casas: "Pressione F" para chamar o morador ou saquear de novo; horda vem dos cantos mais próximos e corre quando longe;
   inimigos contornam prédios; slots do HUD com o nome da habilidade.
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).

@@ -15,6 +15,15 @@ extends Resource
 @export var house_block_radius: float = 520.0
 @export var qte: QTEConfig
 
+@export_group("Criaturas na vila")
+## Criaturas que já estão na vila quando cada fase começa (perto das casas, longe do início).
+## Só atacam quem chega perto; uma casa com criatura por perto não abre conversa.
+@export var village_creatures: Array[EnemyGroup] = []
+## Distância das casas onde cada grupo aparece.
+@export var creature_distance_from_house: float = 300.0
+## Multiplica o aggro_range delas: menor = só atacam quem chega perto.
+@export var creature_aggro_scale: float = 0.45
+
 @export_group("Exército")
 ## O exército chega (e aparece a pergunta enfrentar/aliar) depois deste tempo de fase, em segundos.
 @export var army_arrival_time: float = 45.0

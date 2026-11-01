@@ -126,7 +126,17 @@ func _start_character_phase() -> void:
 	hud.set_objective(Texts.ui("objective.p1" if index == 0 else "objective.p2"))
 	player.set_input_enabled(true)
 	interactions.begin_phase(index, player)
+	_spawn_village_creatures()
 	AudioManager.play_music(&"gameplay")
+
+
+## Criaturas que já estão na vila (perto das casas) quando a fase começa.
+func _spawn_village_creatures() -> void:
+	var anchors: Array[Vector2] = []
+	for house: VillagerHouse in level.get_houses():
+		anchors.append(house.global_position)
+	encounter.spawn_creatures(match_config.village_creatures, anchors, match_config.creature_distance_from_house,
+		match_config.creature_aggro_scale, level.bounds)
 
 
 func _physics_process(delta: float) -> void:
@@ -191,9 +201,17 @@ func _update_army_arrival(delta: float) -> void:
 	if interactions.is_army_decided() or interactions.is_busy():
 		return
 	_army_wait += delta
+	_show_horde_countdown()
 	var houses_done := match_config.army_arrives_when_houses_done and interactions.all_houses_resolved()
 	if _army_wait >= match_config.army_arrival_time or (houses_done and _army_wait >= match_config.army_min_delay):
 		army_arrives_now()
+
+
+## Objetivo com a contagem até a horda chegar ("... (0:25)").
+func _show_horde_countdown() -> void:
+	var left := maxi(ceili(match_config.army_arrival_time - _army_wait), 0)
+	var key := "objective.p1_countdown" if GameState.current_index == 0 else "objective.p2_countdown"
+	hud.set_objective(Texts.ui(key, {"time": "%d:%02d" % [floori(left / 60.0), left % 60]}))
 
 
 ## Faz o exército chegar agora (pergunta enfrentar/aliar). Público para testes.

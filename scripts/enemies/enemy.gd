@@ -19,6 +19,8 @@ var orbit_sign: float = 1.0
 ## Caçando: procura o herói no mapa inteiro, não só no aggro_range (inimigos das ondas,
 ## que surgem longe, nos cantos). Volta a false a cada activate().
 var hunting: bool = false
+## Multiplica o aggro_range (criaturas da vila usam menos: só atacam quem chega perto).
+var aggro_scale: float = 1.0
 ## Desvio de obstáculo em andamento (sem navegação: anda de lado por um instante).
 var _detour_left: float = 0.0
 var _detour_dir: Vector2 = Vector2.ZERO
@@ -83,6 +85,7 @@ func activate(enemy_stats: EnemyStats, pos: Vector2, enemy_skin: EnemySkin = nul
 	velocity = Vector2.ZERO
 	dead = false
 	hunting = false
+	aggro_scale = 1.0
 	_detour_left = 0.0
 	target = null
 	attack_cooldown_left = randf_range(0.4, maxf(stats.attack_interval, 0.5))
@@ -125,7 +128,7 @@ func is_attacking() -> bool:
 
 
 func find_target() -> Node2D:
-	var reach := INF if hunting else stats.aggro_range * size_scale
+	var reach := INF if hunting else stats.aggro_range * aggro_scale * size_scale
 	return Team.find_nearest(get_tree(), Team.opposite(team), global_position, reach)
 
 

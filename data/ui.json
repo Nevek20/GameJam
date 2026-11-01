@@ -88,7 +88,9 @@
 		"confront": "Derrote a horda",
 		"allied": "Saqueie a vila e resista aos cavaleiros do reino",
 		"after_fight": "Continue ajudando a vila",
-		"boss": "Vença a luta final"
+		"boss": "Vença a luta final",
+		"p1_countdown": "Salve os moradores antes que a horda chegue ({time})",
+		"p2_countdown": "A horda está chegando ({time})"
 	},
 	"banner": {
 		"allied_title": "Aliança selada",

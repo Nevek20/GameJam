@@ -16,6 +16,22 @@
 [ext_resource type="Script" path="res://scripts/resources/enemy_group.gd" id="16_group"]
 [ext_resource type="Resource" path="res://resources/config/revive_config.tres" id="13_revive"]
 
+[sub_resource type="Resource" id="Group_village_shadow"]
+script = ExtResource("16_group")
+enemy = ExtResource("7_fdsxe")
+groups = 2
+group_size = 2
+
+[sub_resource type="Resource" id="Group_village_eye"]
+script = ExtResource("16_group")
+enemy = ExtResource("12_dry_eye")
+group_size = 2
+
+[sub_resource type="Resource" id="Group_village_cog"]
+script = ExtResource("16_group")
+enemy = ExtResource("14_cogueye")
+group_size = 1
+
 [sub_resource type="Resource" id="Group_eye3"]
 script = ExtResource("16_group")
 enemy = ExtResource("12_dry_eye")
@@ -86,6 +102,7 @@ script = ExtResource("10_qhdo4")
 [resource]
 script = ExtResource("11_ifoeb")
 characters = Array[ExtResource("4_uuib0")]([ExtResource("5_m8gfc"), ExtResource("6_1iarw")])
+village_creatures = Array[ExtResource("16_group")]([SubResource("Group_village_shadow"), SubResource("Group_village_eye"), SubResource("Group_village_cog")])
 qte = SubResource("Resource_xjlkt")
 confront_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_ukvfe"), SubResource("Resource_d2eq7"), SubResource("Resource_4xlcw")])
 alliance_waves = Array[ExtResource("1_ddvub")]([SubResource("Resource_qxo0s"), SubResource("Resource_inrfv"), SubResource("Resource_eit5g")])

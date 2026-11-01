@@ -324,6 +324,7 @@ func _skip_intro(game: Game) -> void:
 	_press(Actions.CONFIRM)
 	await _wait(0.2)
 	check(game.phase == Game.Phase.PLAYING, "P1 jogando")
+	_clear_creatures(game)
 
 
 func _p2_intro(game: Game) -> void:
@@ -337,6 +338,24 @@ func _p2_intro(game: Game) -> void:
 	_press(Actions.CONFIRM)
 	await _wait(0.2)
 	check(game.phase == Game.Phase.PLAYING and GameState.current_index == 1, "P2 jogando")
+	_clear_creatures(game)
+
+
+## Criaturas da vila aparecem no começo da fase, longe do herói e com aggro curto.
+## O teste confere e tira todas, para o resto do roteiro ficar previsível.
+func _clear_creatures(game: Game) -> void:
+	var pool := Pools.get_pool(&"enemies")
+	var count := pool.active_count()
+	var far := true
+	var short_aggro := true
+	for node: Node in pool.get_active():
+		var e := node as Enemy
+		far = far and e.global_position.distance_to(game.player.global_position) > 300.0
+		short_aggro = short_aggro and e.aggro_scale < 1.0 and not e.hunting
+	check(count == 7, "criaturas na vila desde o começo da fase (%d)" % count)
+	check(far and short_aggro, "criaturas longe do herói e só atacam quem chega perto")
+	pool.release_all()
+	check(game.hud._objective.text.contains("("), "objetivo mostra quanto falta para a horda")
 
 
 ## O exército chega (sem acampamento): pergunta enfrentar (0) ou se aliar (1).
