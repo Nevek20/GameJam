@@ -12,21 +12,54 @@
 	},
 	"characters": {
 		"princess": {
-			"positive": {"title": "A Princesa da Vila", "text": "Os moradores cantam o nome de {name}. A vila nunca esqueceu quem abriu as portas."},
-			"questionable": {"title": "Uma Heroína Pela Metade", "text": "{name} lutou, mas os moradores ainda se perguntam o que sumiu de suas casas."},
-			"negative_victorious": {"title": "A Coroa Vendida", "text": "{name} marcha à frente do exército. A vila agora curva a cabeça para ela."},
-			"negative_imprisoned": {"title": "Grades de Ouro", "text": "Derrotada, {name} assiste ao reino seguir em frente através das grades."}
+			"positive": {
+				"title": "Ainda havia vida",
+				"text": "Então assim foi durante aquela noite infinita: a Guerreira salvou e ajudou o máximo de pessoas que podia. Antes de partir, no final daquela noite, a Guerreira olhou uma última vez para Valedouro. A vila estava destruída, mas ainda havia vida. Com um último suspiro, ela então desapareceu pela estrada."
+			},
+			"questionable": {
+				"title": "Ainda havia vida",
+				"text": "Então assim foi durante aquela noite infinita: a Guerreira salvou e ajudou o máximo de pessoas que podia. Antes de partir, no final daquela noite, a Guerreira olhou uma última vez para Valedouro. A vila estava destruída, mas ainda havia vida. Com um último suspiro, ela então desapareceu pela estrada."
+			},
+			"negative_victorious": {
+				"title": "Fechar os olhos",
+				"text": "Ela seguiu seu rumo, um caminho que parecia interminável, e talvez fosse. Ela nunca foi atrás de saber o desfecho daquela vila. Eles estão vivos? O que aconteceu com aquela garota? Fechar os olhos quando alguém precisa de você pode custar caro. Depois daquele dia, sempre que se deita no fim do dia, um mesmo pensamento: [i]“talvez, eu não seja tão diferente daquelas criaturas…”[/i]"
+			},
+			"negative_imprisoned": {
+				"title": "Fechar os olhos",
+				"text": "Ela seguiu seu rumo, um caminho que parecia interminável, e talvez fosse. Ela nunca foi atrás de saber o desfecho daquela vila. Eles estão vivos? O que aconteceu com aquela garota? Fechar os olhos quando alguém precisa de você pode custar caro. Depois daquele dia, sempre que se deita no fim do dia, um mesmo pensamento: [i]“talvez, eu não seja tão diferente daquelas criaturas…”[/i]"
+			}
 		},
 		"mage": {
-			"positive": {"title": "O Mercenário de Coração", "text": "Pela primeira vez, {name} recusou pagamento. A vila insistiu mesmo assim."},
-			"questionable": {"title": "Pago, Não Amado", "text": "{name} salvou o dia e encheu os bolsos. Ninguém sabe bem em que ordem."},
-			"negative_victorious": {"title": "O Preço de Tudo", "text": "{name} encontrou quem pagasse mais. O exército agora tem um mago."},
-			"negative_imprisoned": {"title": "Feitiço Quebrado", "text": "Derrotado, {name} conta moedas imaginárias numa cela fria."}
+			"positive": {
+				"title": "Um fim honrado",
+				"text": "Você luta bravamente durante o que pareceu horas. Quase esgotado, você junta forças para se levantar e continuar tentando: você e a guerreira não são tão diferentes. Próximo do fim, o curandeiro é gravemente ferido, porém, com sua ajuda, ele continua vivo. Você consegue sua cura. Ela não o faz se sentir menos cansado como imaginava, porém, ela lhe salvou de dois grandes males: sua doença e seu medo… Você vive uma vida comum para um mercenário. Décadas depois, em uma expedição, um fim honrado. Alguns se lembraram de você, nessa vida…"
+			},
+			"questionable": {
+				"title": "Um fim honrado",
+				"text": "Você luta bravamente durante o que pareceu horas. Quase esgotado, você junta forças para se levantar e continuar tentando: você e a guerreira não são tão diferentes. Próximo do fim, o curandeiro é gravemente ferido, porém, com sua ajuda, ele continua vivo. Você consegue sua cura. Ela não o faz se sentir menos cansado como imaginava, porém, ela lhe salvou de dois grandes males: sua doença e seu medo… Você vive uma vida comum para um mercenário. Décadas depois, em uma expedição, um fim honrado. Alguns se lembraram de você, nessa vida…"
+			},
+			"negative_victorious": {
+				"title": "O fim de um covarde",
+				"text": "Ferido, o mercenário foge. Seu medo o torna fraco: quer continuar vivendo, porém, sem coragem para lutar por sua vida. Ele imaginava que sobreviveria o suficiente para encontrar a cura, porém, dias depois encontrou seu fim, sozinho e ferido… O fim de um covarde. Ninguém se lembrará de você. Talvez, em outra vida…"
+			},
+			"negative_imprisoned": {
+				"title": "O fim de um covarde",
+				"text": "Ferido, o mercenário foge. Seu medo o torna fraco: quer continuar vivendo, porém, sem coragem para lutar por sua vida. Ele imaginava que sobreviveria o suficiente para encontrar a cura, porém, dias depois encontrou seu fim, sozinho e ferido… O fim de um covarde. Ninguém se lembrará de você. Talvez, em outra vida…"
+			}
 		}
 	},
 	"kingdom": {
-		"positive": {"title": "O Reino Prospera", "text": "A vila foi reconstruída mais colorida do que antes. O reino respira em paz."},
-		"negative": {"title": "O Reino Sob Domínio", "text": "As bandeiras do exército sobem nas torres. A vila foi só o começo."},
-		"double_alliance": {"title": "Traição em Dobro", "text": "Com os dois heróis ao seu lado, o exército tomou o reino sem resistência."}
+		"positive": {
+			"title": "O Reino Prospera",
+			"text": "A vila foi reconstruída mais colorida do que antes. O reino respira em paz."
+		},
+		"negative": {
+			"title": "O Reino Sob Domínio",
+			"text": "As bandeiras do exército sobem nas torres. A vila foi só o começo."
+		},
+		"double_alliance": {
+			"title": "Traição em Dobro",
+			"text": "Com os dois heróis ao seu lado, o exército tomou o reino sem resistência."
+		}
 	}
 }

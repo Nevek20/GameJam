@@ -3,8 +3,7 @@ class_name PlaceholderShape
 extends Node2D
 ## Forma desenhada por código enquanto não há sprite.
 ## Formas simples (círculo, retângulo, triângulo, elipse, losango) servem para sombras e marcações.
-## Os outros tipos (casa, personagem, fogo, bandeira...) são lugares SEM ARTE: aparecem como
-## uma caixa cinza escrita "SEM ARTE", para ficar claro o que ainda falta desenhar.
+## Os outros tipos (casa, personagem, fogo...) não desenham nada enquanto não houver arte.
 ## Fica escondida automaticamente quando o EntityVisual recebe uma textura.
 
 enum Kind { CIRCLE, RECT, TRIANGLE, ELLIPSE, DIAMOND, HOUSE, TENT, TREE, TOMBSTONE, MUSHROOM, WALL, FLAME, BANNER, CHARACTER, BARREL, POTION }
@@ -50,10 +49,6 @@ enum Accent { NONE, CROWN, HAT, HELMET, HORNS, HOOD }
 
 var look_dir: Vector2 = Vector2.RIGHT
 
-const MISSING_FILL := Color(0.45, 0.45, 0.48, 0.9)
-const MISSING_LINE := Color(0.15, 0.15, 0.17, 1)
-const MISSING_TEXT := "SEM ARTE"
-
 
 func _draw() -> void:
 	var h := size * 0.5
@@ -80,17 +75,10 @@ func _draw() -> void:
 			_draw_missing(h)
 
 
-## Caixa cinza com "SEM ARTE" (e o nome do tipo, para saber o que pedir).
-func _draw_missing(h: Vector2) -> void:
-	draw_rect(Rect2(-h, size), MISSING_FILL)
-	draw_rect(Rect2(-h, size), MISSING_LINE, false, 2.0)
-	draw_line(-h, h, Color(MISSING_LINE, 0.35), 1.5)
-	draw_line(Vector2(h.x, -h.y), Vector2(-h.x, h.y), Color(MISSING_LINE, 0.35), 1.5)
-	var font := ThemeDB.fallback_font
-	var font_size := clampi(int(size.x / 6.0), 8, 22)
-	var label := "%s\n%s" % [MISSING_TEXT, String(Kind.keys()[kind]).to_lower()]
-	draw_multiline_string(font, Vector2(-h.x, -font_size * 0.4), label, HORIZONTAL_ALIGNMENT_CENTER, size.x,
-		font_size, 2, Color.WHITE)
+## Tipos sem arte (casa, personagem, fogo...) não desenham nada: no jogo nunca aparece
+## caixa de "sprite faltando". Coloque a arte no Sprite2D / AnimatedSprite2D do objeto.
+func _draw_missing(_h: Vector2) -> void:
+	pass
 
 
 func _outline_circle(radius: float) -> void:

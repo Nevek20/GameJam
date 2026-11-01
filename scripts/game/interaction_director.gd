@@ -205,9 +205,11 @@ func ask_army() -> void:
 	if not enabled or _busy or _army_decided:
 		return
 	var token := _begin()
+	# Rótulos por personagem: choices.confront_p1 / ally_p1 (Elara), _p2 (Kael).
+	var suffix := "_p%d" % (character_index + 1)
 	var choice: StringName = await _dialog.ask(Texts.text("dialogues", "army.speaker"), _army_text(), [
-		_choice(CHOICE_CONFRONT, "dialogues", "choices.confront"),
-		_choice(CHOICE_ALLY, "dialogues", "choices.ally")])
+		_choice(CHOICE_CONFRONT, "dialogues", "choices.confront" + suffix),
+		_choice(CHOICE_ALLY, "dialogues", "choices.ally" + suffix)])
 	if token != _token:
 		return
 	if choice == CHOICE_CONFRONT or choice == CHOICE_ALLY:
@@ -218,6 +220,10 @@ func ask_army() -> void:
 			ReputationState.set_allied(id)
 		else:
 			ReputationState.register_confront(id)
+		# O que acontece depois da escolha (narração Y/N da história).
+		await _dialog.ask("", Texts.text("dialogues", "army.outcome%s_%s" % [suffix, choice]), [])
+		if token != _token:
+			return
 		refresh_pois()
 		_end()
 		army_choice_made.emit(choice)

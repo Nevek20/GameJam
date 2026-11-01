@@ -43,6 +43,8 @@ func _ready() -> void:
 		_house_shape.visible = false
 	_villager.apply_look(villager_texture, null, Color(0.55, 0.95, 0.8), Color(0.95, 0.5, 0.9),
 		PlaceholderShape.Accent.HOOD, Vector2.ONE)
+	# O morador fica dentro de casa: o boneco só aparece se houver arte (villager_texture).
+	_villager.visible = villager_texture != null
 	_villager.placeholder.size = villager_size
 	_villager.placeholder.position = Vector2(0, -villager_size.y * 0.5)
 	# A casa já recebe a escala de cenário; o morador usa a escala de NPC.

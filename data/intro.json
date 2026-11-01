@@ -1,13 +1,20 @@
 {
 	"_comment": "Legendas das cutscenes (BBCode). Cada lista corresponde a um IntroConfig (campo captions_key), na mesma ordem das imagens.",
 	"slides": [
-		"Em Valedouro, onde as árvores se curvam e as estrelas nadam, a noite começou errada.",
-		"Criaturas deformadas desceram sobre as casas. Os moradores estão presos.",
-		"Duas pessoas podem mudar o destino da vila. Uma de cada vez."
+		"A noite cai sobre a pequena vila de Valedouro, logo após a chegada da Guerreira, [b]Elara Veyne[/b]. De longe, uma vila comum: pequenas casas de madeira, uma torre de sino e uma estrada de terra que desaparecia entre as árvores.",
+		"Mas havia algo errado. O céu tinha uma cor púrpura, iluminado por uma lua enorme demais para ser real. As estrelas pareciam se mover lentamente, como se estivessem nadando no céu.",
+		"As árvores ao redor da vila se inclinavam umas sobre as outras, formando silhuetas que lembram pessoas observando a estrada.",
+		"Então o sino tocou, badaladas após a outra. Quando chegou ao topo da colina, a Guerreira finalmente viu o que estava acontecendo: Valedouro estava sendo atacada.",
+		"Criaturas deformadas caminhavam pelas ruas. Algumas tinham corpos semelhantes aos de fungos, outras inexplicáveis: dentes demais, olhos espalhados pelo rosto, até mesmo a falta de um…",
+		"Criaturas pequenas correm entre as casas e monstros enormes destroem os portões e muralhas. Os moradores gritam e fogem. A Guerreira apertou a espada."
 	],
 	"switch": [
-		"Três dias depois, Kael Draven chega a Valedouro, em busca de um remédio para a filha.",
-		"Tudo o que Elara fez ficou marcado nas ruas."
+		"Três dias depois, um garoto chegou à mesma estrada. Seu nome era [b]Kael Draven[/b], um mercenário.",
+		"Diferente da Guerreira de antes, ele veio para se salvar, já que estava muito doente e precisava de um remédio especial. Ele sabia que um curandeiro poderoso havia desaparecido naquela região e acreditava que o remédio e seus pertences ainda estivessem dentro da vila.",
+		"Quando chegou ao topo da colina, percebeu algo devastador: Valedouro estava destruída, mas havia pessoas vivendo ali. Barricadas haviam sido construídas nas ruas.",
+		"Algumas crianças brincavam perto da igreja e, pendurada na entrada da vila, havia uma placa escrita: \"ESTAMOS VIVOS\". Algo de ruim ainda irá acontecer nesta vila. Se apresse.",
+		"E então o céu se abriu. A lua apareceu como um olho apodrecido, as estrelas giram ao céu, casas começaram a se inclinar, paredes agindo como pulmões.",
+		"O Mercenário se virou e, por um instante, viu a Guerreira parada no meio da praça, exatamente como havia sido três dias antes, com sua espada e a fita vermelha presa ao cabo. Num piscar de olhos, ela desapareceu."
 	],
 	"boss": [
 		"O sino toca, o céu se abre e a lua vira um olho.",

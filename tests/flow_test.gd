@@ -323,7 +323,23 @@ func _p2_intro(game: Game) -> void:
 func _army_choice(game: Game, index: int) -> void:
 	game.army_arrives_now()
 	await _choose(game, index)
+	await _continue(game) # fecha a narração do que aconteceu depois (Y/N)
 	await _wait(0.3)
+
+
+## Fecha uma fala sem escolhas (Enter completa o texto, Enter de novo fecha).
+func _continue(game: Game) -> void:
+	for i in 200:
+		if game.dialog.is_open:
+			break
+		await _wait(0.02)
+	check(game.dialog.is_open, "narração abriu")
+	for i in 4:
+		if not game.dialog.is_open:
+			break
+		_press(Actions.CONFIRM)
+		await _wait(0.1)
+	check(not game.dialog.is_open, "narração fechou")
 
 
 func _choose(game: Game, index: int) -> void:

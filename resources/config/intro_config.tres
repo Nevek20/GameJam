@@ -5,4 +5,4 @@
 
 [resource]
 script = ExtResource("1_nqlo0")
-images = Array[Texture2D]([ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img")])
+images = Array[Texture2D]([ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img")])

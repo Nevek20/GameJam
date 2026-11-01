@@ -35,7 +35,7 @@ Termos usados aqui:
 
 ## 2. Trocar sprites
 
-**Regra geral:** cada personagem ou objeto tem um nó `Visual`, separado da colisão e das hitboxes. Trocar a arte **não muda** o tamanho da hitbox nem o tempo dos ataques. Enquanto não houver sprite, aparece uma **caixa cinza escrita "SEM ARTE"** com o tipo do objeto (nó `Visual/Placeholder`). Ela some sozinha quando você coloca a arte.
+**Regra geral:** cada personagem ou objeto tem um nó `Visual`, separado da colisão e das hitboxes. Trocar a arte **não muda** o tamanho da hitbox nem o tempo dos ataques. Enquanto não houver sprite, o objeto simplesmente não aparece (nunca há caixa de "sprite faltando"). As formas simples do nó `Visual/Placeholder` (sombras, círculos) continuam funcionando.
 
 **Pivô (origem):** personagens, inimigos, boss, moradores e barris têm a origem **nos pés**. O desenho deve ficar acima da origem, com os pés em cima do ponto (0, 0).
 
@@ -69,7 +69,7 @@ Termos usados aqui:
 Abra `scenes/world/level.tscn` → `World/Houses/House1` (até `House5`) → Inspector:
 - `house_texture`: arte da casa (já ligada: fazenda, casa vermelha, casa de pedra, casa de palha, casa rosa).
 - `house_texture_scale`: tamanho do desenho (padrão `0.4`). `house_base`: onde fica a base do desenho; mude o Y se a casa "flutuar".
-- `villager_texture`: arte do morador.
+- `villager_texture`: arte do morador. **Vazio = o morador fica dentro de casa** (não aparece); a conversa acontece ao chegar perto da casa.
 - `villager_size`: tamanho do morador.
 
 ### Barris e poções
@@ -92,7 +92,8 @@ Em `resources/config/barrel_config.tres`:
 - **Ícones das habilidades no HUD:** campo `icon` de cada habilidade (`resources/abilities/...`).
 - **Imagens da introdução e das cutscenes:** campo `images` em `resources/config/intro_config.tres`, `cutscene_switch.tres` e `cutscene_boss.tres`.
 - **Imagens dos finais:** `resources/config/ending_images.tres`.
-- **Lápide:** `ui/endings/tombstone_view.tscn` → `tombstone_texture`.
+- **Lápide:** `ui/endings/tombstone_view.tscn` → `tombstone_texture` (hoje: a pedra grande do cenário).
+- **Fogo:** `scenes/world/prop_fire.tscn` → nós `Flame` (chama) e `Embers` (faíscas), partículas. Com arte, use o `Visual` → `texture`.
 
 ---
 
@@ -229,7 +230,8 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 | Pergunta de objetivos completos | `data/dialogues.json` → `objectives.*` e `choices.advance` / `choices.explore` |
 | Tutorial | `data/tutorial.json`. `{move}`, `{dash}` etc. viram as teclas atuais |
 | Introdução e cutscenes | `data/intro.json` → listas `slides` (introdução), `switch` (troca para o Mago) e `boss` (antes do boss) |
-| Finais e lápides | `data/endings.json` |
+| Finais e lápides | `data/endings.json` (finais da Guerreira/Mercenário: Y em `positive`/`questionable`, N em `negative_*`) |
+| Pergunta da história e o que vem depois | `data/dialogues.json` → `army.p1_ask` (Ajudar?), `army.p2_ask_*` (Tudo ou nada?), `army.outcome_p1_confront`/`_ally`, `army.outcome_p2_confront`/`_ally`; botões em `choices.confront_p1`, `ally_p1`, `confront_p2`, `ally_p2` |
 | Nomes | `data/names.json` |
 | Créditos | `data/credits.json` (aceita BBCode) |
 | Interface (menu, HUD, avisos) | `data/ui.json` |

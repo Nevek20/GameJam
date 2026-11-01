@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource("1_cutscene")
-images = Array[Texture2D]([ExtResource("2_img"), ExtResource("2_img")])
+images = Array[Texture2D]([ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img"), ExtResource("2_img")])
 captions_key = "switch"

@@ -1,6 +1,6 @@
 # O que falta (para cobrar o pessoal)
 
-No jogo, tudo o que ainda não tem arte aparece como uma **caixa cinza escrita "SEM ARTE"**.
+No jogo não aparece nada de "sprite faltando": o que não tem arte foi escondido, cortado ou ganhou uma solução provisória.
 Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 
 ## Arte
@@ -9,13 +9,13 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 - [ ] **Boss**: hoje é uma **Sombra gigante** provisória (contorno avermelhado na versão da horda, dourado na do reino). Se vier arte própria, entra no lugar.
 - [ ] **Cavaleiro do reino** (ataca quem se aliou à horda): hoje é um **Coguolho azulado** provisório.
 - [x] ~~Elite~~: cortada do jogo.
-- [ ] **Moradores**: as 5 casas têm um morador cada (pode ser o mesmo desenho).
+- [x] ~~Moradores~~: ficam dentro de casa (não aparecem). Se um dia tiver arte, vai em `villager_texture`.
 - [ ] **Animações que faltam na Princesa e no Mago**: `hurt` (tomando dano) e `dead` (morrendo).
 - [ ] **Animações dos monstros** (opcional): hoje cada um tem um loop só. Faltam ataque e morte.
 
 ### Cenário
-- [ ] **Fogueiras / fogo** da invasão.
-- [ ] **Lápide**: aparece quando um personagem morre.
+- [ ] **Fogo** da invasão (opcional): hoje é uma chama de partículas feita por código.
+- [ ] **Lápide** (opcional): hoje usa a pedra grande do cenário.
 
 ### Telas e interface
 - [ ] **Ícone do jogo**.
@@ -68,14 +68,17 @@ Onde colocar cada coisa está no `GUIA_DE_EDICAO.md`.
 
 ## Textos (escrita)
 
-Já entraram os textos da lore do Cleson (branch `jogo-completo`): Valedouro, Elara, Kael Draven, a Horda,
-introdução, troca de personagem, cutscene do boss, falas do capitão e pergunta de objetivos.
+A história do jogo agora é a do pessoal (Elara Veyne e Kael Draven):
+- introdução da Elara, "Ajudar?" e o que acontece depois (Y/N);
+- introdução do Kael (troca de personagem), "Tudo ou nada?" e o que acontece depois (Y/N);
+- finais da Guerreira e do Mercenário (Y = finais de herói, N = finais de quem deu as costas / fugiu).
 
-Ainda são **provisórios, escritos por mim**:
+Ainda são **provisórios, escritos por mim** (a história não cobre):
 
 - [ ] `data/endings.json`
-  - [ ] Textos dos 11 finais.
-  - [ ] Texto da lápide.
-- [ ] `data/dialogues.json`: falas dos moradores que o Cleson não mexeu (só `default`, `baker` e `elder` foram revisadas).
-- [ ] `data/tutorial.json`: tutorial (só uma linha foi revisada).
+  - [ ] Finais do reino (positivo, negativo, aliança dupla).
+  - [ ] Texto da lápide (morte de cada personagem).
+- [ ] `data/intro.json` → `boss`: legenda da cutscene antes do boss.
+- [ ] `data/dialogues.json`: falas dos moradores (`weaver` e `twins` nunca foram revisadas).
+- [ ] `data/tutorial.json`: tutorial.
 - [ ] `data/ui.json`: subtítulo do menu ("Uma noite. Dois heróis. Uma escolha.") e textos da interface.

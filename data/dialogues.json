@@ -11,7 +11,11 @@
 		"ally": "Aliar-se",
 		"not_now": "Agora não",
 		"advance": "Ir para a próxima etapa",
-		"explore": "Continuar explorando"
+		"explore": "Continuar explorando",
+		"confront_p1": "Sim, ajudar",
+		"ally_p1": "Não, dar as costas",
+		"confront_p2": "Sim, lutar até o fim",
+		"ally_p2": "Não, fugir"
 	},
 	"houses": {
 		"default": {
@@ -56,11 +60,15 @@
 		}
 	},
 	"army": {
-		"speaker": "Capitão da Horda",
-		"p1_ask": "Valedouro já é nossa. Você pode lutar e cair com ela... ou marchar ao nosso lado e levar o que quiser. O que vai ser?",
-		"p2_ask_p1_hero": "{p1} tentou nos deter. Você vai terminar o que {p1} começou, ou vai ser mais esperto?",
-		"p2_ask_p1_allied": "{p1} já marcha conosco. Junte-se a nós, ou enfrente a horda inteira.",
-		"p2_ask_p1_dead": "{p1} caiu aqui. Quer o mesmo destino, ou prefere se aliar?"
+		"speaker": "",
+		"p1_ask": "Ela poderia fugir, mas avistou uma criança parada no meio da estrada, olhando para uma criatura que se aproximava.\n\n[b]Ajudar?[/b]",
+		"p2_ask_p1_hero": "Vozes ecoavam do fundo de um beco. Ele viu alguém com vestes de curandeiro, e bastava a ele escolher o que fazer: sair daquele lugar com vida, ou se arriscar para roubar seu remédio.\n\n[b]Tudo ou nada?[/b]",
+		"p2_ask_p1_allied": "Vozes ecoavam do fundo de um beco. Ele viu alguém com vestes de curandeiro, e bastava a ele escolher o que fazer: sair daquele lugar com vida, ou se arriscar para roubar seu remédio.\n\n[b]Tudo ou nada?[/b]",
+		"p2_ask_p1_dead": "Vozes ecoavam do fundo de um beco. Ele viu alguém com vestes de curandeiro, e bastava a ele escolher o que fazer: sair daquele lugar com vida, ou se arriscar para roubar seu remédio.\n\n[b]Tudo ou nada?[/b]",
+		"outcome_p1_confront": "A Guerreira então correu e desferiu um golpe fatal na abominação. Decidida, ela vai em direção à cidade.\n\n[i]Será que essa foi uma escolha sábia?[/i]",
+		"outcome_p1_ally": "Fechando seus olhos, ela deu as costas…\nTalvez seja o destino deles. Porém, talvez um monstro pior do que os naquela cidade seja o que fecha os olhos diante de quem precisa.\n\n[i]Será que essa foi uma escolha sábia?[/i]",
+		"outcome_p2_confront": "“Sim, a morte é inevitável, porém, devo batalhar para continuar vivendo. Sairei daqui com minha vida ou morrerei tentando.”\n\nEmpunhe seu cajado, lute até o fim.",
+		"outcome_p2_ally": "Sim, a morte é inevitável. Ele não é como a guerreira, muito pelo contrário: ele fechou seus olhos e fugiu covardemente, enfrentando apenas as criaturas em seu caminho.\n\n[i]Você já fez isso antes, não?[/i]"
 	},
 	"objectives": {
 		"speaker": "Objetivos completos",

@@ -1,7 +1,9 @@
 [gd_resource type="Resource" script_class="IntroConfig" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/images/story/cenario_kael.png" id="2_img"]
 [ext_resource type="Script" path="res://scripts/resources/intro_config.gd" id="1_cutscene"]
 
 [resource]
 script = ExtResource("1_cutscene")
+images = Array[Texture2D]([ExtResource("2_img"), ExtResource("2_img")])
 captions_key = "boss"
