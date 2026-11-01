@@ -293,6 +293,17 @@ func _new_enemies(game: Game) -> void:
 	check(p.test_move(p.global_transform, siam.global_position - p.global_position), "Siameses bloqueiam o corpo do herói")
 	siam.health.take_damage(99999.0)
 	await _wait(0.6)
+	# Casa com inimigo perto: nada de diálogo no meio da luta.
+	var house: VillagerHouse = game.level.get_houses()[2]
+	var guard := pool.acquire() as Enemy
+	guard.activate(load("res://resources/enemies/shadow.tres") as EnemyStats, house.global_position + Vector2(0, 260))
+	p.global_position = house.global_position + Vector2(0, 90)
+	await _wait(0.3)
+	check(not game.dialog.is_open, "casa não abre diálogo com inimigo perto")
+	check(game.interactions.available_action() == &"blocked", "aviso de inimigos por perto")
+	guard.health.take_damage(99999.0)
+	p.global_position = game.level.marker("PlayerStart")
+	await _wait(0.4)
 
 
 func _wait_game() -> Game:

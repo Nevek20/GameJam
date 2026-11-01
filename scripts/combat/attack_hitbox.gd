@@ -13,6 +13,9 @@ var _origin: Vector2
 var _dir: Vector2 = Vector2.RIGHT
 var _orbit_angle: float = 0.0
 var _elapsed: float = 0.0
+## Lado do golpe (SWING): alterna a cada ataque, como golpes de ida e volta.
+var _swing_sign: float = 1.0
+static var _next_swing_sign: float = 1.0
 
 @onready var _collision: CollisionShape2D = $CollisionShape2D
 
@@ -28,6 +31,9 @@ func activate(shape_ability: ShapeAbility, by: AbilityCaster) -> void:
 	_origin = by.global_position
 	_dir = by.aim_dir
 	_orbit_angle = _dir.angle()
+	if shape_ability.style == ShapeAbility.Style.SWING:
+		_swing_sign = _next_swing_sign
+		_next_swing_sign = -_next_swing_sign
 	# Área não é corpo físico: escalar o nó escala colisão e desenho juntos.
 	scale = Vector2.ONE * by.geometry_scale
 	match shape_ability.shape:
@@ -96,8 +102,38 @@ func _draw() -> void:
 		ShapeAbility.Style.SOLID:
 			ability.draw_local(self, Color(col, col.a * 0.8), true)
 			ability.draw_local(self, Color(1, 1, 1, 0.8), false, 2.0)
+		ShapeAbility.Style.SWING:
+			_draw_swing(t, col)
 		ShapeAbility.Style.BEAM:
 			var pulse := 0.85 + 0.15 * sin(_elapsed * 40.0)
 			ability.draw_local_scaled(self, Color(col, 0.35), pulse)
 			draw_rect(Rect2(Vector2(-ability.size.x * 0.5, -ability.size.y * 0.22 * pulse), Vector2(ability.size.x, ability.size.y * 0.44 * pulse)), Color(col, 0.85))
 			draw_rect(Rect2(Vector2(-ability.size.x * 0.5, -ability.size.y * 0.08), Vector2(ability.size.x, ability.size.y * 0.16)), Color(1, 1, 1, 0.95))
+
+
+## Arco de espada: meia-lua em volta do lançador (que fica forward_offset atrás do centro da forma).
+## A ponta varre de um lado ao outro; o rastro afina para trás e some no fim do golpe.
+func _draw_swing(t: float, col: Color) -> void:
+	var pivot := Vector2(-ability.forward_offset, 0.0)
+	var outer := ability.forward_offset + ability.size.x * 0.5
+	var inner := maxf(outer - ability.size.x * 0.8, 8.0)
+	var half := clampf(atan2(ability.size.y * 0.5, maxf(ability.forward_offset, 1.0)), 0.7, 1.35)
+	var head := lerpf(-half, half, 1.0 - pow(1.0 - minf(t * 1.5, 1.0), 3.0))
+	var tail := maxf(-half, head - half * 1.7)
+	if head - tail < 0.04:
+		return
+	var fade := 1.0 - smoothstep(0.55, 1.0, t)
+	var steps := 16
+	var edge := PackedVector2Array()
+	var crescent := PackedVector2Array()
+	for i in steps + 1:
+		var a := lerpf(tail, head, float(i) / steps) * _swing_sign
+		edge.append(pivot + Vector2.from_angle(a) * outer)
+	crescent.append_array(edge)
+	for i in range(steps, -1, -1):
+		var k := float(i) / steps
+		var a := lerpf(tail, head, k) * _swing_sign
+		# Grosso na ponta (lâmina), fino no rastro.
+		crescent.append(pivot + Vector2.from_angle(a) * lerpf(outer, inner, k * k))
+	draw_colored_polygon(crescent, Color(col, col.a * 0.7 * fade))
+	draw_polyline(edge, Color(1, 1, 1, 0.9 * fade), 3.0, true)

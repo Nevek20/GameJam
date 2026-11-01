@@ -109,6 +109,8 @@ Guia completo, com nomes reais de arquivos e parâmetros: **[GUIA_DE_EDICAO.md](
 - Estrada da `art` (`Trilha.png`), textos da lore (Valedouro, Elara, Kael Draven, Horda), elite cortada, boss = Sombra gigante e
   cavaleiros = Coguolho azulado (provisórios), tema da interface nas cores de Carcosa, HUD com retrato e menu animado.
 - História do pessoal (Elara Veyne e Kael Draven): cutscenes, perguntas "Ajudar?"/"Tudo ou nada?", narração Y/N e finais.
+- Pronto para o itch.io: presets Web/Windows em `export_presets.cfg` e passo a passo em [ITCH.md](ITCH.md).
+- Golpes de espada desenhados como arco (estilo `SWING`); casas não abrem conversa com inimigo perto.
 - Casas: "Pressione F" para chamar o morador ou saquear de novo; horda vem dos cantos mais próximos e corre quando longe;
   inimigos contornam prédios; slots do HUD com o nome da habilidade.
 - `DashAttackAbility`: ataque com dash compartilhado por elite, boss e Princesa (Q).

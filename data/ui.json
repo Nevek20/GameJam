@@ -79,7 +79,8 @@
 		"downed_ally": "{name} caiu! Vá até ele(a) ({time}s)",
 		"advance_prompt": "Objetivos completos! Pressione {key} para avançar",
 		"interact_rescue": "Pressione {key} para chamar o morador",
-		"interact_loot": "Pressione {key} para entrar e saquear"
+		"interact_loot": "Pressione {key} para entrar e saquear",
+		"interact_blocked": "Inimigos por perto! Afaste-os para falar com a casa"
 	},
 	"objective": {
 		"p1": "Salve os moradores antes que a horda chegue",

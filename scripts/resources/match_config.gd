@@ -11,6 +11,8 @@ extends Resource
 @export var pause_timer_during_dialogue: bool = true
 
 @export_group("Moradores")
+## Com inimigo a menos desta distância do jogador, as casas não abrem conversa (nada de diálogo no meio da luta).
+@export var house_block_radius: float = 520.0
 @export var qte: QTEConfig
 
 @export_group("Exército")

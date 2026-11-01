@@ -168,6 +168,8 @@ func _update_play_prompt() -> void:
 			hud.set_prompt(Texts.ui("hud.interact_rescue", {"key": key}))
 		&"loot":
 			hud.set_prompt(Texts.ui("hud.interact_loot", {"key": key}))
+		&"blocked":
+			hud.set_prompt(Texts.ui("hud.interact_blocked"))
 		_:
 			hud.set_prompt(Texts.ui("hud.advance_prompt", {"key": Settings.get_binding_text(Actions.ADVANCE)}) if _can_advance else "")
 

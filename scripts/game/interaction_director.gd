@@ -126,18 +126,29 @@ func _on_house_exited(house: VillagerHouse) -> void:
 
 
 ## Casa perto do jogador onde dá para fazer algo agora (resgatar ou saquear), ou null.
+## Com inimigos por perto não há casa disponível (sem diálogo no meio da luta).
 func available_house() -> VillagerHouse:
-	if not enabled or _busy or _near == null or not _has_action(_near):
+	if not enabled or _busy or _near == null or not _has_action(_near) or enemies_near():
 		return null
 	return _near
 
 
-## Que ação a casa perto oferece: &"rescue", &"loot" ou &"" (nada).
+## Que ação a casa perto oferece: &"rescue", &"loot", &"blocked" (inimigos perto) ou &"" (nada).
 func available_action() -> StringName:
+	if enabled and not _busy and _near and _has_action(_near) and enemies_near():
+		return &"blocked"
 	var house := available_house()
 	if house == null:
 		return &""
 	return &"rescue" if house.state == GameState.HouseState.OCCUPIED and not ReputationState.is_allied(current_id()) else &"loot"
+
+
+## Algum inimigo vivo a menos de house_block_radius do jogador.
+func enemies_near() -> bool:
+	if player == null or config == null:
+		return false
+	return Team.find_nearest(get_tree(), Team.opposite(player.team), player.global_position,
+		config.house_block_radius) != null
 
 
 ## Tecla de interagir perto de uma casa (para quem fechou o diálogo e quer voltar).
@@ -156,7 +167,7 @@ func _has_action(house: VillagerHouse) -> bool:
 
 
 func _interact_with(house: VillagerHouse) -> void:
-	if not enabled or _busy:
+	if not enabled or _busy or enemies_near():
 		return
 	if ReputationState.is_allied(current_id()):
 		if not house.looted:

@@ -191,7 +191,7 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 
 | Gatilho | Onde | Como mexer |
 |---|---|---|
-| Conversa com o morador | `scenes/world/villager_house.tscn` → `InteractionZone/CollisionShape2D` (círculo amarelo no editor) | Mude o `radius` do círculo ou mova o nó `InteractionZone`. A conversa abre ao entrar; quem fechou e continua perto vê "Pressione F…" e reabre com a ação `interact` (F) |
+| Conversa com o morador | `scenes/world/villager_house.tscn` → `InteractionZone/CollisionShape2D` (círculo amarelo no editor) | Mude o `radius` do círculo ou mova o nó `InteractionZone`. A conversa abre ao entrar; quem fechou e continua perto vê "Pressione F…" e reabre com a ação `interact` (F). **Com inimigo perto, a casa não abre conversa** (aparece "Inimigos por perto!"): distância em `match_config.tres` → `house_block_radius` |
 | **Chegada do exército** (pergunta enfrentar/aliar) | Não é área: tempo. `match_config.tres` → `army_arrival_time` (segundos de fase), `army_arrives_when_houses_done` (chega antes se as casas acabaram) e `army_min_delay` | Os inimigos surgem nos cantos do mapa mais perto do herói (`spawn_corner_count`, nunca a menos de `spawn_min_distance`). Longe do alvo eles correm: `catch_up_distance` e `catch_up_speed` em cada `resources/enemies/*.tres` |
 | Pegar poção | `scenes/world/potion.tscn` → `CollisionShape2D` | Mude o raio |
 | Reviver (luta final) | Não é área: distância em `resources/config/revive_config.tres` → `revive_distance` | |
@@ -250,6 +250,7 @@ Tudo fica em `scenes/world/level.tscn`. Mova os nós arrastando no editor.
 |---|---|
 | `characters/princess.tres`, `mage.tres` | Vida, velocidade, aceleração, dash (`dash_distance`, `dash_duration`, `dash_cooldown`), defesa e parry (`parry_window`, `parry_cooldown`, `block_damage_multiplier`), `body_size`, `collision_size`, `attack_origin_offset`, sprites, habilidades (`attack`, `skill_q`, `skill_e`, `ultimate`), IA, `input_buffer` |
 | `abilities/**` | Ver seção 7 |
+| **Visual dos golpes** (`ShapeAbility` → `style`) | `SWING` = arco de espada (corte da Princesa, Final e golpes dos monstros), `SLASH` = forma brilhante, `SOLID` = forma cheia, `BEAM` = feixe. Só muda o desenho: a área de dano continua sendo a forma (`shape`, `size`) |
 | **Dashes de ataque** (`princess/dash_slash.tres`, `enemies/elite_lunge.tres`, `enemies/boss_lunge.tres`) | `windup` = **telegraph**, `active_time` = **duração do dash**, `dash_distance`, `ease_power` (curva: 2 = rápido e desacelera), `recovery` (parado e vulnerável), `cooldown`, `skip_telegraph_for_player` (Princesa do jogador sai na hora) |
 | `enemies/shadow.tres` (Sombra, inimigo comum) | Vida, velocidade, ataques, `attack_interval`, `aggro_range`, `body_size` |
 | `enemies/dry_eye.tres` (Olho seco) | `behavior = ORBIT_DASH`: voa em volta (`orbit_radius`, `orbit_speed`), depois de `orbit_time_min`–`orbit_time_max` segundos dá o dash `abilities/enemies/dry_eye_dive.tres` (telegraph = `windup`, `dash_distance`, dano). `fly_height` = altura do voo |
@@ -328,7 +329,5 @@ godot --headless --path . res://tests/flow_test.tscn     # joga partidas inteira
 | Mudou algo e quer voltar | Use o Git, ou duplique o `.tres` antes de mexer |
 
 ### Exportar o jogo (para entregar na jam)
-1. No Godot: *Editor → Manage Export Templates → Download and Install* (uma vez só).
-2. *Project → Export… → Add…* e escolha **Web** (para o itch.io) e/ou **Windows Desktop**.
-3. *Export Project…* e escolha a pasta. No Web, suba o `.zip` com o `index.html` no itch.io e marque "This file will be played in the browser".
-4. O projeto usa o renderer **Compatibility**, que funciona no navegador. O botão "Sair" do menu some sozinho na versão Web.
+Os presets **Web** e **Windows** já vêm prontos em `export_presets.cfg`. O passo a passo completo (exportar, compactar e preencher a página do itch.io) está em **[ITCH.md](ITCH.md)**.
+O projeto usa o renderer **Compatibility**, que funciona no navegador; o botão "Sair" do menu some sozinho na versão Web.

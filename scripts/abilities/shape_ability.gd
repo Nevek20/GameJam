@@ -5,7 +5,8 @@ extends Ability
 ## grande corte e o feixe do mago (rehit_interval = dano por tick).
 
 enum Shape { RECT, TRIANGLE, CIRCLE }
-enum Style { SLASH, SOLID, BEAM }
+## SWING: arco de espada (meia-lua que varre em volta do lançador); a colisão continua sendo a forma.
+enum Style { SLASH, SOLID, BEAM, SWING }
 
 @export_group("Forma")
 @export var shape: Shape = Shape.RECT
